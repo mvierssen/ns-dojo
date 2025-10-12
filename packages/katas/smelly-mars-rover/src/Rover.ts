@@ -4,6 +4,12 @@ export class Rover {
   constructor(p = "") {
     const s = p.split(" ");
     if (s.length >= 3) {
+      if (s[0] === undefined || s[1] === undefined || s[2] === undefined) {
+        throw new Error("Invalid position string");
+      }
+      if (typeof s[2][0] !== "string") {
+        throw new TypeError("Invalid direction");
+      }
       this.rs.xx = Number.parseInt(s[0], 10);
       this.rs.yy = Number.parseInt(s[1], 10);
       this.rs.dd = s[2][0];
@@ -89,11 +95,14 @@ export class Rover {
   }
 
   public G(z: string): void {
+    if (typeof z[0] !== "string") {
+      throw new TypeError("Invalid direction");
+    }
     this.go(z[0]);
   }
 
   public get XYD(): string {
-    return `${this.rs.xx} ${this.rs.yy} ${this.rs.dd}`;
+    return `${String(this.rs.xx)} ${String(this.rs.yy)} ${this.rs.dd}`;
   }
 
   public pos(): string {
