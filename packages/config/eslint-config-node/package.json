@@ -1,0 +1,36 @@
+{
+  "name": "@ns-white-crane-white-belt/eslint-config-node",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "node": "./dist/src/index.js",
+      "import": {
+        "@ns-white-crane-white-belt/source": "./src/index.ts",
+        "default": "./dist/src/index.js"
+      }
+    },
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "node": "./dist/src/*.js",
+      "import": {
+        "@ns-white-crane-white-belt/source": "./src/*.ts",
+        "default": "./dist/src/*.js"
+      }
+    }
+  },
+  "dependencies": {
+    "@ns-white-crane-white-belt/eslint-config-base": "^0.1.0",
+    "globals": "16.4.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "24.7.1",
+    "@ns-white-crane-white-belt/ts-config-build": "^0.1.0"
+  }
+}

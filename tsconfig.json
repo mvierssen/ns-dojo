@@ -1,0 +1,52 @@
+{
+  "extends": "./tsconfig.options.json",
+  "files": [],
+  "references": [
+    // Shared
+    {
+      "path": "packages/shared/shared-core"
+    },
+    {
+      "path": "packages/shared/shared-vite"
+    },
+    {
+      "path": "packages/shared/shared-zod"
+    },
+    // Config
+    {
+      "path": "packages/config/eslint-config-base"
+    },
+    {
+      "path": "packages/config/eslint-config-node"
+    },
+    {
+      "path": "packages/config/vite-config-base"
+    },
+    {
+      "path": "packages/config/vitest-config-base"
+    },
+    {
+      "path": "packages/config/vitest-config-node"
+    },
+    {
+      "path": "packages/config/vitest-config-jsdom"
+    },
+    {
+      "path": "packages/config/prettier-config"
+    },
+    {
+      "path": "packages/config/stryker-config"
+    },
+    // Templates
+    {
+      "path": "packages/templates/template-base"
+    },
+    {
+      "path": "packages/templates/template-vite"
+    },
+    // Katas
+    {
+      "path": "packages/katas/smelly-mars-rover"
+    }
+  ]
+}

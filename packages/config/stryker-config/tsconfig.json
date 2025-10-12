@@ -1,0 +1,18 @@
+{
+  "extends": "@ns-white-crane-white-belt/ts-config-build",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@ns-white-crane-white-belt/eslint-config-base/*": ["../eslint-config-base/src/*"]
+    }
+  },
+  "references": [
+    {
+      "path": "../eslint-config-base"
+    }
+  ],
+  "include": ["src"],
+  "exclude": ["dist"]
+}

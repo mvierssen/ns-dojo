@@ -1,0 +1,216 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "remoteCache": {
+    "signature": true
+  },
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*",
+        "tsconfig*.json",
+        "vite.config.*",
+        "astro.config.*",
+        "wrangler.json",
+        "capacitor.config.*",
+        "app.config.*"
+      ],
+      "outputs": [
+        "dist/**",
+        ".astro/**",
+        ".next/**",
+        ".vite/**",
+        ".output/**",
+        ".tanstack/**",
+        "build/**",
+        "out/**",
+        "android/app/build/**",
+        "ios/build/**",
+        "coverage/**"
+      ]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*",
+        "vitest.config.*",
+        "jest.config.*",
+        "test/**",
+        "**/*.test.*",
+        "**/*.spec.*",
+        "package.json"
+      ],
+      "outputs": []
+    },
+    "coverage": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*",
+        "vitest.config.*",
+        "jest.config.*",
+        "test/**",
+        "**/*.test.*",
+        "**/*.spec.*",
+        "package.json"
+      ],
+      "outputs": ["coverage/**", ".vitest/**"]
+    },
+    "test:watch": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".eslintrc*",
+        ".eslintignore",
+        "eslint.config.*",
+        "tsconfig*.json",
+        "package.json"
+      ],
+      "outputs": []
+    },
+    "lint:fix": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".eslintrc*",
+        ".eslintignore",
+        "eslint.config.*",
+        "tsconfig*.json",
+        "package.json"
+      ],
+      "outputs": []
+    },
+    "fmt": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".prettierrc*",
+        ".prettierignore",
+        "prettier.config.*",
+        "package.json"
+      ],
+      "outputs": []
+    },
+    "fmt:check": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".prettierrc*",
+        ".prettierignore",
+        "prettier.config.*",
+        "package.json"
+      ],
+      "outputs": []
+    },
+    "typecheck": {
+      "inputs": ["$TURBO_DEFAULT$", "tsconfig*.json", "package.json"],
+      "outputs": []
+    },
+    "clean": {
+      "cache": false,
+      "outputs": []
+    },
+    "dev": {
+      "persistent": true,
+      "cache": false,
+      "outputs": []
+    },
+    "lint:eslint": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".eslintrc*",
+        ".eslintignore",
+        "eslint.config.*",
+        "tsconfig*.json",
+        "package.json"
+      ],
+      "outputs": []
+    },
+    "typecheck:tsc": {
+      "inputs": ["$TURBO_DEFAULT$", "tsconfig*.json", "package.json"],
+      "outputs": []
+    },
+    "test:vitest": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*",
+        "vitest.config.*",
+        "test/**",
+        "**/*.test.*",
+        "**/*.spec.*",
+        "package.json"
+      ],
+      "outputs": []
+    },
+    "coverage:vitest": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*",
+        "vitest.config.*",
+        "test/**",
+        "**/*.test.*",
+        "**/*.spec.*",
+        "package.json"
+      ],
+      "outputs": ["coverage/**", ".vitest/**"]
+    },
+    "fmt:prettier": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".prettierrc*",
+        ".prettierignore",
+        "prettier.config.*",
+        "package.json"
+      ],
+      "outputs": []
+    },
+    "fmt:check:prettier": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".prettierrc*",
+        ".prettierignore",
+        "prettier.config.*",
+        "package.json"
+      ],
+      "outputs": []
+    },
+    "test:mutation": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*",
+        "stryker.config.*",
+        "vitest.config.*",
+        "src/**",
+        "**/*.test.*",
+        "**/*.spec.*",
+        "package.json"
+      ],
+      "outputs": [
+        "reports/mutation/**",
+        "reports/stryker-incremental.json",
+        "stryker-tmp/**"
+      ]
+    }
+  },
+  "globalDependencies": [
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json",
+    "tsconfig.options.json",
+    ".env*",
+    ".eslintrc*",
+    ".eslintignore",
+    "eslint.config.*",
+    ".prettierrc*",
+    ".prettierignore",
+    "prettier.config.*",
+    "playwright.config.*"
+  ]
+}

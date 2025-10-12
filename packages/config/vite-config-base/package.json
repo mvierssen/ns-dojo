@@ -1,0 +1,32 @@
+{
+  "name": "@ns-white-crane-white-belt/vite-config-base",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./dist/src/index.d.ts",
+      "node": "./dist/src/index.js",
+      "default": "./dist/src/index.js"
+    },
+    "./*": {
+      "import": "./src/*.ts",
+      "types": "./dist/src/*.d.ts",
+      "node": "./dist/src/*.js",
+      "default": "./dist/src/*.js"
+    }
+  },
+  "dependencies": {
+    "vite-tsconfig-paths": "5.1.4",
+    "@tailwindcss/vite": "4.1.14"
+  },
+  "devDependencies": {
+    "@ns-white-crane-white-belt/ts-config-build": "^0.1.0",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  }
+}

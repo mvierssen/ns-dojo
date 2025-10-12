@@ -1,0 +1,6 @@
+{
+  "extends": "@ns-white-crane-white-belt/ts-config-base",
+  "compilerOptions": {
+    "emitDeclarationOnly": false
+  }
+}

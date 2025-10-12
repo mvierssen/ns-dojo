@@ -1,0 +1,18 @@
+{
+  "extends": "@ns-white-crane-white-belt/ts-config-build",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@ns-white-crane-white-belt/vitest-config-base/*": ["../vitest-config-base/src/*"]
+    }
+  },
+  "references": [
+    {
+      "path": "../vitest-config-base"
+    }
+  ],
+  "include": ["src"],
+  "exclude": ["dist"]
+}

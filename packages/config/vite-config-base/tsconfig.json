@@ -1,0 +1,10 @@
+{
+  "extends": "@ns-white-crane-white-belt/ts-config-build",
+  "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": ".",
+    "rootDir": "."
+  },
+  "include": ["src"],
+  "exclude": ["dist"]
+}

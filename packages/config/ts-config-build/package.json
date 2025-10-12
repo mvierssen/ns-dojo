@@ -1,0 +1,15 @@
+{
+  "name": "@ns-white-crane-white-belt/ts-config-build",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.json",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./src/index.json",
+    "./tsconfig.json": "./src/index.json"
+  },
+  "dependencies": {
+    "@ns-white-crane-white-belt/ts-config-base": "^0.1.0"
+  }
+}

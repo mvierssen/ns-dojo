@@ -1,0 +1,29 @@
+import tsconfigPaths from "vite-tsconfig-paths";
+import {defineConfig} from "vitest/config";
+
+export default defineConfig({
+  test: {
+    includeSource: ["src/**/*.{ts,tsx,js,jsx}"],
+    coverage: {
+      provider: "istanbul",
+      include: ["src/**"],
+      exclude: ["src/**/*.test.*", "src/**/*.spec.*", "**/*.d.ts"],
+      reporter: ["text", "html", "lcov"],
+    },
+    passWithNoTests: true,
+    fakeTimers: {
+      toFake: [
+        "setTimeout",
+        "clearTimeout",
+        "setInterval",
+        "clearInterval",
+        "performance",
+        "Date",
+      ],
+    },
+  },
+  plugins: [tsconfigPaths({projects: ["./tsconfig.json"]})],
+  resolve: {
+    conditions: ["@ns-white-crane-white-belt/source"],
+  },
+});
