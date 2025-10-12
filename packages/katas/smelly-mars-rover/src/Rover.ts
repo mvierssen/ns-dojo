@@ -1,51 +1,89 @@
 import { RoverState } from "./RoverState.js";
 
 export class Rover {
-  constructor(p: string = "") {
+  constructor(p = "") {
     const s = p.split(" ");
     if (s.length >= 3) {
-      this.rs.xx = parseInt(s[0], 10);
-      this.rs.yy = parseInt(s[1], 10);
+      this.rs.xx = Number.parseInt(s[0], 10);
+      this.rs.yy = Number.parseInt(s[1], 10);
       this.rs.dd = s[2][0];
     }
   }
 
   public go(cms: string): void {
-    for (let i = 0; i < cms.length; i++) {
-      const c = cms[i];
-      if (c === "L") {
-        if (this.rs.dd === "E") {
-          this.rs.dd = "N";
-        } else if (this.rs.dd === "N") {
-          this.rs.dd = "W";
-        } else if (this.rs.dd === "W") {
-          this.rs.dd = "S";
-        } else if (this.rs.dd === "S") {
-          this.rs.dd = "E";
+    for (const c of cms) {
+      switch (c) {
+        case "L": {
+          switch (this.rs.dd) {
+            case "E": {
+              this.rs.dd = "N";
+
+              break;
+            }
+            case "N": {
+              this.rs.dd = "W";
+
+              break;
+            }
+            case "W": {
+              this.rs.dd = "S";
+
+              break;
+            }
+            case "S": {
+              this.rs.dd = "E";
+
+              break;
+            }
+            // No default
+          }
+
+          break;
         }
-      } else if (c === "R") {
-        if (this.rs.dd === "E") {
-          this.rs.dd = "S";
-        } else if (this.rs.dd === "S") {
-          this.rs.dd = "W";
-        } else if (this.rs.dd === "W") {
-          this.rs.dd = "N";
-        } else if (this.rs.dd === "N") {
-          this.rs.dd = "E";
+        case "R": {
+          switch (this.rs.dd) {
+            case "E": {
+              this.rs.dd = "S";
+
+              break;
+            }
+            case "S": {
+              this.rs.dd = "W";
+
+              break;
+            }
+            case "W": {
+              this.rs.dd = "N";
+
+              break;
+            }
+            case "N": {
+              this.rs.dd = "E";
+
+              break;
+            }
+            // No default
+          }
+
+          break;
         }
-      } else if (c === "M") {
-        if (this.rs.dd === "E") {
-          this.rs.xx++;
+        case "M": {
+          if (this.rs.dd === "E") {
+            this.rs.xx++;
+          }
+          if (this.rs.dd === "S") {
+            this.rs.yy--;
+          }
+          if (this.rs.dd === "W") {
+            this.rs.xx--;
+          }
+          if (this.rs.dd === "N") {
+            this.rs.yy++;
+          }
+
+          break;
         }
-        if (this.rs.dd === "S") {
-          this.rs.yy--;
-        }
-        if (this.rs.dd === "W") {
-          this.rs.xx--;
-        }
-        if (this.rs.dd === "N") {
-          this.rs.yy++;
-        }
+        // No default
       }
     }
   }

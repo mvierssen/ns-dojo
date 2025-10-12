@@ -1,4 +1,4 @@
-import { Rover } from "../src/Rover.js";
+import { Rover } from "./Rover.js";
 import { describe, expect, test } from "vitest";
 
 describe("MarsRoverShould", () => {
@@ -24,6 +24,6 @@ describe("MarsRoverShould", () => {
       const rover = new Rover(startingPosition);
       rover.go(instructions);
       expect(rover.pos()).toBe(expectedOutput);
-    },
+    }
   );
 });
