@@ -1,5 +1,5 @@
 import { RoverState } from "./RoverState.js";
-import { CommandSchema } from "./schemas.js";
+import { CommandSchema, HeadingSchema } from "./schemas.js";
 
 export class Rover {
   // Code Smell: Primitive Obsession "p"
@@ -18,7 +18,8 @@ export class Rover {
       this.rs.xx = Number.parseInt(s[0], 10);
       // Code Smell: Poor Naming "yy", Primitive Obsession, Feature Envy
       this.rs.yy = Number.parseInt(s[1], 10);
-      this.rs.dd = s[2][0];
+      const safeHeading = HeadingSchema.parse(s[2][0]);
+      this.rs.dd = safeHeading;
     }
   }
 
@@ -26,28 +27,25 @@ export class Rover {
   public go(commands: string): void {
     const safeCommands = commands.split("").map((c) => CommandSchema.parse(c));
     for (const c of safeCommands) {
+      const heading = this.rs.dd;
       switch (c) {
-        // Code Smell: Magic Strings ("E", "N", "W", "S"), Feature Envy
+        // Code Smell: Feature Envy
         case CommandSchema.enum.L: {
-          switch (this.rs.dd) {
-            case "E": {
-              this.rs.dd = "N";
-
+          switch (heading) {
+            case HeadingSchema.enum.E: {
+              this.rs.dd = HeadingSchema.enum.N;
               break;
             }
-            case "N": {
-              this.rs.dd = "W";
-
+            case HeadingSchema.enum.N: {
+              this.rs.dd = HeadingSchema.enum.W;
               break;
             }
-            case "W": {
-              this.rs.dd = "S";
-
+            case HeadingSchema.enum.W: {
+              this.rs.dd = HeadingSchema.enum.S;
               break;
             }
-            case "S": {
-              this.rs.dd = "E";
-
+            case HeadingSchema.enum.S: {
+              this.rs.dd = HeadingSchema.enum.E;
               break;
             }
             // No default
@@ -56,25 +54,21 @@ export class Rover {
           break;
         }
         case CommandSchema.enum.R: {
-          switch (this.rs.dd) {
-            case "E": {
-              this.rs.dd = "S";
-
+          switch (heading) {
+            case HeadingSchema.enum.E: {
+              this.rs.dd = HeadingSchema.enum.S;
               break;
             }
-            case "S": {
-              this.rs.dd = "W";
-
+            case HeadingSchema.enum.S: {
+              this.rs.dd = HeadingSchema.enum.W;
               break;
             }
-            case "W": {
-              this.rs.dd = "N";
-
+            case HeadingSchema.enum.W: {
+              this.rs.dd = HeadingSchema.enum.N;
               break;
             }
-            case "N": {
-              this.rs.dd = "E";
-
+            case HeadingSchema.enum.N: {
+              this.rs.dd = HeadingSchema.enum.E;
               break;
             }
             // No default
@@ -83,19 +77,18 @@ export class Rover {
           break;
         }
         case CommandSchema.enum.M: {
-          if (this.rs.dd === "E") {
+          if (heading === HeadingSchema.enum.E) {
             this.rs.xx++;
           }
-          if (this.rs.dd === "S") {
+          if (heading === HeadingSchema.enum.S) {
             this.rs.yy--;
           }
-          if (this.rs.dd === "W") {
+          if (heading === HeadingSchema.enum.W) {
             this.rs.xx--;
           }
-          if (this.rs.dd === "N") {
+          if (heading === HeadingSchema.enum.N) {
             this.rs.yy++;
           }
-
           break;
         }
         // No default
