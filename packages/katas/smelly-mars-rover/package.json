@@ -1,6 +1,10 @@
 {
   "name": "@ns-white-crane-white-belt/smelly-mars-rover",
   "version": "0.1.0",
+  "dependencies": {
+    "@ns-white-crane-white-belt/shared-core": "^0.1.0",
+    "@ns-white-crane-white-belt/shared-zod": "^0.1.0"
+  },
   "devDependencies": {
     "@ns-white-crane-white-belt/ts-config-lib-compiled": "^0.1.0",
     "typescript": "5.9.3"

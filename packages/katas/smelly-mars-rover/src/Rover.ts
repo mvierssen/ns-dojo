@@ -1,4 +1,5 @@
 import { RoverState } from "./RoverState.js";
+import { CommandSchema } from "./schemas.js";
 
 export class Rover {
   // Code Smell: Primitive Obsession "p"
@@ -21,12 +22,13 @@ export class Rover {
     }
   }
 
-  // Code Smell: Long Function, Primitive Obsession "cms", Poor Naming "cms"
-  public go(cms: string): void {
-    for (const c of cms) {
+  // Code Smell: Long Function, Primitive Obsession "cms" (= public interface)
+  public go(commands: string): void {
+    const safeCommands = commands.split("").map((c) => CommandSchema.parse(c));
+    for (const c of safeCommands) {
       switch (c) {
-        // Code Smell: Magic Strings ("L", "R", "M", "E", "N", "W", "S"), Feature Envy
-        case "L": {
+        // Code Smell: Magic Strings ("E", "N", "W", "S"), Feature Envy
+        case CommandSchema.enum.L: {
           switch (this.rs.dd) {
             case "E": {
               this.rs.dd = "N";
@@ -53,7 +55,7 @@ export class Rover {
 
           break;
         }
-        case "R": {
+        case CommandSchema.enum.R: {
           switch (this.rs.dd) {
             case "E": {
               this.rs.dd = "S";
@@ -80,7 +82,7 @@ export class Rover {
 
           break;
         }
-        case "M": {
+        case CommandSchema.enum.M: {
           if (this.rs.dd === "E") {
             this.rs.xx++;
           }
@@ -102,11 +104,9 @@ export class Rover {
   }
 
   // Code Smell: Primitive Obsession
-  public G(z: string): void {
-    if (typeof z[0] !== "string") {
-      throw new TypeError("Invalid direction");
-    }
-    this.go(z[0]);
+  public G(command: string): void {
+    const safeCommand = CommandSchema.parse(command);
+    this.go(safeCommand);
   }
 
   // Code Smell: Poor Naming "XYD", Primitive Obsession, Feature Envy
