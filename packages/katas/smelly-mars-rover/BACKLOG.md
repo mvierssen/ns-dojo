@@ -26,3 +26,8 @@
 ## Version 4 -> 5 (Functional refactor)
 
 - Functional / immutable parallel change of Rover functionality.
+
+## Version 5 -> 6 (Partial expand)
+
+- Expand new functional implementation into legacy.
+- Removed legacy rover state class.
