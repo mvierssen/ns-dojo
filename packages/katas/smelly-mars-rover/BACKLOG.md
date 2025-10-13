@@ -1,7 +1,6 @@
 # TODO
 
 - Barrel export
-- Add mutation testing
 - Create frontend (with AI)
 - Expand new implementation, remove legacy (which is now a facade)
 - Trying to achieve 100% code coverage revealed that the contract for the public legacy method G was broken. Find out if G should be removed.
@@ -50,3 +49,7 @@
 
 - Achieve 100% code coverage with tests
 - Add test to cover G, which was previously not covered
+
+## Version 9 -> 10 (Mutation testing)
+
+- Add Stryker mutation testing
