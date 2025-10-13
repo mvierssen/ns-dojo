@@ -2,7 +2,7 @@
   "name": "@ns-white-crane-white-belt/template-vite",
   "version": "0.1.0",
   "devDependencies": {
-    "@ns-white-crane-white-belt/vite-config-base": "^0.1.0",
+    "@ns-white-crane-white-belt/ts-config-vite": "^0.1.0",
     "@ns-white-crane-white-belt/ts-config-node": "^0.1.0",
     "typescript": "5.9.3"
   },

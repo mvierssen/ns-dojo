@@ -2,8 +2,8 @@
   "name": "@ns-white-crane-white-belt/smelly-mars-rover-frontend",
   "version": "0.1.0",
   "devDependencies": {
+    "@ns-white-crane-white-belt/ts-config-vite": "^0.1.0",
     "@ns-white-crane-white-belt/vite-config-base": "^0.1.0",
-    "@ns-white-crane-white-belt/ts-config-node": "^0.1.0",
     "typescript": "5.9.3"
   },
   "exports": {
@@ -49,5 +49,9 @@
     "typecheck": "npm run typecheck:tsc",
     "typecheck:tsc": "tsc --noemit"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "three": "^0.180.0",
+    "zod": "^4.1.12"
+  }
 }
