@@ -4,16 +4,20 @@ import {
 } from "@ns-white-crane-white-belt/smelly-mars-rover";
 import * as THREE from "three";
 import {
-  createRover,
+  createScript,
   createTransform,
   MESH_COMPONENT,
-  ROVER_COMPONENT,
+  SCRIPT_COMPONENT,
   TRANSFORM_COMPONENT,
   type Transform,
 } from "../components/index.js";
 import {addComponent} from "../ecs/component.js";
 import {createEntity, type EntityId} from "../ecs/entity.js";
 import {addEntity, type World} from "../ecs/world.js";
+import {
+  createRoverAnimationScript,
+  type RoverAnimationScript,
+} from "../scripts/rover-animation.js";
 import type {RenderContext} from "../systems/index.js";
 
 /**
@@ -24,6 +28,14 @@ export interface CreateRoverOptions {
   initialState: RoverState;
   color?: number;
   size?: number;
+}
+
+/**
+ * Result of creating a rover entity
+ */
+export interface CreateRoverResult {
+  entityId: EntityId;
+  script: RoverAnimationScript;
 }
 
 /**
@@ -38,14 +50,14 @@ const DIRECTION_TO_ROTATION: Record<string, number> = {
 };
 
 /**
- * Creates a rover entity with mesh, transform, and rover components
+ * Creates a rover entity with mesh, transform, and rover animation script
  * Maps 2D rover position (x, y) to 3D world position (x, 0, z)
  */
 export function createRoverEntity(
   world: World,
   renderCtx: RenderContext,
   options: CreateRoverOptions,
-): EntityId {
+): CreateRoverResult {
   const entityId = createEntity();
   addEntity(world, entityId);
 
@@ -116,9 +128,14 @@ export function createRoverEntity(
   });
   addComponent(world, entityId, TRANSFORM_COMPONENT, transform);
 
-  // Add Rover component
-  const rover = createRover(id, initialState, color);
-  addComponent(world, entityId, ROVER_COMPONENT, rover);
+  // Create and add Rover Animation Script
+  const roverScript: RoverAnimationScript = createRoverAnimationScript({
+    id,
+    initialState,
+    color,
+  });
+  const scriptComponent = createScript(roverScript.scriptFn);
+  addComponent(world, entityId, SCRIPT_COMPONENT, scriptComponent);
 
   console.log(
     `  → Rover entity created successfully! EntityId: ${String(entityId)}`,
@@ -127,5 +144,5 @@ export function createRoverEntity(
     `  → Scene objects count: ${String(renderCtx.scene.children.length)}`,
   );
 
-  return entityId;
+  return {entityId, script: roverScript};
 }

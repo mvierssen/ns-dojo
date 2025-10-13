@@ -11,6 +11,3 @@ export {
   handleResize,
   type RenderContext,
 } from "./render-system.js";
-
-// Rover Animation System
-export {roverAnimationSystem} from "./rover-animation-system.js";

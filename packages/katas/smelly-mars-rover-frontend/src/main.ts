@@ -4,12 +4,7 @@ import {
   parseStart,
 } from "@ns-white-crane-white-belt/smelly-mars-rover";
 import * as THREE from "three";
-import {
-  MESH_COMPONENT,
-  ROVER_COMPONENT,
-  type Mesh,
-  type Rover,
-} from "./components/index.js";
+import {MESH_COMPONENT, type Mesh} from "./components/index.js";
 import {getComponent} from "./ecs/component.js";
 import type {EntityId} from "./ecs/entity.js";
 import {createWorld} from "./ecs/index.js";
@@ -18,11 +13,11 @@ import {createCamera} from "./entities/create-camera.js";
 import {createLight} from "./entities/create-light.js";
 import {createRoverEntity} from "./entities/create-rover.js";
 import {createCameraOrbitScript} from "./scripts/index.js";
+import type {RoverAnimationScript} from "./scripts/rover-animation.js";
 import {
   createRenderContext,
   handleResize,
   renderSystem,
-  roverAnimationSystem,
   scriptSystem,
   transformSystem,
   type RenderContext,
@@ -58,19 +53,22 @@ function main(): void {
   // Create UI manager
   const uiManager = new UIManager();
 
+  // Rover script registry (maps entityId to script)
+  const roverScripts = new Map<EntityId, RoverAnimationScript>();
+
   // Create entities
   setupScene(world, renderCtx);
 
   // Wire up UI controls
-  setupUIControls(world, renderCtx, uiManager);
+  setupUIControls(world, renderCtx, uiManager, roverScripts);
 
   // Set up remove callback
   uiManager.setOnRemoveCallback((_roverId, entityId) => {
-    handleRemoveRover(world, renderCtx, entityId);
+    handleRemoveRover(world, renderCtx, entityId, roverScripts);
   });
 
   // Add some initial rovers for demonstration
-  addInitialRovers(world, renderCtx, uiManager);
+  addInitialRovers(world, renderCtx, uiManager, roverScripts);
 
   console.log(
     "Mars Rover Simulator initialized with",
@@ -92,7 +90,6 @@ function main(): void {
 
     // Run systems in order
     scriptSystem(world, deltaTime);
-    roverAnimationSystem(world, deltaTime);
     transformSystem(world, deltaTime);
     renderSystem(world, deltaTime, renderCtx);
 
@@ -109,6 +106,7 @@ function addInitialRovers(
   world: ReturnType<typeof createWorld>,
   renderCtx: RenderContext,
   uiManager: UIManager,
+  roverScripts: Map<EntityId, RoverAnimationScript>,
 ): void {
   console.log("Adding initial rover to scene...");
 
@@ -125,12 +123,13 @@ function addInitialRovers(
       `Creating initial rover ${String(index)}: position (${String(pos.x)}, ${String(pos.y)}), direction ${pos.direction}, color 0x${color?.toString(16) ?? "unknown"}`,
     );
 
-    const entityId = createRoverEntity(world, renderCtx, {
+    const {entityId, script} = createRoverEntity(world, renderCtx, {
       id,
       initialState,
       color,
     });
 
+    roverScripts.set(entityId, script);
     uiManager.addRover(id, entityId, color ?? 0x44_88_ff, initialState);
   }
 
@@ -187,12 +186,13 @@ function setupUIControls(
   world: ReturnType<typeof createWorld>,
   renderCtx: RenderContext,
   uiManager: UIManager,
+  roverScripts: Map<EntityId, RoverAnimationScript>,
 ): void {
   // Add Rover button
   const addRoverBtn = document.querySelector("#btn-add-rover");
   if (addRoverBtn) {
     addRoverBtn.addEventListener("click", () => {
-      handleAddRover(world, renderCtx, uiManager);
+      handleAddRover(world, renderCtx, uiManager, roverScripts);
     });
   }
 
@@ -200,7 +200,7 @@ function setupUIControls(
   const executeAllBtn = document.querySelector("#btn-execute");
   if (executeAllBtn) {
     executeAllBtn.addEventListener("click", () => {
-      handleExecuteAll(world, uiManager);
+      handleExecuteAll(uiManager, roverScripts);
     });
   }
 
@@ -208,7 +208,7 @@ function setupUIControls(
   const resetAllBtn = document.querySelector("#btn-reset");
   if (resetAllBtn) {
     resetAllBtn.addEventListener("click", () => {
-      handleResetAll(world, renderCtx, uiManager);
+      handleResetAll(world, renderCtx, uiManager, roverScripts);
     });
   }
 }
@@ -220,6 +220,7 @@ function handleAddRover(
   world: ReturnType<typeof createWorld>,
   renderCtx: RenderContext,
   uiManager: UIManager,
+  roverScripts: Map<EntityId, RoverAnimationScript>,
 ): void {
   // Generate random initial position and direction (only positive coordinates)
   const x = Math.floor(Math.random() * 10); // 0 to 9
@@ -251,13 +252,14 @@ function handleAddRover(
   );
 
   // Create rover entity
-  const entityId = createRoverEntity(world, renderCtx, {
+  const {entityId, script} = createRoverEntity(world, renderCtx, {
     id,
     initialState,
     color,
   });
 
-  // Add to UI
+  // Add to registry and UI
+  roverScripts.set(entityId, script);
   uiManager.addRover(id, entityId, color ?? 0x44_88_ff, initialState);
 }
 
@@ -268,6 +270,7 @@ function handleRemoveRover(
   world: ReturnType<typeof createWorld>,
   renderCtx: RenderContext,
   entityId: EntityId,
+  roverScripts: Map<EntityId, RoverAnimationScript>,
 ): void {
   // Remove mesh from scene
   const meshComponent = getComponent(world, entityId, MESH_COMPONENT) as
@@ -277,6 +280,9 @@ function handleRemoveRover(
     renderCtx.scene.remove(meshComponent.object3D);
   }
 
+  // Remove from script registry
+  roverScripts.delete(entityId);
+
   // Remove entity from world
   removeEntity(world, entityId);
 }
@@ -285,8 +291,8 @@ function handleRemoveRover(
  * Handles executing all rover commands
  */
 function handleExecuteAll(
-  world: ReturnType<typeof createWorld>,
   uiManager: UIManager,
+  roverScripts: Map<EntityId, RoverAnimationScript>,
 ): void {
   const commands = uiManager.getAllCommands();
 
@@ -294,21 +300,11 @@ function handleExecuteAll(
     const entityId = uiManager.getEntityId(roverId);
     if (!entityId) continue;
 
-    const rover = getComponent(world, entityId, ROVER_COMPONENT) as
-      | Rover
-      | undefined;
-    if (!rover) continue;
+    const script = roverScripts.get(entityId);
+    if (!script) continue;
 
-    // Set command queue and reset index
-    rover.commandQueue = commandString.split("");
-    rover.currentCommandIndex = 0;
-
-    // Reset animation state
-    if (rover.animationState) {
-      rover.animationState.isAnimating = false;
-      rover.animationState.progress = 0;
-      rover.animationState.type = "idle";
-    }
+    // Set commands using script method
+    script.setCommands(commandString);
   }
 }
 
@@ -319,13 +315,14 @@ function handleResetAll(
   world: ReturnType<typeof createWorld>,
   renderCtx: RenderContext,
   uiManager: UIManager,
+  roverScripts: Map<EntityId, RoverAnimationScript>,
 ): void {
   // Remove all rover entities from world
   const roverIds = uiManager.getAllRoverIds();
   for (const roverId of roverIds) {
     const entityId = uiManager.getEntityId(roverId);
     if (entityId) {
-      handleRemoveRover(world, renderCtx, entityId);
+      handleRemoveRover(world, renderCtx, entityId, roverScripts);
     }
   }
 
