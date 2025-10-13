@@ -1,6 +1,7 @@
 # TODO
 
 - Barrel export
+- Make code more declarative
 - Expand new implementation, remove legacy (which is now a facade)
 
 # DONE
