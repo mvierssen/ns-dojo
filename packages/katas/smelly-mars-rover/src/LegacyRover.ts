@@ -1,6 +1,5 @@
 import { parseStart, run, render } from "./rover.js";
 import type {
-  Command,
   InstructionString,
   PositionDirectionString,
   RoverState,
@@ -13,12 +12,12 @@ export class LegacyRover {
     this.rs = parseStart(startPositionString);
   }
 
-  public go(commands: InstructionString): void {
-    this.rs = run(this.rs, commands);
+  public go(instructionString: InstructionString): void {
+    this.rs = run(this.rs, instructionString);
   }
 
-  public G(command: Command): void {
-    this.go(command);
+  public G(singleInstructionString: string): void {
+    this.go(singleInstructionString);
   }
 
   public get XYD(): PositionDirectionString {
