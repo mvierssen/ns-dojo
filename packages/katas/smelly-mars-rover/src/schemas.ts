@@ -32,3 +32,13 @@ export const StartPositionStringWithTransformSchema =
     const direction = HeadingSchema.parse(parts[2]);
     return { x, y, direction };
   });
+
+export const InstructionStringWithTransformSchema =
+  InstructionStringSchema.transform(
+    (str) => str.split("") as z.infer<typeof CommandSchema>[]
+  );
+
+export const Vector2DSchema = z.object({
+  x: z.number().int(),
+  y: z.number().int(),
+});
