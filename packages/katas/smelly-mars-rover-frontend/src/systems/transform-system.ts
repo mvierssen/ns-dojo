@@ -1,4 +1,3 @@
-import type * as THREE from "three";
 import {
   CAMERA_COMPONENT,
   MESH_COMPONENT,
@@ -10,34 +9,7 @@ import {
 import {getComponent} from "../ecs/component.js";
 import {queryEntities} from "../ecs/query.js";
 import type {World} from "../ecs/world.js";
-
-/**
- * Syncs a Transform component to a Three.js Object3D
- */
-function syncTransformToObject3D(
-  transform: Transform,
-  object3D: THREE.Object3D,
-  syncRotation = true,
-): void {
-  // Sync position
-  object3D.position.set(
-    transform.position.x,
-    transform.position.y,
-    transform.position.z,
-  );
-
-  // Sync rotation (Euler angles) - optional for cameras using lookAt
-  if (syncRotation) {
-    object3D.rotation.set(
-      transform.rotation.x,
-      transform.rotation.y,
-      transform.rotation.z,
-    );
-  }
-
-  // Sync scale
-  object3D.scale.set(transform.scale.x, transform.scale.y, transform.scale.z);
-}
+import {syncTransformToObject3D} from "../utils/index.js";
 
 /**
  * Transform System - syncs Transform components to Three.js Object3D transforms

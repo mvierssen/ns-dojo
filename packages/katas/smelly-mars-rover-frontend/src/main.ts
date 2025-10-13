@@ -4,14 +4,17 @@ import {
   parseStart,
 } from "@ns-white-crane-white-belt/smelly-mars-rover";
 import * as THREE from "three";
-import {MESH_COMPONENT, type Mesh} from "./components/index.js";
-import {getComponent} from "./ecs/component.js";
 import type {EntityId} from "./ecs/entity.js";
 import {createWorld} from "./ecs/index.js";
-import {removeEntity} from "./ecs/world.js";
 import {createCamera} from "./entities/create-camera.js";
 import {createLight} from "./entities/create-light.js";
 import {createRoverEntity} from "./entities/create-rover.js";
+import {
+  handleAddRover,
+  handleExecuteAll,
+  handleRemoveRover,
+  handleResetAll,
+} from "./handlers/index.js";
 import {createCameraOrbitScript} from "./scripts/index.js";
 import type {RoverAnimationScript} from "./scripts/rover-animation.js";
 import {
@@ -23,17 +26,7 @@ import {
   type RenderContext,
 } from "./systems/index.js";
 import {UIManager} from "./ui-manager.js";
-
-/**
- * Predefined rover colors matching the original cube colors
- */
-const ROVER_COLORS = [
-  0x44_88_ff, // Blue
-  0xff_44_88, // Red/Pink
-  0x44_ff_88, // Green
-  0xff_aa_44, // Orange
-  0xaa_44_ff, // Purple
-];
+import {ROVER_COLORS} from "./utils/index.js";
 
 /**
  * Main application entry point
@@ -211,123 +204,6 @@ function setupUIControls(
       handleResetAll(world, renderCtx, uiManager, roverScripts);
     });
   }
-}
-
-/**
- * Handles adding a new rover
- */
-function handleAddRover(
-  world: ReturnType<typeof createWorld>,
-  renderCtx: RenderContext,
-  uiManager: UIManager,
-  roverScripts: Map<EntityId, RoverAnimationScript>,
-): void {
-  // Generate random initial position and direction (only positive coordinates)
-  const x = Math.floor(Math.random() * 10); // 0 to 9
-  const y = Math.floor(Math.random() * 10); // 0 to 9
-  const directions = [
-    DirectionEnum.North,
-    DirectionEnum.East,
-    DirectionEnum.South,
-    DirectionEnum.West,
-  ];
-  const direction =
-    directions[Math.floor(Math.random() * directions.length)] ??
-    DirectionEnum.North;
-
-  // Create rover state
-  const positionDirectionString =
-    `${String(x)} ${String(y)} ${direction}` as const;
-  const initialState = parseStart(positionDirectionString);
-
-  // Choose color (cycle through predefined colors)
-  const roverCount = uiManager.getAllRoverIds().length;
-  const color = ROVER_COLORS[roverCount % ROVER_COLORS.length];
-
-  // Generate unique ID
-  const id = `rover-${String(Date.now())}-${Math.random().toString(36).slice(2, 9)}`;
-
-  console.log(
-    `Adding rover at position (${String(x)}, ${String(y)}) facing ${direction}`,
-  );
-
-  // Create rover entity
-  const {entityId, script} = createRoverEntity(world, renderCtx, {
-    id,
-    initialState,
-    color,
-  });
-
-  // Add to registry and UI
-  roverScripts.set(entityId, script);
-  uiManager.addRover(id, entityId, color ?? 0x44_88_ff, initialState);
-}
-
-/**
- * Handles removing a single rover
- */
-function handleRemoveRover(
-  world: ReturnType<typeof createWorld>,
-  renderCtx: RenderContext,
-  entityId: EntityId,
-  roverScripts: Map<EntityId, RoverAnimationScript>,
-): void {
-  // Remove mesh from scene
-  const meshComponent = getComponent(world, entityId, MESH_COMPONENT) as
-    | Mesh
-    | undefined;
-  if (meshComponent) {
-    renderCtx.scene.remove(meshComponent.object3D);
-  }
-
-  // Remove from script registry
-  roverScripts.delete(entityId);
-
-  // Remove entity from world
-  removeEntity(world, entityId);
-}
-
-/**
- * Handles executing all rover commands
- */
-function handleExecuteAll(
-  uiManager: UIManager,
-  roverScripts: Map<EntityId, RoverAnimationScript>,
-): void {
-  const commands = uiManager.getAllCommands();
-
-  for (const [roverId, commandString] of commands.entries()) {
-    const entityId = uiManager.getEntityId(roverId);
-    if (!entityId) continue;
-
-    const script = roverScripts.get(entityId);
-    if (!script) continue;
-
-    // Set commands using script method
-    script.setCommands(commandString);
-  }
-}
-
-/**
- * Handles resetting all rovers
- */
-function handleResetAll(
-  world: ReturnType<typeof createWorld>,
-  renderCtx: RenderContext,
-  uiManager: UIManager,
-  roverScripts: Map<EntityId, RoverAnimationScript>,
-): void {
-  // Remove all rover entities from world
-  const roverIds = uiManager.getAllRoverIds();
-  for (const roverId of roverIds) {
-    const entityId = uiManager.getEntityId(roverId);
-    if (entityId) {
-      handleRemoveRover(world, renderCtx, entityId, roverScripts);
-    }
-  }
-
-  // Clear UI
-  uiManager.clearAll();
 }
 
 // Start the application
