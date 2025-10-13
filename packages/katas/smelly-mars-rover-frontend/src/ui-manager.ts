@@ -1,5 +1,6 @@
 import type {RoverState} from "@ns-white-crane-white-belt/smelly-mars-rover";
 import type {EntityId} from "./ecs/entity.js";
+import {createRoverUIElement} from "./factories/index.js";
 
 /**
  * Rover UI state
@@ -47,53 +48,18 @@ export class UIManager {
   ): void {
     if (this.rovers.has(id)) return;
 
-    // Create rover UI element
-    const roverElement = document.createElement("div");
-    roverElement.className = "rover-item";
-    roverElement.dataset.roverId = id;
-
-    // Color indicator
-    const colorHex = `#${color.toString(16).padStart(6, "0")}`;
-    const colorIndicator = document.createElement("div");
-    colorIndicator.className = "rover-color";
-    colorIndicator.style.backgroundColor = colorHex;
-
-    // Rover info
-    const roverInfo = document.createElement("div");
-    roverInfo.className = "rover-info";
-
-    const roverName = document.createElement("h3");
-    roverName.textContent = `Rover ${String(this.nextRoverNumber++)}`;
-
-    const roverPosition = document.createElement("p");
-    roverPosition.className = "rover-position";
-    roverPosition.textContent = `Position: ${String(initialState.position.x)}, ${String(initialState.position.y)} ${initialState.direction}`;
-
-    roverInfo.append(roverName, roverPosition);
-
-    // Remove button
-    const removeBtn = document.createElement("button");
-    removeBtn.className = "rover-remove-btn";
-    removeBtn.textContent = "×";
-    removeBtn.title = "Remove rover";
-    removeBtn.addEventListener("click", () => {
-      this.removeRover(id);
+    // Create rover UI element using factory
+    const {element: roverElement, commandInput} = createRoverUIElement({
+      roverId: id,
+      roverNumber: this.nextRoverNumber++,
+      color,
+      initialState,
+      onRemove: () => {
+        this.removeRover(id);
+      },
     });
 
-    // Header row (color + info + remove button)
-    const headerRow = document.createElement("div");
-    headerRow.className = "rover-header";
-    headerRow.append(colorIndicator, roverInfo, removeBtn);
-
-    // Command input
-    const commandInput = document.createElement("input");
-    commandInput.type = "text";
-    commandInput.className = "rover-command-input";
-    commandInput.placeholder = "Enter commands (e.g., LMLMLMLMM)";
-    commandInput.maxLength = 100;
-
-    // Assemble rover element
-    roverElement.append(headerRow, commandInput);
+    // Add to DOM
     this.roversList.appendChild(roverElement);
 
     // Store state

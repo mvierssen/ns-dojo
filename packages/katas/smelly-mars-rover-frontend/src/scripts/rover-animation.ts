@@ -1,6 +1,5 @@
 import {
   CommandEnum,
-  DirectionEnum,
   step,
   type RoverState,
 } from "@ns-white-crane-white-belt/smelly-mars-rover";
@@ -10,10 +9,11 @@ import {
   type Mesh,
   type Transform,
 } from "../components/index.js";
+import type {ScriptFn} from "../components/script.js";
 import {getComponent} from "../ecs/component.js";
 import type {EntityId} from "../ecs/entity.js";
 import type {World} from "../ecs/world.js";
-import type {ScriptFn} from "../components/script.js";
+import {DIRECTION_TO_ROTATION, lerp, lerpAngle} from "../utils/index.js";
 
 /**
  * Configuration for rover animation script
@@ -47,55 +47,6 @@ export interface RoverAnimationScript {
   getState: () => RoverState;
   getId: () => string;
   getColor: () => number;
-}
-
-/**
- * Maps rover direction to 3D rotation (in radians, around Y axis)
- */
-const DIRECTION_TO_ROTATION: Record<string, number> = {
-  [DirectionEnum.North]: 0,
-  [DirectionEnum.East]: Math.PI / 2,
-  [DirectionEnum.South]: Math.PI,
-  [DirectionEnum.West]: (3 * Math.PI) / 2,
-};
-
-/**
- * Linearly interpolates between two values
- */
-function lerp(start: number, end: number, t: number): number {
-  return start + (end - start) * t;
-}
-
-/**
- * Normalizes an angle to be within [0, 2π)
- */
-function normalizeAngle(angle: number): number {
-  let normalized = angle % (2 * Math.PI);
-  if (normalized < 0) normalized += 2 * Math.PI;
-  return normalized;
-}
-
-/**
- * Interpolates between two angles taking the shortest path
- * Returns the interpolated angle
- */
-function lerpAngle(from: number, to: number, t: number): number {
-  // Normalize both angles to [0, 2π)
-  const fromNorm = normalizeAngle(from);
-  const toNorm = normalizeAngle(to);
-
-  // Calculate the difference
-  let diff = toNorm - fromNorm;
-
-  // Take the shorter path around the circle
-  if (diff > Math.PI) {
-    diff -= 2 * Math.PI;
-  } else if (diff < -Math.PI) {
-    diff += 2 * Math.PI;
-  }
-
-  // Interpolate using the shortest difference
-  return fromNorm + diff * t;
 }
 
 /**
