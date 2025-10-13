@@ -3,7 +3,6 @@ import {
   TURN_LEFT_TRANSITION_MAP,
   TURN_RIGHT_TRANSITION_MAP,
 } from "./constants.js";
-import { RoverState } from "./RoverState.js";
 import {
   CommandSchema,
   InstructionStringWithTransformSchema,
@@ -13,57 +12,44 @@ import type {
   Command,
   InstructionString,
   PositionDirectionString,
+  Rover,
 } from "./types.js";
 
-export class Rover {
-  constructor(startPositionString: PositionDirectionString) {
-    const parsed =
-      PositionDirectionStringWithTransformSchema.parse(startPositionString);
-    // Code Smell: Feature Envy
-    this.rs.x = parsed.x;
-    // Code Smell: Feature Envy
-    this.rs.y = parsed.y;
-    this.rs.direction = parsed.direction;
-  }
+export const parseStart = (
+  positionDirectionString: PositionDirectionString
+): Rover => {
+  const parsed = PositionDirectionStringWithTransformSchema.parse(
+    positionDirectionString
+  );
+  return {
+    position: { x: parsed.x, y: parsed.y },
+    direction: parsed.direction,
+  };
+};
 
-  public go(commands: InstructionString): void {
-    const safeCommands = InstructionStringWithTransformSchema.parse(commands);
-    for (const c of safeCommands) {
-      const heading = this.rs.direction;
-      switch (c) {
-        // Code Smell: Feature Envy
-        case CommandSchema.enum.L: {
-          this.rs.direction = TURN_LEFT_TRANSITION_MAP[heading];
-          break;
-        }
-        case CommandSchema.enum.R: {
-          this.rs.direction = TURN_RIGHT_TRANSITION_MAP[heading];
-          break;
-        }
-        case CommandSchema.enum.M: {
-          const moveVector = MOVE_VECTOR_MAP[heading];
-          this.rs.x += moveVector.x;
-          this.rs.y += moveVector.y;
-          break;
-        }
-        // No default
-      }
-    }
+export const step = (state: Rover, command: Command): Rover => {
+  const dir = state.direction;
+  if (command === CommandSchema.enum.L)
+    return { ...state, direction: TURN_LEFT_TRANSITION_MAP[dir] };
+  if (command === CommandSchema.enum.R)
+    return { ...state, direction: TURN_RIGHT_TRANSITION_MAP[dir] };
+  if (command === CommandSchema.enum.M) {
+    const move = MOVE_VECTOR_MAP[dir];
+    return {
+      ...state,
+      position: { x: state.position.x + move.x, y: state.position.y + move.y },
+    };
   }
+  return state;
+};
 
-  public G(command: Command): void {
-    const safeCommand = CommandSchema.parse(command);
-    this.go(safeCommand);
-  }
+export const run = (
+  initialState: Rover,
+  commands: InstructionString
+): Rover => {
+  const safe = InstructionStringWithTransformSchema.parse(commands);
+  return [...safe].reduce((s, c) => step(s, c), initialState);
+};
 
-  // Code Smell: Poor Naming "XYD", Feature Envy
-  public get XYD(): PositionDirectionString {
-    return `${String(this.rs.x)} ${String(this.rs.y)} ${this.rs.direction}`;
-  }
-
-  public pos(): PositionDirectionString {
-    return this.XYD;
-  }
-
-  private rs: RoverState = new RoverState();
-}
+export const render = (state: Rover): string =>
+  `${String(state.position.x)} ${String(state.position.y)} ${state.direction}`;

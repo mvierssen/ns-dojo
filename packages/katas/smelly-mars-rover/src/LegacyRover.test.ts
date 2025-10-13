@@ -1,7 +1,7 @@
+import { LegacyRover } from "./LegacyRover.js";
 import { describe, expect, test } from "vitest";
-import { run, render, parseStart } from "./rover.js";
 
-describe("MarsRoverShould", () => {
+describe("LegacyMarsRoverShould", () => {
   test.each([
     ["1 2 N", "", "1 2 N"],
     ["1 2 N", "L", "1 2 W"],
@@ -21,8 +21,9 @@ describe("MarsRoverShould", () => {
   ])(
     "start at '%s', with instructions '%s' => '%s'",
     (startingPosition, instructions, expectedOutput) => {
-      const finalPosition = run(parseStart(startingPosition), instructions);
-      expect(render(finalPosition)).toBe(expectedOutput);
+      const rover = new LegacyRover(startingPosition);
+      rover.go(instructions);
+      expect(rover.pos()).toBe(expectedOutput);
     }
   );
 });
