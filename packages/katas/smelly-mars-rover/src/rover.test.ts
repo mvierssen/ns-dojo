@@ -23,6 +23,6 @@ describe("MarsRoverShould", () => {
     (startingPosition, instructions, expectedOutput) => {
       const finalPosition = run(parseStart(startingPosition), instructions);
       expect(render(finalPosition)).toBe(expectedOutput);
-    }
+    },
   );
 });

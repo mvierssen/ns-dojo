@@ -3,7 +3,6 @@
 - Barrel export
 - Add mutation testing
 - Create frontend (with AI)
-- Make code more declarative
 - Expand new implementation, remove legacy (which is now a facade)
 
 # DONE
@@ -41,3 +40,7 @@
 ## Version 6 -> 7 (Use constants for directions and commands)
 
 - Even though the directions and input characters are now fully typed, use enums or constants for them
+
+## Version 7 -> 8 (Fully declarative)
+
+- Make code more declarative by using a handler map for commands instead of a switch statement
