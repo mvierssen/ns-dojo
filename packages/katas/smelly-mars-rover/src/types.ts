@@ -6,11 +6,13 @@ import type {
   PositionDirectionStringSchema,
   InstructionStringSchema,
   Vector2DSchema,
-  RoverSchema,
+  RoverStateSchema,
 } from "./schemas.js";
 
-export type Heading = z.infer<typeof DirectionSchema>;
+export type Direction = z.infer<typeof DirectionSchema>;
 export type Command = z.infer<typeof CommandSchema>;
+
+export type RoverState = z.infer<typeof RoverStateSchema>;
 
 export type PositionDirectionString = z.infer<
   typeof PositionDirectionStringSchema
@@ -18,4 +20,3 @@ export type PositionDirectionString = z.infer<
 export type InstructionString = z.infer<typeof InstructionStringSchema>;
 
 export type Vector2D = z.infer<typeof Vector2DSchema>;
-export type Rover = z.infer<typeof RoverSchema>;

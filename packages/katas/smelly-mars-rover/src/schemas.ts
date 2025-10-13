@@ -12,7 +12,7 @@ export const PositionSchema = z.object({
   y: z.number().int(),
 });
 
-export const RoverSchema = z.object({
+export const RoverStateSchema = z.object({
   position: PositionSchema,
   direction: DirectionSchema,
 });
