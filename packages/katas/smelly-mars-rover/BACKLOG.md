@@ -1,6 +1,8 @@
 # TODO
 
 - Barrel export
+- Add mutation testing
+- Create frontend (with AI)
 - Make code more declarative
 - Expand new implementation, remove legacy (which is now a facade)
 
