@@ -9,7 +9,7 @@ export {
 } from "./transform.js";
 
 // Mesh
-export { MeshSchema, MESH_COMPONENT, type Mesh } from "./mesh.js";
+export {MeshSchema, MESH_COMPONENT, type Mesh} from "./mesh.js";
 
 // Script
 export {
@@ -21,7 +21,7 @@ export {
 } from "./script.js";
 
 // Camera
-export { CameraSchema, CAMERA_COMPONENT, type Camera } from "./camera.js";
+export {CameraSchema, CAMERA_COMPONENT, type Camera} from "./camera.js";
 
 // Light
 export {
@@ -31,3 +31,11 @@ export {
   type Light,
   type LightType,
 } from "./light.js";
+
+// Rover
+export {
+  RoverSchema,
+  ROVER_COMPONENT,
+  createRover,
+  type Rover,
+} from "./rover.js";

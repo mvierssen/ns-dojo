@@ -1,6 +1,6 @@
-import { z } from "zod";
 import type * as THREE from "three";
-import type { ComponentType } from "../ecs/world.js";
+import {z} from "zod";
+import type {ComponentType} from "../ecs/world.js";
 
 /**
  * Light types supported
@@ -21,7 +21,7 @@ export type LightType = z.infer<typeof LightTypeSchema>;
 export const LightSchema = z.object({
   light: z.custom<THREE.Light>((val) => val !== null && val !== undefined),
   type: LightTypeSchema,
-  color: z.number().int().default(0xFF_FF_FF), // Hex color
+  color: z.number().int().default(0xff_ff_ff), // Hex color
   intensity: z.number().min(0).default(1),
 });
 

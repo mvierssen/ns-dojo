@@ -1,8 +1,8 @@
 import * as THREE from "three";
-import type { World } from "../ecs/world.js";
-import { getComponent } from "../ecs/component.js";
-import { queryEntities } from "../ecs/query.js";
-import { CAMERA_COMPONENT, type Camera } from "../components/index.js";
+import {CAMERA_COMPONENT, type Camera} from "../components/index.js";
+import {getComponent} from "../ecs/component.js";
+import {queryEntities} from "../ecs/query.js";
+import type {World} from "../ecs/world.js";
 
 /**
  * Render context - Three.js scene, renderer, and active camera
@@ -18,7 +18,7 @@ export interface RenderContext {
  */
 export function createRenderContext(canvas: HTMLCanvasElement): RenderContext {
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x0A_0A_0A);
+  scene.background = new THREE.Color(0x0a_0a_0a);
 
   const renderer = new THREE.WebGLRenderer({
     canvas,
@@ -62,7 +62,9 @@ export function renderSystem(
   const cameraEntities = queryEntities(world, [CAMERA_COMPONENT]);
 
   for (const entityId of cameraEntities) {
-    const camera = getComponent(world, entityId, CAMERA_COMPONENT) as Camera | undefined;
+    const camera = getComponent(world, entityId, CAMERA_COMPONENT) as
+      | Camera
+      | undefined;
 
     if (camera?.isActive) {
       ctx.activeCamera = camera.camera;

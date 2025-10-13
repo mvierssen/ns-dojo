@@ -1,6 +1,6 @@
-import { z } from "zod";
 import type * as THREE from "three";
-import type { ComponentType } from "../ecs/world.js";
+import {z} from "zod";
+import type {ComponentType} from "../ecs/world.js";
 
 /**
  * Camera component - configuration for a perspective camera

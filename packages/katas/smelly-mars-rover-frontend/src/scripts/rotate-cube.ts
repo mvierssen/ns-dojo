@@ -1,7 +1,7 @@
-import { getComponent } from "../ecs/component.js";
-import type { EntityId } from "../ecs/entity.js";
-import type { World } from "../ecs/world.js";
-import { TRANSFORM_COMPONENT, type Transform } from "../components/index.js";
+import {TRANSFORM_COMPONENT, type Transform} from "../components/index.js";
+import {getComponent} from "../ecs/component.js";
+import type {EntityId} from "../ecs/entity.js";
+import type {World} from "../ecs/world.js";
 
 /**
  * Configuration for the rotate cube script
@@ -23,7 +23,9 @@ export function createRotateCubeScript(
   const speedZ = config.speedZ ?? 0;
 
   return (world: World, entityId: EntityId, deltaTime: number): void => {
-    const transform = getComponent(world, entityId, TRANSFORM_COMPONENT) as Transform | undefined;
+    const transform = getComponent(world, entityId, TRANSFORM_COMPONENT) as
+      | Transform
+      | undefined;
 
     if (!transform) return;
 

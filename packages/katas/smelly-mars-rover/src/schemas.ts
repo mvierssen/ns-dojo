@@ -1,13 +1,13 @@
 import { z } from "zod";
 import {
-  Direction,
-  Command,
+  DirectionEnum,
+  CommandEnum,
   INSTRUCTION_STRING_REGEX,
   POSITION_DIRECTION_STRING_REGEX,
 } from "./constants.js";
 
-export const DirectionSchema = z.enum(Direction);
-export const CommandSchema = z.enum(Command);
+export const DirectionSchema = z.enum(DirectionEnum);
+export const CommandSchema = z.enum(CommandEnum);
 
 export const PositionSchema = z.object({
   x: z.number().int(),

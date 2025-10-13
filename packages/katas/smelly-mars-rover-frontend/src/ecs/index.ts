@@ -1,5 +1,5 @@
 // Entity
-export { createEntity, type EntityId } from "./entity.js";
+export {createEntity, type EntityId} from "./entity.js";
 
 // World
 export {
@@ -20,4 +20,4 @@ export {
 } from "./component.js";
 
 // Query
-export { queryEntities } from "./query.js";
+export {queryEntities} from "./query.js";

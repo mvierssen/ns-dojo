@@ -1,10 +1,10 @@
-import type { EntityId } from "./entity.js";
+import type {EntityId} from "./entity.js";
 
 /**
  * Component type identifier (e.g., "transform", "mesh", "script")
  * Branded type for additional type safety.
  */
-export type ComponentType = string & { readonly __brand: "ComponentType" };
+export type ComponentType = string & {readonly __brand: "ComponentType"};
 
 /**
  * The ECS World stores all entities and their components.

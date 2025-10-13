@@ -1,5 +1,5 @@
 import {
-  Command,
+  CommandEnum,
   MOVE_VECTOR_MAP,
   TURN_LEFT_TRANSITION_MAP,
   TURN_RIGHT_TRANSITION_MAP,
@@ -26,25 +26,29 @@ export const parseStart = (
   };
 };
 
-const COMMAND_HANDLERS: Record<Command, (state: RoverState) => RoverState> = {
-  [Command.Left]: (state) => ({
-    ...state,
-    direction: TURN_LEFT_TRANSITION_MAP[state.direction],
-  }),
-  [Command.Right]: (state) => ({
-    ...state,
-    direction: TURN_RIGHT_TRANSITION_MAP[state.direction],
-  }),
-  [Command.Move]: (state) => {
-    const move = MOVE_VECTOR_MAP[state.direction];
-    return {
+const COMMAND_HANDLERS: Record<CommandEnum, (state: RoverState) => RoverState> =
+  {
+    [CommandEnum.Left]: (state) => ({
       ...state,
-      position: { x: state.position.x + move.x, y: state.position.y + move.y },
-    };
-  },
-};
+      direction: TURN_LEFT_TRANSITION_MAP[state.direction],
+    }),
+    [CommandEnum.Right]: (state) => ({
+      ...state,
+      direction: TURN_RIGHT_TRANSITION_MAP[state.direction],
+    }),
+    [CommandEnum.Move]: (state) => {
+      const move = MOVE_VECTOR_MAP[state.direction];
+      return {
+        ...state,
+        position: {
+          x: state.position.x + move.x,
+          y: state.position.y + move.y,
+        },
+      };
+    },
+  };
 
-export const step = (state: RoverState, command: Command): RoverState =>
+export const step = (state: RoverState, command: CommandEnum): RoverState =>
   COMMAND_HANDLERS[command](state);
 
 export const run = (

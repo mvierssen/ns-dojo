@@ -1,8 +1,8 @@
 // Transform System
-export { transformSystem } from "./transform-system.js";
+export {transformSystem} from "./transform-system.js";
 
 // Script System
-export { scriptSystem } from "./script-system.js";
+export {scriptSystem} from "./script-system.js";
 
 // Render System
 export {
@@ -11,3 +11,6 @@ export {
   handleResize,
   type RenderContext,
 } from "./render-system.js";
+
+// Rover Animation System
+export {roverAnimationSystem} from "./rover-animation-system.js";

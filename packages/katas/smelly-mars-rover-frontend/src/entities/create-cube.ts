@@ -1,24 +1,24 @@
 import * as THREE from "three";
-import { addComponent } from "../ecs/component.js";
-import { createEntity, type EntityId } from "../ecs/entity.js";
-import { addEntity, type World } from "../ecs/world.js";
-import type { RenderContext } from "../systems/index.js";
 import {
-  MESH_COMPONENT,
-  TRANSFORM_COMPONENT,
-  SCRIPT_COMPONENT,
   createTransform,
+  MESH_COMPONENT,
+  SCRIPT_COMPONENT,
+  TRANSFORM_COMPONENT,
   type ScriptFn,
   type Transform,
 } from "../components/index.js";
+import {addComponent} from "../ecs/component.js";
+import {createEntity, type EntityId} from "../ecs/entity.js";
+import {addEntity, type World} from "../ecs/world.js";
+import type {RenderContext} from "../systems/index.js";
 
 /**
  * Options for creating a cube entity
  */
 export interface CreateCubeOptions {
-  position?: { x: number; y: number; z: number };
-  rotation?: { x: number; y: number; z: number };
-  scale?: { x: number; y: number; z: number };
+  position?: {x: number; y: number; z: number};
+  rotation?: {x: number; y: number; z: number};
+  scale?: {x: number; y: number; z: number};
   size?: number;
   color?: number;
   scriptFn?: ScriptFn;
@@ -39,7 +39,7 @@ export function createCube(
   const size = options.size ?? 1;
   const geometry = new THREE.BoxGeometry(size, size, size);
   const material = new THREE.MeshStandardMaterial({
-    color: options.color ?? 0x44_88_FF,
+    color: options.color ?? 0x44_88_ff,
   });
   const mesh = new THREE.Mesh(geometry, material);
 
@@ -53,9 +53,9 @@ export function createCube(
 
   // Add Transform component
   const transform: Transform = createTransform({
-    position: options.position ?? { x: 0, y: 0, z: 0 },
-    rotation: options.rotation ?? { x: 0, y: 0, z: 0 },
-    scale: options.scale ?? { x: 1, y: 1, z: 1 },
+    position: options.position ?? {x: 0, y: 0, z: 0},
+    rotation: options.rotation ?? {x: 0, y: 0, z: 0},
+    scale: options.scale ?? {x: 1, y: 1, z: 1},
   });
   addComponent(world, entityId, TRANSFORM_COMPONENT, transform);
 

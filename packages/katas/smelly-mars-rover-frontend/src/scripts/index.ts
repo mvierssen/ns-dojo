@@ -1,8 +1,5 @@
 // Rotate Cube Script
-export {
-  createRotateCubeScript,
-  type RotateCubeConfig,
-} from "./rotate-cube.js";
+export {createRotateCubeScript, type RotateCubeConfig} from "./rotate-cube.js";
 
 // Camera Orbit Script
 export {

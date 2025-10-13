@@ -5,9 +5,13 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@ns-white-crane-white-belt/smelly-mars-rover/*": [
+        "../smelly-mars-rover/src/*"
+      ]
     }
   },
+  "references": [{"path": "../smelly-mars-rover"}],
   "include": ["src", "test", "vite.config.ts", "vitest.config.ts"],
   "exclude": ["dist"]
 }
