@@ -13,3 +13,8 @@
 - Added `schemas.ts` with Zod schemas for Heading, Command, Rover State and Start Position String.
 - Added `types.ts` for inferred types.
 - Changed property names in `RoverState` to `x`, `y`, `direction`.
+
+## Version 2 -> 3 (Lookup Tables)
+
+- Introduced `constants.ts` with TURN_LEFT, TURN_RIGHT, MOVE_VECTOR maps.
+- Replace conditionals with data lookups.
