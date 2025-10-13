@@ -7,14 +7,18 @@ import { RoverState } from "./RoverState.js";
 import {
   CommandSchema,
   InstructionStringWithTransformSchema,
-  StartPositionStringWithTransformSchema,
+  PositionDirectionStringWithTransformSchema,
 } from "./schemas.js";
-import type { InstructionString, StartPositionString } from "./types.js";
+import type {
+  Command,
+  InstructionString,
+  PositionDirectionString,
+} from "./types.js";
 
 export class Rover {
-  constructor(startPositionString: StartPositionString) {
+  constructor(startPositionString: PositionDirectionString) {
     const parsed =
-      StartPositionStringWithTransformSchema.parse(startPositionString);
+      PositionDirectionStringWithTransformSchema.parse(startPositionString);
     // Code Smell: Feature Envy
     this.rs.x = parsed.x;
     // Code Smell: Feature Envy
@@ -22,7 +26,6 @@ export class Rover {
     this.rs.direction = parsed.direction;
   }
 
-  // Code Smell: Long Function
   public go(commands: InstructionString): void {
     const safeCommands = InstructionStringWithTransformSchema.parse(commands);
     for (const c of safeCommands) {
@@ -48,14 +51,13 @@ export class Rover {
     }
   }
 
-  // Code Smell: Primitive Obsession
-  public G(command: string): void {
+  public G(command: Command): void {
     const safeCommand = CommandSchema.parse(command);
     this.go(safeCommand);
   }
 
   // Code Smell: Poor Naming "XYD", Primitive Obsession, Feature Envy
-  public get XYD(): string {
+  public get XYD(): PositionDirectionString {
     return `${String(this.rs.x)} ${String(this.rs.y)} ${this.rs.direction}`;
   }
 

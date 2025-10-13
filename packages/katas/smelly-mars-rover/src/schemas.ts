@@ -1,10 +1,10 @@
 import { z } from "zod";
 import {
   INSTRUCTION_STRING_REGEX,
-  START_POSITION_STRING_REGEX,
+  POSITION_DIRECTION_STRING_REGEX,
 } from "./constants.js";
 
-export const HeadingSchema = z.enum(["N", "E", "S", "W"]);
+export const DirectionSchema = z.enum(["N", "E", "S", "W"]);
 export const CommandSchema = z.enum(["L", "R", "M"]);
 
 export const PositionSchema = z.object({
@@ -14,22 +14,22 @@ export const PositionSchema = z.object({
 
 export const RoverSchema = z.object({
   position: PositionSchema,
-  heading: HeadingSchema,
+  direction: DirectionSchema,
 });
 
 export const InstructionStringSchema = z
   .string()
   .regex(INSTRUCTION_STRING_REGEX);
-export const StartPositionStringSchema = z
+export const PositionDirectionStringSchema = z
   .string()
-  .regex(START_POSITION_STRING_REGEX);
+  .regex(POSITION_DIRECTION_STRING_REGEX);
 
-export const StartPositionStringWithTransformSchema =
-  StartPositionStringSchema.transform((str) => {
+export const PositionDirectionStringWithTransformSchema =
+  PositionDirectionStringSchema.transform((str) => {
     const parts = str.split(" ");
     const x = Number.parseInt(parts[0] ?? "0", 10);
     const y = Number.parseInt(parts[1] ?? "0", 10);
-    const direction = HeadingSchema.parse(parts[2]);
+    const direction = DirectionSchema.parse(parts[2]);
     return { x, y, direction };
   });
 

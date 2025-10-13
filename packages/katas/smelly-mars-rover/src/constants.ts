@@ -1,7 +1,7 @@
 import type { Heading, Vector2D } from "./types.js";
 
 export const INSTRUCTION_STRING_REGEX = /^[LRM]*$/;
-export const START_POSITION_STRING_REGEX = /^\d+ \d+ [NESW]$/;
+export const POSITION_DIRECTION_STRING_REGEX = /^\d+ \d+ [NESW]$/;
 
 export const TURN_LEFT_TRANSITION_MAP: Record<Heading, Heading> = {
   N: "W",
