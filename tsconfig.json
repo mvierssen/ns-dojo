@@ -47,6 +47,9 @@
     // Katas
     {
       "path": "packages/katas/smelly-mars-rover"
+    },
+    {
+      "path": "packages/katas/smelly-mars-rover-frontend"
     }
   ]
 }

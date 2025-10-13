@@ -1,0 +1,13 @@
+{
+  "extends": "@ns-white-crane-white-belt/ts-config-node",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "test", "vite.config.ts", "vitest.config.ts"],
+  "exclude": ["dist"]
+}
