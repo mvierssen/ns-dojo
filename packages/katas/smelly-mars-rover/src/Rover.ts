@@ -12,12 +12,12 @@ import type {
   Command,
   InstructionString,
   PositionDirectionString,
-  Rover,
+  RoverState,
 } from "./types.js";
 
 export const parseStart = (
   positionDirectionString: PositionDirectionString
-): Rover => {
+): RoverState => {
   const parsed = PositionDirectionStringWithTransformSchema.parse(
     positionDirectionString
   );
@@ -27,7 +27,7 @@ export const parseStart = (
   };
 };
 
-export const step = (state: Rover, command: Command): Rover => {
+export const step = (state: RoverState, command: Command): RoverState => {
   const dir = state.direction;
   if (command === CommandSchema.enum.L)
     return { ...state, direction: TURN_LEFT_TRANSITION_MAP[dir] };
@@ -44,12 +44,12 @@ export const step = (state: Rover, command: Command): Rover => {
 };
 
 export const run = (
-  initialState: Rover,
+  initialState: RoverState,
   commands: InstructionString
-): Rover => {
+): RoverState => {
   const safe = InstructionStringWithTransformSchema.parse(commands);
   return [...safe].reduce((s, c) => step(s, c), initialState);
 };
 
-export const render = (state: Rover): string =>
+export const render = (state: RoverState): string =>
   `${String(state.position.x)} ${String(state.position.y)} ${state.direction}`;
