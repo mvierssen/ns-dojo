@@ -1,0 +1,17 @@
+{
+  "extends": "@ns-white-crane-white-belt/ts-config-base",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "useDefineForClassFields": true,
+    "noEmit": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": [
+      "@testing-library/jest-dom",
+      "vitest/importMeta",
+      "vitest/globals"
+    ]
+  }
+}

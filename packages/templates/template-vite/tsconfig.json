@@ -1,5 +1,5 @@
 {
-  "extends": "@ns-white-crane-white-belt/ts-config-node",
+  "extends": "@ns-white-crane-white-belt/ts-config-vite",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": ".",
