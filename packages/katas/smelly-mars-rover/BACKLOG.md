@@ -1,5 +1,8 @@
 # TODO
 
+- Barrel export
+- Expand new implementation, remove legacy (which is now a facade)
+
 # DONE
 
 ## Version 0 -> 1 (Identifying smells)
