@@ -22,3 +22,7 @@
 ## Version 3 -> 4 (Use more consistent naming)
 
 - Renamed `direction` to `heading` etc. for consistency.
+
+## Version 4 -> 5 (Functional refactor)
+
+- Functional / immutable parallel change of Rover functionality.
