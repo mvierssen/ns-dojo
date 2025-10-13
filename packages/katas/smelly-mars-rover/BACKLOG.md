@@ -5,6 +5,7 @@
 - Create frontend (with AI)
 - Make code more declarative
 - Expand new implementation, remove legacy (which is now a facade)
+- Even though the directions and input characters are now fully typed, use enums or constants for them
 
 # DONE
 
