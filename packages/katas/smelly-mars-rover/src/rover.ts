@@ -1,15 +1,14 @@
 import {
+  Command,
   MOVE_VECTOR_MAP,
   TURN_LEFT_TRANSITION_MAP,
   TURN_RIGHT_TRANSITION_MAP,
 } from "./constants.js";
 import {
-  CommandSchema,
   InstructionStringWithTransformSchema,
   PositionDirectionStringWithTransformSchema,
 } from "./schemas.js";
 import type {
-  Command,
   InstructionString,
   PositionDirectionString,
   RoverState,
@@ -18,23 +17,23 @@ import type {
 export const parseStart = (
   positionDirectionString: PositionDirectionString
 ): RoverState => {
-  const parsed = PositionDirectionStringWithTransformSchema.parse(
+  const positionDirection = PositionDirectionStringWithTransformSchema.parse(
     positionDirectionString
   );
   return {
-    position: { x: parsed.x, y: parsed.y },
-    direction: parsed.direction,
+    position: { x: positionDirection.x, y: positionDirection.y },
+    direction: positionDirection.direction,
   };
 };
 
 export const step = (state: RoverState, command: Command): RoverState => {
-  const dir = state.direction;
-  if (command === CommandSchema.enum.L)
-    return { ...state, direction: TURN_LEFT_TRANSITION_MAP[dir] };
-  if (command === CommandSchema.enum.R)
-    return { ...state, direction: TURN_RIGHT_TRANSITION_MAP[dir] };
-  if (command === CommandSchema.enum.M) {
-    const move = MOVE_VECTOR_MAP[dir];
+  const direction = state.direction;
+  if (command === Command.Left)
+    return { ...state, direction: TURN_LEFT_TRANSITION_MAP[direction] };
+  if (command === Command.Right)
+    return { ...state, direction: TURN_RIGHT_TRANSITION_MAP[direction] };
+  if (command === Command.Move) {
+    const move = MOVE_VECTOR_MAP[direction];
     return {
       ...state,
       position: { x: state.position.x + move.x, y: state.position.y + move.y },
@@ -45,10 +44,11 @@ export const step = (state: RoverState, command: Command): RoverState => {
 
 export const run = (
   initialState: RoverState,
-  commands: InstructionString
+  instructionString: InstructionString
 ): RoverState => {
-  const safe = InstructionStringWithTransformSchema.parse(commands);
-  return [...safe].reduce((s, c) => step(s, c), initialState);
+  const instructions =
+    InstructionStringWithTransformSchema.parse(instructionString);
+  return [...instructions].reduce((s, c) => step(s, c), initialState);
 };
 
 export const render = (state: RoverState): string =>
