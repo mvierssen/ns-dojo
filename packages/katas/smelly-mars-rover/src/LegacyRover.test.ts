@@ -24,6 +24,6 @@ describe("LegacyMarsRoverShould", () => {
       const rover = new LegacyRover(startingPosition);
       rover.go(instructions);
       expect(rover.pos()).toBe(expectedOutput);
-    }
+    },
   );
 });
