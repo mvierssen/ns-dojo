@@ -18,3 +18,7 @@
 
 - Introduced `constants.ts` with TURN_LEFT, TURN_RIGHT, MOVE_VECTOR maps.
 - Replace conditionals with data lookups.
+
+## Version 3 -> 4 (Use more consistent naming)
+
+- Renamed `direction` to `heading` etc. for consistency.

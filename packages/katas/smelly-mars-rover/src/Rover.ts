@@ -56,13 +56,12 @@ export class Rover {
     this.go(safeCommand);
   }
 
-  // Code Smell: Poor Naming "XYD", Primitive Obsession, Feature Envy
+  // Code Smell: Poor Naming "XYD", Feature Envy
   public get XYD(): PositionDirectionString {
     return `${String(this.rs.x)} ${String(this.rs.y)} ${this.rs.direction}`;
   }
 
-  // Code Smell: Primitive Obsession
-  public pos(): string {
+  public pos(): PositionDirectionString {
     return this.XYD;
   }
 
