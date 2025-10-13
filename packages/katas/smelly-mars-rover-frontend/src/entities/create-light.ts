@@ -1,22 +1,22 @@
 import * as THREE from "three";
-import { addComponent } from "../ecs/component.js";
-import { createEntity, type EntityId } from "../ecs/entity.js";
-import { addEntity, type World } from "../ecs/world.js";
-import type { RenderContext } from "../systems/index.js";
 import {
+  createTransform,
   LIGHT_COMPONENT,
   TRANSFORM_COMPONENT,
-  createTransform,
   type LightType,
   type Transform,
 } from "../components/index.js";
+import {addComponent} from "../ecs/component.js";
+import {createEntity, type EntityId} from "../ecs/entity.js";
+import {addEntity, type World} from "../ecs/world.js";
+import type {RenderContext} from "../systems/index.js";
 
 /**
  * Options for creating a light entity
  */
 export interface CreateLightOptions {
   type: LightType;
-  position?: { x: number; y: number; z: number };
+  position?: {x: number; y: number; z: number};
   color?: number;
   intensity?: number;
 }
@@ -32,7 +32,7 @@ export function createLight(
   const entityId = createEntity();
   addEntity(world, entityId);
 
-  const color = options.color ?? 0xFF_FF_FF;
+  const color = options.color ?? 0xff_ff_ff;
   const intensity = options.intensity ?? 1;
 
   // Create the appropriate Three.js light
@@ -83,7 +83,7 @@ export function createLight(
 
   // Add Transform component
   const transform: Transform = createTransform({
-    position: options.position ?? { x: 0, y: 0, z: 0 },
+    position: options.position ?? {x: 0, y: 0, z: 0},
   });
   addComponent(world, entityId, TRANSFORM_COMPONENT, transform);
 

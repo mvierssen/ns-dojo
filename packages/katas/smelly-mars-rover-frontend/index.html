@@ -4,11 +4,47 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ECS Three.js Demo</title>
+    <title>Mars Rover Simulator</title>
   </head>
   <body>
     <div id="root">
       <canvas id="canvas"></canvas>
+
+      <!-- UI Overlay -->
+      <div id="ui-overlay">
+        <!-- Header -->
+        <div id="header">
+          <h1>Mars Rover Simulator</h1>
+          <p class="subtitle">Multi-rover mission control</p>
+        </div>
+
+        <!-- Rovers Panel -->
+        <div id="rovers-panel">
+          <div class="panel-header">
+            <h2>Rovers</h2>
+            <button id="btn-add-rover" class="add-btn">+ Add Rover</button>
+          </div>
+          <div id="rovers-list">
+            <!-- Rovers will be dynamically added here -->
+          </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div id="control-panel">
+          <div class="control-buttons">
+            <button id="btn-execute" class="execute-btn">Execute All</button>
+            <button id="btn-reset" class="reset-btn">Reset All</button>
+          </div>
+          <div class="instructions">
+            <p><strong>Instructions:</strong></p>
+            <p>
+              <kbd>L</kbd> = Turn left, <kbd>R</kbd> = Turn right,
+              <kbd>M</kbd> = Move forward
+            </p>
+            <p class="example">Example: <code>LMLMLMLMM</code></p>
+          </div>
+        </div>
+      </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>

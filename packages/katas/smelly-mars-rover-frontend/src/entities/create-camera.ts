@@ -1,21 +1,21 @@
 import * as THREE from "three";
-import { addComponent } from "../ecs/component.js";
-import { createEntity, type EntityId } from "../ecs/entity.js";
-import { addEntity, type World } from "../ecs/world.js";
 import {
   CAMERA_COMPONENT,
-  TRANSFORM_COMPONENT,
-  SCRIPT_COMPONENT,
   createTransform,
+  SCRIPT_COMPONENT,
+  TRANSFORM_COMPONENT,
   type ScriptFn,
   type Transform,
 } from "../components/index.js";
+import {addComponent} from "../ecs/component.js";
+import {createEntity, type EntityId} from "../ecs/entity.js";
+import {addEntity, type World} from "../ecs/world.js";
 
 /**
  * Options for creating a camera entity
  */
 export interface CreateCameraOptions {
-  position?: { x: number; y: number; z: number };
+  position?: {x: number; y: number; z: number};
   fov?: number;
   aspect?: number;
   near?: number;
@@ -53,7 +53,7 @@ export function createCamera(
 
   // Add Transform component
   const transform: Transform = createTransform({
-    position: options.position ?? { x: 0, y: 5, z: 10 },
+    position: options.position ?? {x: 0, y: 5, z: 10},
   });
   addComponent(world, entityId, TRANSFORM_COMPONENT, transform);
 

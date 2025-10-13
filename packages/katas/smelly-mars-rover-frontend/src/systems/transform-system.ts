@@ -1,7 +1,4 @@
 import type * as THREE from "three";
-import { getComponent } from "../ecs/component.js";
-import { queryEntities } from "../ecs/query.js";
-import type { World } from "../ecs/world.js";
 import {
   CAMERA_COMPONENT,
   MESH_COMPONENT,
@@ -10,6 +7,9 @@ import {
   type Mesh,
   type Transform,
 } from "../components/index.js";
+import {getComponent} from "../ecs/component.js";
+import {queryEntities} from "../ecs/query.js";
+import type {World} from "../ecs/world.js";
 
 /**
  * Syncs a Transform component to a Three.js Object3D
@@ -36,11 +36,7 @@ function syncTransformToObject3D(
   }
 
   // Sync scale
-  object3D.scale.set(
-    transform.scale.x,
-    transform.scale.y,
-    transform.scale.z,
-  );
+  object3D.scale.set(transform.scale.x, transform.scale.y, transform.scale.z);
 }
 
 /**
@@ -50,11 +46,18 @@ function syncTransformToObject3D(
  */
 export function transformSystem(world: World, _deltaTime: number): void {
   // Sync Transform+Mesh entities
-  const meshEntities = queryEntities(world, [TRANSFORM_COMPONENT, MESH_COMPONENT]);
+  const meshEntities = queryEntities(world, [
+    TRANSFORM_COMPONENT,
+    MESH_COMPONENT,
+  ]);
 
   for (const entityId of meshEntities) {
-    const transform = getComponent(world, entityId, TRANSFORM_COMPONENT) as Transform | undefined;
-    const mesh = getComponent(world, entityId, MESH_COMPONENT) as Mesh | undefined;
+    const transform = getComponent(world, entityId, TRANSFORM_COMPONENT) as
+      | Transform
+      | undefined;
+    const mesh = getComponent(world, entityId, MESH_COMPONENT) as
+      | Mesh
+      | undefined;
 
     if (!transform || !mesh) continue;
 
@@ -62,11 +65,18 @@ export function transformSystem(world: World, _deltaTime: number): void {
   }
 
   // Sync Transform+Camera entities (skip rotation for cameras using lookAt)
-  const cameraEntities = queryEntities(world, [TRANSFORM_COMPONENT, CAMERA_COMPONENT]);
+  const cameraEntities = queryEntities(world, [
+    TRANSFORM_COMPONENT,
+    CAMERA_COMPONENT,
+  ]);
 
   for (const entityId of cameraEntities) {
-    const transform = getComponent(world, entityId, TRANSFORM_COMPONENT) as Transform | undefined;
-    const camera = getComponent(world, entityId, CAMERA_COMPONENT) as Camera | undefined;
+    const transform = getComponent(world, entityId, TRANSFORM_COMPONENT) as
+      | Transform
+      | undefined;
+    const camera = getComponent(world, entityId, CAMERA_COMPONENT) as
+      | Camera
+      | undefined;
 
     if (!transform || !camera) continue;
 

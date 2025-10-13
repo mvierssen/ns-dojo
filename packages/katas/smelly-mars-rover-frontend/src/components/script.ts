@@ -1,6 +1,6 @@
-import { z } from "zod";
-import type { EntityId } from "../ecs/entity.js";
-import type { ComponentType, World } from "../ecs/world.js";
+import {z} from "zod";
+import type {EntityId} from "../ecs/entity.js";
+import type {ComponentType, World} from "../ecs/world.js";
 
 /**
  * Script function type - executes logic on an entity each frame
@@ -30,5 +30,5 @@ export const SCRIPT_COMPONENT = "script" as ComponentType;
  * Helper to create a script component
  */
 export function createScript(scriptFn: ScriptFn, enabled = true): Script {
-  return ScriptSchema.parse({ scriptFn, enabled });
+  return ScriptSchema.parse({scriptFn, enabled});
 }

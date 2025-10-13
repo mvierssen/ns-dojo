@@ -1,12 +1,12 @@
-import { getComponent } from "../ecs/component.js";
-import type { EntityId } from "../ecs/entity.js";
-import type { World } from "../ecs/world.js";
 import {
   CAMERA_COMPONENT,
   TRANSFORM_COMPONENT,
   type Camera,
   type Transform,
 } from "../components/index.js";
+import {getComponent} from "../ecs/component.js";
+import type {EntityId} from "../ecs/entity.js";
+import type {World} from "../ecs/world.js";
 
 /**
  * Configuration for the camera orbit script
@@ -36,8 +36,12 @@ export function createCameraOrbitScript(
   let angle = 0;
 
   return (world: World, entityId: EntityId, deltaTime: number): void => {
-    const transform = getComponent(world, entityId, TRANSFORM_COMPONENT) as Transform | undefined;
-    const camera = getComponent(world, entityId, CAMERA_COMPONENT) as Camera | undefined;
+    const transform = getComponent(world, entityId, TRANSFORM_COMPONENT) as
+      | Transform
+      | undefined;
+    const camera = getComponent(world, entityId, CAMERA_COMPONENT) as
+      | Camera
+      | undefined;
 
     if (!transform || !camera) return;
 

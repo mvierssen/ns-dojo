@@ -10,15 +10,328 @@ body {
   height: 100%;
   overflow: hidden;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #e0e0e0;
 }
 
 #root {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
 #canvas {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+/* UI Overlay */
+#ui-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400px;
+  max-width: 90vw;
+  height: 100%;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+}
+
+#ui-overlay > * {
+  pointer-events: auto;
+}
+
+/* Header */
+#header {
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+#header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  background: linear-gradient(135deg, #4488ff, #44ffaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+#header .subtitle {
+  font-size: 12px;
+  color: #888;
+}
+
+/* Rovers Panel */
+#rovers-panel {
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  max-height: 50vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(68, 136, 255, 0.5) rgba(0, 0, 0, 0.3);
+  flex: 1;
+}
+
+#rovers-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+#rovers-panel::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+#rovers-panel::-webkit-scrollbar-thumb {
+  background: rgba(68, 136, 255, 0.5);
+  border-radius: 4px;
+}
+
+#rovers-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(68, 136, 255, 0.7);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.panel-header h2 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.add-btn {
+  background: linear-gradient(135deg, #4488ff, #44aaff);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(68, 136, 255, 0.4);
+}
+
+.add-btn:active {
+  transform: translateY(0);
+}
+
+/* Rover Items */
+#rovers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rover-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+
+.rover-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.rover-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rover-color {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.rover-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.rover-info h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.rover-position {
+  font-size: 11px;
+  color: #aaa;
+  font-family: "Courier New", monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rover-command-input {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: white;
+  font-size: 13px;
+  font-family: "Courier New", monospace;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.rover-command-input:focus {
+  outline: none;
+  border-color: #4488ff;
+  box-shadow: 0 0 0 3px rgba(68, 136, 255, 0.2);
+}
+
+.rover-command-input::placeholder {
+  color: #666;
+}
+
+.rover-remove-btn {
+  background: rgba(255, 68, 68, 0.2);
+  color: #ff4444;
+  border: 1px solid rgba(255, 68, 68, 0.3);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rover-remove-btn:hover {
+  background: rgba(255, 68, 68, 0.4);
+  border-color: rgba(255, 68, 68, 0.5);
+}
+
+/* Control Panel */
+#control-panel {
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.execute-btn,
+.reset-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.execute-btn {
+  background: linear-gradient(135deg, #44ff88, #44ffaa);
+  color: #000;
+}
+
+.execute-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(68, 255, 136, 0.4);
+}
+
+.reset-btn {
+  background: rgba(255, 68, 68, 0.2);
+  color: #ff6666;
+  border: 1px solid rgba(255, 68, 68, 0.3);
+}
+
+.reset-btn:hover {
+  background: rgba(255, 68, 68, 0.3);
+  border-color: rgba(255, 68, 68, 0.5);
+  transform: translateY(-2px);
+}
+
+.execute-btn:active,
+.reset-btn:active {
+  transform: translateY(0);
+}
+
+/* Instructions */
+.instructions {
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.instructions p {
+  margin: 3px 0;
+}
+
+.instructions strong {
+  color: #4488ff;
+}
+
+.instructions kbd {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  padding: 2px 5px;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+}
+
+.instructions code {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  color: #44ffaa;
+}
+
+.instructions .example {
+  color: #999;
+  font-style: italic;
 }

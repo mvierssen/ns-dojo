@@ -1,20 +1,44 @@
 import "./style.css";
-import {createWorld} from "./ecs/index.js";
-import {createCamera} from "./entities/create-camera.js";
-import {createCube} from "./entities/create-cube.js";
-import {createLight} from "./entities/create-light.js";
 import {
-  createCameraOrbitScript,
-  createRotateCubeScript,
-} from "./scripts/index.js";
+  DirectionEnum,
+  parseStart,
+} from "@ns-white-crane-white-belt/smelly-mars-rover";
+import * as THREE from "three";
+import {
+  MESH_COMPONENT,
+  ROVER_COMPONENT,
+  type Mesh,
+  type Rover,
+} from "./components/index.js";
+import {getComponent} from "./ecs/component.js";
+import type {EntityId} from "./ecs/entity.js";
+import {createWorld} from "./ecs/index.js";
+import {removeEntity} from "./ecs/world.js";
+import {createCamera} from "./entities/create-camera.js";
+import {createLight} from "./entities/create-light.js";
+import {createRoverEntity} from "./entities/create-rover.js";
+import {createCameraOrbitScript} from "./scripts/index.js";
 import {
   createRenderContext,
   handleResize,
   renderSystem,
+  roverAnimationSystem,
   scriptSystem,
   transformSystem,
   type RenderContext,
 } from "./systems/index.js";
+import {UIManager} from "./ui-manager.js";
+
+/**
+ * Predefined rover colors matching the original cube colors
+ */
+const ROVER_COLORS = [
+  0x44_88_ff, // Blue
+  0xff_44_88, // Red/Pink
+  0x44_ff_88, // Green
+  0xff_aa_44, // Orange
+  0xaa_44_ff, // Purple
+];
 
 /**
  * Main application entry point
@@ -31,8 +55,28 @@ function main(): void {
   // Create Three.js render context
   const renderCtx: RenderContext = createRenderContext(canvas);
 
+  // Create UI manager
+  const uiManager = new UIManager();
+
   // Create entities
   setupScene(world, renderCtx);
+
+  // Wire up UI controls
+  setupUIControls(world, renderCtx, uiManager);
+
+  // Set up remove callback
+  uiManager.setOnRemoveCallback((_roverId, entityId) => {
+    handleRemoveRover(world, renderCtx, entityId);
+  });
+
+  // Add some initial rovers for demonstration
+  addInitialRovers(world, renderCtx, uiManager);
+
+  console.log(
+    "Mars Rover Simulator initialized with",
+    uiManager.getAllRoverIds().length,
+    "rover(s)",
+  );
 
   // Handle window resize
   window.addEventListener("resize", () => {
@@ -48,6 +92,7 @@ function main(): void {
 
     // Run systems in order
     scriptSystem(world, deltaTime);
+    roverAnimationSystem(world, deltaTime);
     transformSystem(world, deltaTime);
     renderSystem(world, deltaTime, renderCtx);
 
@@ -58,27 +103,64 @@ function main(): void {
 }
 
 /**
- * Sets up the demo scene with camera, lights, and rotating cubes
+ * Adds some initial rovers to the scene for demonstration
+ */
+function addInitialRovers(
+  world: ReturnType<typeof createWorld>,
+  renderCtx: RenderContext,
+  uiManager: UIManager,
+): void {
+  console.log("Adding initial rover to scene...");
+
+  const initialRoverPositions = [{x: 1, y: 2, direction: DirectionEnum.North}];
+
+  for (const [index, pos] of initialRoverPositions.entries()) {
+    const positionDirectionString =
+      `${String(pos.x)} ${String(pos.y)} ${pos.direction}` as const;
+    const initialState = parseStart(positionDirectionString);
+    const color = ROVER_COLORS[index % ROVER_COLORS.length];
+    const id = `rover-initial-${String(index)}`;
+
+    console.log(
+      `Creating initial rover ${String(index)}: position (${String(pos.x)}, ${String(pos.y)}), direction ${pos.direction}, color 0x${color?.toString(16) ?? "unknown"}`,
+    );
+
+    const entityId = createRoverEntity(world, renderCtx, {
+      id,
+      initialState,
+      color,
+    });
+
+    uiManager.addRover(id, entityId, color ?? 0x44_88_ff, initialState);
+  }
+
+  console.log("Initial rover added successfully");
+}
+
+/**
+ * Sets up the scene with camera and lights
  */
 function setupScene(
   world: ReturnType<typeof createWorld>,
   renderCtx: RenderContext,
 ): void {
+  console.log("Setting up scene...");
+
   // Create camera with orbit script
   createCamera(world, {
     position: {x: 0, y: 5, z: 10},
     scriptFn: createCameraOrbitScript({
-      radius: 12,
+      radius: 15,
       speed: 0.3,
-      height: 6,
+      height: 8,
     }),
   });
 
-  // Create ambient light
+  // Create ambient light (brighter for better visibility)
   createLight(world, renderCtx, {
     type: "ambient",
-    color: 0x40_40_40,
-    intensity: 0.5,
+    color: 0x80_80_80,
+    intensity: 1,
   });
 
   // Create directional light
@@ -89,27 +171,166 @@ function setupScene(
     intensity: 1,
   });
 
-  // Create rotating cubes in a pattern
-  const cubePositions = [
-    {x: 0, y: 0, z: 0, color: 0x44_88_ff},
-    {x: -3, y: 0, z: -3, color: 0xff_44_88},
-    {x: 3, y: 0, z: -3, color: 0x44_ff_88},
-    {x: -3, y: 0, z: 3, color: 0xff_aa_44},
-    {x: 3, y: 0, z: 3, color: 0xaa_44_ff},
-  ];
+  // Add ground grid for reference
+  const gridHelper = new THREE.GridHelper(20, 20, 0x44_44_44, 0x22_22_22);
+  renderCtx.scene.add(gridHelper);
 
-  for (const pos of cubePositions) {
-    createCube(world, renderCtx, {
-      position: {x: pos.x, y: pos.y, z: pos.z},
-      size: 1.5,
-      color: pos.color,
-      scriptFn: createRotateCubeScript({
-        speedX: 0.5 + Math.random() * 0.5,
-        speedY: 1 + Math.random() * 0.5,
-        speedZ: Math.random() * 0.3,
-      }),
+  console.log(
+    "Scene setup complete. Grid added, camera orbiting at radius 15, height 8",
+  );
+}
+
+/**
+ * Sets up UI controls for rover management
+ */
+function setupUIControls(
+  world: ReturnType<typeof createWorld>,
+  renderCtx: RenderContext,
+  uiManager: UIManager,
+): void {
+  // Add Rover button
+  const addRoverBtn = document.querySelector("#btn-add-rover");
+  if (addRoverBtn) {
+    addRoverBtn.addEventListener("click", () => {
+      handleAddRover(world, renderCtx, uiManager);
     });
   }
+
+  // Execute All button
+  const executeAllBtn = document.querySelector("#btn-execute");
+  if (executeAllBtn) {
+    executeAllBtn.addEventListener("click", () => {
+      handleExecuteAll(world, uiManager);
+    });
+  }
+
+  // Reset All button
+  const resetAllBtn = document.querySelector("#btn-reset");
+  if (resetAllBtn) {
+    resetAllBtn.addEventListener("click", () => {
+      handleResetAll(world, renderCtx, uiManager);
+    });
+  }
+}
+
+/**
+ * Handles adding a new rover
+ */
+function handleAddRover(
+  world: ReturnType<typeof createWorld>,
+  renderCtx: RenderContext,
+  uiManager: UIManager,
+): void {
+  // Generate random initial position and direction (only positive coordinates)
+  const x = Math.floor(Math.random() * 10); // 0 to 9
+  const y = Math.floor(Math.random() * 10); // 0 to 9
+  const directions = [
+    DirectionEnum.North,
+    DirectionEnum.East,
+    DirectionEnum.South,
+    DirectionEnum.West,
+  ];
+  const direction =
+    directions[Math.floor(Math.random() * directions.length)] ??
+    DirectionEnum.North;
+
+  // Create rover state
+  const positionDirectionString =
+    `${String(x)} ${String(y)} ${direction}` as const;
+  const initialState = parseStart(positionDirectionString);
+
+  // Choose color (cycle through predefined colors)
+  const roverCount = uiManager.getAllRoverIds().length;
+  const color = ROVER_COLORS[roverCount % ROVER_COLORS.length];
+
+  // Generate unique ID
+  const id = `rover-${String(Date.now())}-${Math.random().toString(36).slice(2, 9)}`;
+
+  console.log(
+    `Adding rover at position (${String(x)}, ${String(y)}) facing ${direction}`,
+  );
+
+  // Create rover entity
+  const entityId = createRoverEntity(world, renderCtx, {
+    id,
+    initialState,
+    color,
+  });
+
+  // Add to UI
+  uiManager.addRover(id, entityId, color ?? 0x44_88_ff, initialState);
+}
+
+/**
+ * Handles removing a single rover
+ */
+function handleRemoveRover(
+  world: ReturnType<typeof createWorld>,
+  renderCtx: RenderContext,
+  entityId: EntityId,
+): void {
+  // Remove mesh from scene
+  const meshComponent = getComponent(world, entityId, MESH_COMPONENT) as
+    | Mesh
+    | undefined;
+  if (meshComponent) {
+    renderCtx.scene.remove(meshComponent.object3D);
+  }
+
+  // Remove entity from world
+  removeEntity(world, entityId);
+}
+
+/**
+ * Handles executing all rover commands
+ */
+function handleExecuteAll(
+  world: ReturnType<typeof createWorld>,
+  uiManager: UIManager,
+): void {
+  const commands = uiManager.getAllCommands();
+
+  for (const [roverId, commandString] of commands.entries()) {
+    const entityId = uiManager.getEntityId(roverId);
+    if (!entityId) continue;
+
+    const rover = getComponent(world, entityId, ROVER_COMPONENT) as
+      | Rover
+      | undefined;
+    if (!rover) continue;
+
+    // Set command queue and reset index
+    rover.commandQueue = commandString.split("");
+    rover.currentCommandIndex = 0;
+
+    // Reset animation state
+    if (rover.animationState) {
+      rover.animationState.isAnimating = false;
+      rover.animationState.progress = 0;
+      rover.animationState.type = "idle";
+    }
+  }
+}
+
+/**
+ * Handles resetting all rovers
+ */
+function handleResetAll(
+  world: ReturnType<typeof createWorld>,
+  renderCtx: RenderContext,
+  uiManager: UIManager,
+): void {
+  // Remove all rover entities from world
+  const roverIds = uiManager.getAllRoverIds();
+  for (const roverId of roverIds) {
+    const entityId = uiManager.getEntityId(roverId);
+    if (entityId) {
+      handleRemoveRover(world, renderCtx, entityId);
+    }
+  }
+
+  // Clear UI
+  uiManager.clearAll();
 }
 
 // Start the application

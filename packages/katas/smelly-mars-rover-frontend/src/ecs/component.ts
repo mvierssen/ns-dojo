@@ -1,5 +1,5 @@
-import type { EntityId } from "./entity.js";
-import type { ComponentType, World } from "./world.js";
+import type {EntityId} from "./entity.js";
+import type {ComponentType, World} from "./world.js";
 
 /**
  * Adds or updates a component for an entity.
