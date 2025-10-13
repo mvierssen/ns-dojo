@@ -31,11 +31,3 @@ export {
   type Light,
   type LightType,
 } from "./light.js";
-
-// Rover
-export {
-  RoverSchema,
-  ROVER_COMPONENT,
-  createRover,
-  type Rover,
-} from "./rover.js";
