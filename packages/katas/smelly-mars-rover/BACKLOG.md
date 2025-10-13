@@ -4,6 +4,7 @@
 - Add mutation testing
 - Create frontend (with AI)
 - Expand new implementation, remove legacy (which is now a facade)
+- Trying to achieve 100% code coverage revealed that the contract for the public legacy method G was broken. Find out if G should be removed.
 
 # DONE
 
@@ -44,3 +45,8 @@
 ## Version 7 -> 8 (Fully declarative)
 
 - Make code more declarative by using a handler map for commands instead of a switch statement
+
+## Version 8 -> 9 (Full coverage)
+
+- Achieve 100% code coverage with tests
+- Add test to cover G, which was previously not covered

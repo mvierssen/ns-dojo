@@ -26,4 +26,10 @@ describe("LegacyMarsRoverShould", () => {
       expect(rover.pos()).toBe(expectedOutput);
     },
   );
+
+  test("support single command", () => {
+    const rover = new LegacyRover("1 2 N");
+    rover.G("L");
+    expect(rover.pos()).toBe("1 2 W");
+  });
 });
