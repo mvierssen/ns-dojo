@@ -23,16 +23,31 @@ import type {
   RoverState,
 } from "./types.js";
 
+export const safeParseStart = (
+  positionDirectionString: PositionDirectionString,
+): Result<RoverState, Error> => {
+  const positionDirection =
+    PositionDirectionStringWithTransformSchema.safeParse(
+      positionDirectionString,
+    );
+  if (!positionDirection.success) {
+    return resultCreateFailure(new Error("Invalid position direction string"));
+  }
+
+  return resultCreateSuccess({
+    position: { x: positionDirection.data.x, y: positionDirection.data.y },
+    direction: positionDirection.data.direction,
+  });
+};
+
 export const parseStart = (
-  positionDirectionString: PositionDirectionString
+  positionDirectionString: PositionDirectionString,
 ): RoverState => {
-  const positionDirection = PositionDirectionStringWithTransformSchema.parse(
-    positionDirectionString
-  );
-  return {
-    position: { x: positionDirection.x, y: positionDirection.y },
-    direction: positionDirection.direction,
-  };
+  const result = safeParseStart(positionDirectionString);
+  if (resultIsFailure(result)) {
+    throw result.error;
+  }
+  return result.value;
 };
 
 const COMMAND_HANDLERS: Record<Command, (state: RoverState) => RoverState> = {
@@ -58,14 +73,14 @@ const COMMAND_HANDLERS: Record<Command, (state: RoverState) => RoverState> = {
 
 export const safeStep = (
   state: RoverState,
-  command: Command
+  command: Command,
 ): Result<RoverState, Error> => {
   try {
     const next = COMMAND_HANDLERS[command](state);
     return resultCreateSuccess(next);
   } catch (error) {
     return resultCreateFailure(
-      error instanceof Error ? error : new Error(String(error))
+      error instanceof Error ? error : new Error(String(error)),
     );
   }
 };
@@ -80,11 +95,10 @@ export const step = (state: RoverState, command: Command): RoverState => {
 
 export const safeRun = (
   initialState: RoverState,
-  instructionString: InstructionString
+  instructionString: InstructionString,
 ): Result<RoverState, Error> => {
   const instructions =
     InstructionStringWithTransformSchema.safeParse(instructionString);
-
   if (!instructions.success) {
     return resultCreateFailure(new Error("Invalid instruction string"));
   }
@@ -92,7 +106,7 @@ export const safeRun = (
   const result = [...instructions.data].reduce<Result<RoverState, Error>>(
     (acc, c) =>
       resultIsSuccess(acc) ? resultFlatMap(acc, (s) => safeStep(s, c)) : acc,
-    resultCreateSuccess(initialState)
+    resultCreateSuccess(initialState),
   );
 
   return result;
@@ -100,7 +114,7 @@ export const safeRun = (
 
 export const run = (
   initialState: RoverState,
-  instructionString: InstructionString
+  instructionString: InstructionString,
 ): RoverState => {
   const result = safeRun(initialState, instructionString);
   if (resultIsFailure(result)) {
@@ -110,7 +124,7 @@ export const run = (
 };
 
 export const safeRender = (
-  state: RoverState
+  state: RoverState,
 ): Result<PositionDirectionString, Error> => {
   const validatedState = RoverStateSchema.safeParse(state);
   if (!validatedState.success) {
