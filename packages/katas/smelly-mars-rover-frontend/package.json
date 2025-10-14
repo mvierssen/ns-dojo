@@ -9,6 +9,7 @@
   "devDependencies": {
     "@ns-white-crane-white-belt/ts-config-vite": "^0.1.0",
     "@ns-white-crane-white-belt/vite-config-base": "^0.1.0",
+    "@types/three": "^0.180.0",
     "typescript": "5.9.3"
   },
   "exports": {
