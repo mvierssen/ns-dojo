@@ -58,3 +58,7 @@
 
 - Introduce Result type for operations that can fail
 - Added parallel change safeRun and safeStep functions that use Result types
+
+## Version 11 -> 12 (Full test coverage)
+
+- Added unit tests for safeX functions and fail cases to reach close to 100% coverage
