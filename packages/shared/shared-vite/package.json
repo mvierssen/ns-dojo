@@ -48,6 +48,7 @@
     "lint:eslint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "npm run test:vitest",
+    "test:watch": "vitest",
     "test:vitest": "vitest run",
     "typecheck": "npm run typecheck:tsc",
     "typecheck:tsc": "tsc --noemit"

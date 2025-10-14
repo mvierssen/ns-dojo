@@ -46,6 +46,7 @@
     "lint:eslint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "npm run test:vitest",
+    "test:watch": "vitest",
     "test:vitest": "vitest run",
     "test:mutation": "stryker run",
     "typecheck": "npm run typecheck:tsc",
