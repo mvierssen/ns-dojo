@@ -1,4 +1,12 @@
 import {
+  resultCreateFailure,
+  resultCreateSuccess,
+  resultFlatMap,
+  resultIsFailure,
+  resultIsSuccess,
+  type Result,
+} from "@ns-white-crane-white-belt/shared-core/types";
+import {
   Command,
   MOVE_VECTOR_MAP,
   TURN_LEFT_TRANSITION_MAP,
@@ -47,16 +55,57 @@ const COMMAND_HANDLERS: Record<Command, (state: RoverState) => RoverState> = {
   },
 };
 
-export const step = (state: RoverState, command: Command): RoverState =>
-  COMMAND_HANDLERS[command](state);
+export const step = (state: RoverState, command: Command): RoverState => {
+  const result = safeStep(state, command);
+  if (resultIsFailure(result)) {
+    throw result.error;
+  }
+  return result.value;
+};
+
+export const safeStep = (
+  state: RoverState,
+  command: Command
+): Result<RoverState, Error> => {
+  try {
+    const next = COMMAND_HANDLERS[command](state);
+    return resultCreateSuccess(next);
+  } catch (error) {
+    return resultCreateFailure(
+      error instanceof Error ? error : new Error(String(error))
+    );
+  }
+};
 
 export const run = (
   initialState: RoverState,
   instructionString: InstructionString
 ): RoverState => {
+  const result = safeRun(initialState, instructionString);
+  if (resultIsFailure(result)) {
+    throw result.error;
+  }
+  return result.value;
+};
+
+export const safeRun = (
+  initialState: RoverState,
+  instructionString: InstructionString
+): Result<RoverState, Error> => {
   const instructions =
-    InstructionStringWithTransformSchema.parse(instructionString);
-  return [...instructions].reduce((s, c) => step(s, c), initialState);
+    InstructionStringWithTransformSchema.safeParse(instructionString);
+
+  if (!instructions.success) {
+    return resultCreateFailure(new Error("Invalid instruction string"));
+  }
+
+  const result = [...instructions.data].reduce<Result<RoverState, Error>>(
+    (acc, c) =>
+      resultIsSuccess(acc) ? resultFlatMap(acc, (s) => safeStep(s, c)) : acc,
+    resultCreateSuccess(initialState)
+  );
+
+  return result;
 };
 
 export const render = (state: RoverState): string =>
