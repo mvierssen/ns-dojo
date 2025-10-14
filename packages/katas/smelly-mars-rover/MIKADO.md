@@ -8,4 +8,4 @@ Introduce Result type for operations that can fail.
   - [*] use safeParse instead of parse
   - [*] modify reduce to reduce over mapped Result<RoverState, Error>
     - [*] modify step to take a Result<RoverState, Error> and return a Result<RoverState, Error>
-- [ ] render has to return a Result<PositionDirectionString, Error> in case an invalid state is passed during runtime
+- [*] render has to return a Result<PositionDirectionString, Error> in case an invalid state is passed during runtime

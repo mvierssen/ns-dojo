@@ -15,6 +15,7 @@ import {
 import {
   InstructionStringWithTransformSchema,
   PositionDirectionStringWithTransformSchema,
+  RoverStateSchema,
 } from "./schemas.js";
 import type {
   InstructionString,
@@ -55,14 +56,6 @@ const COMMAND_HANDLERS: Record<Command, (state: RoverState) => RoverState> = {
   },
 };
 
-export const step = (state: RoverState, command: Command): RoverState => {
-  const result = safeStep(state, command);
-  if (resultIsFailure(result)) {
-    throw result.error;
-  }
-  return result.value;
-};
-
 export const safeStep = (
   state: RoverState,
   command: Command
@@ -77,11 +70,8 @@ export const safeStep = (
   }
 };
 
-export const run = (
-  initialState: RoverState,
-  instructionString: InstructionString
-): RoverState => {
-  const result = safeRun(initialState, instructionString);
+export const step = (state: RoverState, command: Command): RoverState => {
+  const result = safeStep(state, command);
   if (resultIsFailure(result)) {
     throw result.error;
   }
@@ -108,5 +98,40 @@ export const safeRun = (
   return result;
 };
 
-export const render = (state: RoverState): string =>
-  `${String(state.position.x)} ${String(state.position.y)} ${state.direction}`;
+export const run = (
+  initialState: RoverState,
+  instructionString: InstructionString
+): RoverState => {
+  const result = safeRun(initialState, instructionString);
+  if (resultIsFailure(result)) {
+    throw result.error;
+  }
+  return result.value;
+};
+
+export const safeRender = (
+  state: RoverState
+): Result<PositionDirectionString, Error> => {
+  const validatedState = RoverStateSchema.safeParse(state);
+  if (!validatedState.success) {
+    return resultCreateFailure(new Error("Invalid rover state"));
+  }
+
+  const rendered = `${String(validatedState.data.position.x)} ${String(validatedState.data.position.y)} ${validatedState.data.direction}`;
+
+  const validatedOutput =
+    PositionDirectionStringWithTransformSchema.safeParse(rendered);
+  if (!validatedOutput.success) {
+    return resultCreateFailure(new Error("Invalid render output"));
+  }
+
+  return resultCreateSuccess(rendered);
+};
+
+export const render = (state: RoverState): string => {
+  const result = safeRender(state);
+  if (resultIsFailure(result)) {
+    throw result.error;
+  }
+  return result.value;
+};
