@@ -5,9 +5,13 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@ns-white-crane-white-belt/shared-core/*": [
+        "../../shared/shared-core/src/*"
+      ]
     }
   },
+  "references": [{ "path": "../../shared/shared-core" }],
   "include": ["src", "test", "vitest.config.ts"],
   "exclude": ["dist"]
 }
