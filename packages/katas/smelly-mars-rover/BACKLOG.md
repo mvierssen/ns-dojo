@@ -53,3 +53,8 @@
 ## Version 9 -> 10 (Mutation testing)
 
 - Add Stryker mutation testing
+
+## Version 10 -> 11 (Result type, safe run and step functions)
+
+- Introduce Result type for operations that can fail
+- Added parallel change safeRun and safeStep functions that use Result types
