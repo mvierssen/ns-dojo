@@ -15,10 +15,10 @@ import type {
 } from "./types.js";
 
 export const parseStart = (
-  positionDirectionString: PositionDirectionString,
+  positionDirectionString: PositionDirectionString
 ): RoverState => {
   const positionDirection = PositionDirectionStringWithTransformSchema.parse(
-    positionDirectionString,
+    positionDirectionString
   );
   return {
     position: { x: positionDirection.x, y: positionDirection.y },
@@ -39,7 +39,10 @@ const COMMAND_HANDLERS: Record<Command, (state: RoverState) => RoverState> = {
     const move = MOVE_VECTOR_MAP[state.direction];
     return {
       ...state,
-      position: { x: state.position.x + move.x, y: state.position.y + move.y },
+      position: {
+        x: state.position.x + move.x,
+        y: state.position.y + move.y,
+      },
     };
   },
 };
@@ -49,7 +52,7 @@ export const step = (state: RoverState, command: Command): RoverState =>
 
 export const run = (
   initialState: RoverState,
-  instructionString: InstructionString,
+  instructionString: InstructionString
 ): RoverState => {
   const instructions =
     InstructionStringWithTransformSchema.parse(instructionString);

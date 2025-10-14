@@ -1,0 +1,1 @@
+Introduce Result type for operations that can fail.
