@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const resultSchema = <T, E = string>(
   valueSchema: z.ZodType<T>,
-  errorSchema: z.ZodType<E>
+  errorSchema: z.ZodType<E>,
 ) =>
   z.union([
     z
@@ -44,10 +44,10 @@ export const resultIsFailure = <T, E>(r: Result<T, E>): r is FailureResult<E> =>
 
 export const resultMap = <T, U, E>(
   r: Result<T, E>,
-  fn: (t: T) => U
+  fn: (t: T) => U,
 ): Result<U, E> => (resultIsSuccess(r) ? resultCreateSuccess(fn(r.value)) : r);
 
 export const resultFlatMap = <T, U, E>(
   r: Result<T, E>,
-  fn: (t: T) => Result<U, E>
+  fn: (t: T) => Result<U, E>,
 ): Result<U, E> => (resultIsSuccess(r) ? fn(r.value) : r);
