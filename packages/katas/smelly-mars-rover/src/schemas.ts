@@ -37,7 +37,7 @@ export const PositionDirectionStringWithTransformSchema =
 
 export const InstructionStringWithTransformSchema =
   InstructionStringSchema.transform(
-    (str) => str.split("") as z.infer<typeof CommandSchema>[],
+    (str) => str.split("") as z.infer<typeof CommandSchema>[]
   );
 
 export const Vector2DSchema = z.object({
