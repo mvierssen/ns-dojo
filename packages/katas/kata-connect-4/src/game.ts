@@ -1,4 +1,5 @@
 import { createBoard } from "./board.js";
+import { getGameInstructions, type GameInstructions } from "./instructions.js";
 import type { Board } from "./types.js";
 
 export class Game {
@@ -13,5 +14,9 @@ export class Game {
       throw new Error("Game has not been started");
     }
     return this.board;
+  }
+
+  getInstructions(): GameInstructions {
+    return getGameInstructions();
   }
 }
