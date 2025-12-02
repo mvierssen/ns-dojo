@@ -1,0 +1,13 @@
+{
+  "extends": "@ns-dojo/ts-config-lib-compiled",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "types": [
+      "@testing-library/jest-dom",
+      "vitest/importMeta",
+      "vitest/globals",
+      "unplugin-icons/types/react"
+    ]
+  }
+}

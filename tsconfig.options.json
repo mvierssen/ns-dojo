@@ -7,7 +7,7 @@
     "baseUrl": ".",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "customConditions": ["@ns_white_crane_white_belt/source"],
+    "customConditions": ["source"],
 
     "allowJs": true,
     "resolveJsonModule": true,

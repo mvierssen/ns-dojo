@@ -1,5 +1,5 @@
 {
-  "name": "@ns-white-crane-white-belt/stryker-config",
+  "name": "@ns-dojo/stryker-config",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -8,11 +8,21 @@
     ".": "./src/index.js"
   },
   "dependencies": {
-    "@stryker-mutator/core": "9.2.0",
-    "@stryker-mutator/vitest-runner": "9.2.0",
-    "@stryker-mutator/typescript-checker": "9.2.0"
+    "@stryker-mutator/core": "9.3.0",
+    "@stryker-mutator/typescript-checker": "9.3.0",
+    "@stryker-mutator/vitest-runner": "9.3.0"
   },
   "devDependencies": {
-    "@ns-white-crane-white-belt/ts-config-build": "^0.1.0"
+    "@ns-dojo/eslint-config-base": "0.1.0",
+    "@ns-dojo/ts-config-build": "0.1.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
+    "typecheck": "tsc --noemit",
+    "test": "echo 'No tests for config package'",
+    "build": "mkdir -p dist && echo \"No build needed for config package\" > dist/.gitkeep"
   }
 }

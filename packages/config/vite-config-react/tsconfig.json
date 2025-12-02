@@ -1,0 +1,19 @@
+{
+  "extends": "@ns-dojo/ts-config-lib-react-source",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {}
+  },
+  "references": [
+    {
+      "path": "../eslint-config-base"
+    },
+    {
+      "path": "../vite-config-base"
+    }
+  ],
+  "include": ["src"],
+  "exclude": ["dist"]
+}

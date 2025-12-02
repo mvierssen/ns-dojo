@@ -1,0 +1,31 @@
+---
+interface Props {
+  title?: string;
+}
+
+const {title = "Welcome to Astro"} = Astro.props;
+---
+
+<div class="mx-auto max-w-3xl p-8 text-center">
+  <h1
+    class="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-5xl font-bold text-transparent">
+    {title}
+  </h1>
+  <p class="mb-8 text-xl text-gray-600">
+    This is a template Astro website with React islands, Tailwind CSS, and
+    Cloudflare Workers deployment ready to go.
+  </p>
+  <div class="rounded-lg border border-gray-200 bg-slate-50 p-8 text-left">
+    <h2 class="mb-4 text-2xl font-semibold text-gray-800">
+      Features included:
+    </h2>
+    <ul class="space-y-2 text-lg text-gray-700">
+      <li>⚡ Astro with React integration</li>
+      <li>🎨 Tailwind CSS for styling</li>
+      <li>☁️ Cloudflare Workers deployment</li>
+      <li>📦 Turborepo monorepo integration</li>
+      <li>🧪 Vitest testing setup</li>
+      <li>💎 TypeScript support</li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+$schema: https://moonrepo.dev/schemas/project.json
+type: library
+language: typescript
+tags:
+  - tenant-shared
+  - shared
+dependsOn:
+  - shared-logging
+tasks:
+  build:
+    deps:
+      - eslint-config-node:build
+      - stryker-config:build
+      - ts-config-lib-compiled:build
+      - vitest-config-node:build

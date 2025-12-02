@@ -1,0 +1,39 @@
+{
+  "extends": "@ns-dojo/ts-config-astro",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "types": [
+      "@testing-library/jest-dom",
+      "vitest/importMeta",
+      "vitest/globals"
+    ],
+    "paths": {}
+  },
+  "references": [
+    {
+      "path": "../../config/astro-config-react-cloudflare"
+    },
+    {
+      "path": "../../config/eslint-config-astro-react"
+    },
+    {
+      "path": "../../config/prettier-config"
+    },
+    {
+      "path": "../../config/vitest-config-react"
+    }
+  ],
+  "include": [
+    ".astro/types.d.ts",
+    "worker-configuration.d.ts",
+    "src",
+    "test",
+    "vitest.setup.ts",
+    "astro.config.ts",
+    "vite.config.ts",
+    "vitest.config.ts"
+  ],
+  "exclude": ["dist"]
+}

@@ -5,7 +5,7 @@
     "baseUrl": ".",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "customConditions": ["@ns-white-crane-white-belt/source"],
+    "customConditions": ["source"],
 
     "allowJs": true,
     "resolveJsonModule": true,
@@ -37,10 +37,6 @@
     "noImplicitOverride": true,
     "strict": true,
 
-    "types": [
-      "@testing-library/jest-dom",
-      "vitest/importMeta",
-      "vitest/globals"
-    ]
+    "types": ["vitest/importMeta", "vitest/globals"]
   }
 }

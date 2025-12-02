@@ -1,0 +1,26 @@
+$schema: https://moonrepo.dev/schemas/project.json
+type: configuration
+language: typescript
+tags:
+  - tenant-shared
+dependsOn:
+  - vite-config-base
+fileGroups:
+  sources:
+    - src/**/*
+  tests:
+    - src/**/*.test.*
+    - src/**/*.spec.*
+    - test/**/*
+  configs:
+    - "*.config.*"
+    - tsconfig*.json
+    - .eslintrc*
+    - .prettierrc*
+    - package.json
+tasks:
+  build:
+    deps:
+      - ts-config-lib-react-source:build
+      - eslint-config-base:build
+      - ^:build

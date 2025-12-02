@@ -1,5 +1,5 @@
 {
-  "name": "@ns-white-crane-white-belt/vitest-config-base",
+  "name": "@ns-dojo/vitest-config-base",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -9,16 +9,16 @@
       "types": "./dist/src/index.d.ts",
       "node": "./dist/src/index.js",
       "import": {
-        "@ns-white-crane-white-belt/source": "./src/index.ts",
-        "default": "./dist/src/index.js"
+        "source": "./src/index.ts",
+        "default": "./src/index.ts"
       }
     },
     "./*": {
       "types": "./dist/src/*.d.ts",
       "node": "./dist/src/*.js",
       "import": {
-        "@ns-white-crane-white-belt/source": "./src/*.ts",
-        "default": "./dist/src/*.js"
+        "source": "./src/*.ts",
+        "default": "./src/*.ts"
       }
     }
   },
@@ -26,9 +26,16 @@
     "vite-tsconfig-paths": "5.1.4"
   },
   "devDependencies": {
-    "@ns-white-crane-white-belt/ts-config-build": "^0.1.0"
+    "@ns-dojo/eslint-config-base": "0.1.0",
+    "@ns-dojo/ts-config-build": "0.1.0"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
+    "typecheck": "tsc --noemit",
+    "test": "echo 'No tests for config package'"
   }
 }

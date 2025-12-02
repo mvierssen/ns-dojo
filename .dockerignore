@@ -1,0 +1,98 @@
+# Global Docker Ignore File
+# This file consolidates all ignore patterns for Docker builds across the entire monorepo
+
+# Local Env and Secrets
+**/.env.local
+**/.env.*.local
+**/age.agekey
+**/*.pem
+**/*.key
+
+# IDE and Editor Files
+**/.vscode
+**/.history
+**/.ionide
+**/*.code-workspace
+
+# Version Control
+**/.git
+**/.gitignore
+
+# Dependencies and Package Management
+**/node_modules
+**/.pnp
+**/.pnp.*
+**/.yarn/cache
+**/.yarn/unplugged
+
+# Build Outputs
+**/dist
+**/build
+**/.output
+**/out
+**/.next
+**/.nuxt
+**/.nitro
+
+# Framework-Specific Directories
+**/.astro
+**/.svelte-kit
+**/.tanstack
+**/.cache
+**/.docusaurus
+
+# Testing and Coverage
+**/coverage
+**/*.coverage
+**/coverage*.json
+**/coverage*.xml
+**/.nyc_output
+**/test-results
+**/playwright-report
+**/blob-report
+**/playwright/.cache
+
+# Mutation Testing
+**/stryker-tmp
+**/reports
+
+# Cache and Temporary Files
+**/.moon/cache
+**/.parcel-cache
+**/*.tmp
+**/*.bak
+**/*.old
+**/*.log
+**/*storybook.log
+**/.serena
+
+# Auto-Generated Files
+**/*.gen.*
+**/auto-imports.d.ts
+**/routeTree.gen.ts
+**/*.tsbuildinfo
+**/next-env.d.ts
+
+# Docker-Specific Files
+**/Dockerfile*
+**/docker-compose*
+**/.dockerignore
+**/kubernetes
+
+# Documentation Build Outputs
+**/storybook-static
+**/docs/_build
+
+# Operating System Files
+**/.DS_Store
+**/.AppleDouble
+**/.LSOverride
+**/._*
+**/*.icloud
+
+# Mobile Applications
+**/android
+**/ios
+
+# Miscellaneous Generated Files
+**/.assetsignore

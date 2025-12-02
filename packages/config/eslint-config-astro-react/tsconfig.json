@@ -1,0 +1,22 @@
+{
+  "extends": "@ns-dojo/ts-config-build",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {}
+  },
+  "references": [
+    {
+      "path": "../eslint-config-base"
+    },
+    {
+      "path": "../eslint-config-astro"
+    },
+    {
+      "path": "../eslint-config-react"
+    }
+  ],
+  "include": ["src", "eslint.config.ts"],
+  "exclude": ["dist"]
+}
