@@ -44,4 +44,10 @@ describe("InstructionsShould", () => {
     const instructions = getGameInstructions();
     expect(instructions.rules.columnSelection).toMatch(/1.*7/);
   });
+
+  test("include prompt to start the game", () => {
+    const instructions = getGameInstructions();
+    expect(instructions.startPrompt).toBeDefined();
+    expect(instructions.startPrompt.length).toBeGreaterThan(0);
+  });
 });

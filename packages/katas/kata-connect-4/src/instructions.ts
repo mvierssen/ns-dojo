@@ -10,6 +10,7 @@ export interface GameRules {
 export interface GameInstructions {
   welcome: string;
   rules: GameRules;
+  startPrompt: string;
 }
 
 export function getGameInstructions(): GameInstructions {
@@ -24,5 +25,6 @@ export function getGameInstructions(): GameInstructions {
       drawCondition: "The game is a draw if the board is full with no winner.",
       columnSelection: "Select a column from 1 to 7 to drop your coin.",
     },
+    startPrompt: "Press Enter to start the game!",
   };
 }
