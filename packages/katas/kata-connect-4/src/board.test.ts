@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import { createBoard } from "./board.js";
-import { CELL_SYMBOLS, CellState } from "./constants.js";
+import { CELL_SYMBOLS, CellState, COLUMN_LABELS } from "./constants.js";
 
 describe("BoardShould", () => {
   test("have 6 rows", () => {
@@ -22,5 +22,9 @@ describe("BoardShould", () => {
 
   test("represent empty cells with ◯ symbol", () => {
     expect(CELL_SYMBOLS[CellState.Empty]).toBe("◯");
+  });
+
+  test("label columns 1 through 7 left to right", () => {
+    expect(COLUMN_LABELS).toEqual([1, 2, 3, 4, 5, 6, 7]);
   });
 });
