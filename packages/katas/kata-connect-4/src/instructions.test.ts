@@ -33,4 +33,10 @@ describe("InstructionsShould", () => {
     expect(instructions.rules.winCondition).toMatch(/vertical/i);
     expect(instructions.rules.winCondition).toMatch(/diagonal/i);
   });
+
+  test("explain draw occurs when board is full with no winner", () => {
+    const instructions = getGameInstructions();
+    expect(instructions.rules.drawCondition).toMatch(/draw|tie/i);
+    expect(instructions.rules.drawCondition).toMatch(/full/i);
+  });
 });
