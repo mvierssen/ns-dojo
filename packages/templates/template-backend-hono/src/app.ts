@@ -1,6 +1,6 @@
+import {OpenAPIHono} from "@hono/zod-openapi";
 import {createErrorHandler} from "@ns-dojo/shared-hono/errors";
 import {versionMiddleware} from "@ns-dojo/shared-hono/middleware";
-import {OpenAPIHono} from "@hono/zod-openapi";
 import {
   bodyLimitMiddleware,
   compressionMiddleware,

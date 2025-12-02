@@ -35,7 +35,7 @@ export const safeParseStart = (
   }
 
   return resultCreateSuccess({
-    position: { x: positionDirection.data.x, y: positionDirection.data.y },
+    position: {x: positionDirection.data.x, y: positionDirection.data.y},
     direction: positionDirection.data.direction,
   });
 };

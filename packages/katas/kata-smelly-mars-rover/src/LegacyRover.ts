@@ -1,4 +1,4 @@
-import { parseStart, run, render } from "./rover.js";
+import {parseStart, render, run} from "./rover.js";
 import type {
   InstructionString,
   PositionDirectionString,

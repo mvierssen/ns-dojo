@@ -1,7 +1,7 @@
-import { z } from "zod";
+import {z} from "zod";
 import {
-  Direction,
   Command,
+  Direction,
   INSTRUCTION_STRING_REGEX,
   POSITION_DIRECTION_STRING_REGEX,
 } from "./constants.js";
@@ -32,7 +32,7 @@ export const PositionDirectionStringWithTransformSchema =
     const x = Number.parseInt(parts[0] ?? "0", 10);
     const y = Number.parseInt(parts[1] ?? "0", 10);
     const direction = DirectionSchema.parse(parts[2]);
-    return { x, y, direction };
+    return {x, y, direction};
   });
 
 export const InstructionStringWithTransformSchema =

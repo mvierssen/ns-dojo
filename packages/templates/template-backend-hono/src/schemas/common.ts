@@ -1,9 +1,9 @@
+import {z} from "@hono/zod-openapi";
 import type {
   PaginationSchema as BasePaginationSchema,
   ProblemDetailsSchema as BaseProblemDetailsSchema,
   SuccessResponseSchema as BaseSuccessResponseSchema,
 } from "@ns-dojo/shared-hono";
-import {z} from "@hono/zod-openapi";
 
 /**
  * Common schemas used across the application with OpenAPI metadata

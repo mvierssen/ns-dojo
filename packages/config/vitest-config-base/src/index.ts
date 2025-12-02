@@ -14,7 +14,7 @@ export default defineConfig({
     coverage: {
       provider: "istanbul",
       include: ["src/**"],
-      exclude: ["src/**/*.test.*", "src/**/*.spec.*", "**/*.d.ts"],
+      exclude: ["src/**/*.test.*", "src/**/*.spec.*", "**/*.d.ts", "**/*.astro"],
       reporter: ["text", "html", "lcov"],
     },
     passWithNoTests: true,

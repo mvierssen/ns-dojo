@@ -1,4 +1,4 @@
-import type { Vector2D } from "./types.js";
+import type {Vector2D} from "./types.js";
 
 export enum Direction {
   North = "N",
@@ -31,8 +31,8 @@ export const TURN_RIGHT_TRANSITION_MAP: Record<Direction, Direction> = {
 };
 
 export const MOVE_VECTOR_MAP: Record<Direction, Vector2D> = {
-  [Direction.North]: { x: 0, y: 1 },
-  [Direction.East]: { x: 1, y: 0 },
-  [Direction.South]: { x: 0, y: -1 },
-  [Direction.West]: { x: -1, y: 0 },
+  [Direction.North]: {x: 0, y: 1},
+  [Direction.East]: {x: 1, y: 0},
+  [Direction.South]: {x: 0, y: -1},
+  [Direction.West]: {x: -1, y: 0},
 };

@@ -1,8 +1,12 @@
-import { describe, expect, test } from "vitest";
-
-import { createBoard, getAvailableColumns, getCell } from "./board.js";
-import { CELL_SYMBOLS, CellState, COLUMN_LABELS, ROW_LABELS } from "./constants.js";
-import { BoardSchema } from "./schemas.js";
+import {describe, expect, test} from "vitest";
+import {createBoard, getAvailableColumns, getCell} from "./board.js";
+import {
+  CELL_SYMBOLS,
+  CellState,
+  COLUMN_LABELS,
+  ROW_LABELS,
+} from "./constants.js";
+import {BoardSchema} from "./schemas.js";
 
 describe("BoardShould", () => {
   test("have 6 rows", () => {
@@ -17,7 +21,9 @@ describe("BoardShould", () => {
 
   test("initialize all 42 positions as empty", () => {
     const board = createBoard();
-    const allEmpty = board.cells.flat().every((cell) => cell === CellState.Empty);
+    const allEmpty = board.cells
+      .flat()
+      .every((cell) => cell === CellState.Empty);
     expect(allEmpty).toBe(true);
   });
 
@@ -35,7 +41,7 @@ describe("BoardShould", () => {
 
   test("identify position by row and column", () => {
     const board = createBoard();
-    const cell = getCell(board, { row: 1, column: 1 });
+    const cell = getCell(board, {row: 1, column: 1});
     expect(cell).toBe(CellState.Empty);
   });
 
@@ -47,7 +53,7 @@ describe("BoardShould", () => {
 
   describe("fail cases", () => {
     test("reject invalid board dimensions", () => {
-      const invalid = { cells: [[CellState.Empty]] };
+      const invalid = {cells: [[CellState.Empty]]};
       expect(() => BoardSchema.parse(invalid)).toThrow();
     });
   });

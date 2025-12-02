@@ -1,7 +1,6 @@
-import { describe, expect, test } from "vitest";
-
-import { Game } from "./game.js";
-import { CellState } from "./constants.js";
+import {describe, expect, test} from "vitest";
+import {CellState} from "./constants.js";
+import {Game} from "./game.js";
 
 describe("GameShould", () => {
   test("begin with a fresh board when started", () => {
