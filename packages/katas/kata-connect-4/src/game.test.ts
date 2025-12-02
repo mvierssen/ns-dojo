@@ -11,4 +11,11 @@ describe("GameShould", () => {
     const allEmpty = board.cells.flat().every((c) => c === CellState.Empty);
     expect(allEmpty).toBe(true);
   });
+
+  test("provide game instructions", () => {
+    const game = new Game();
+    const instructions = game.getInstructions();
+    expect(instructions.welcome).toBeDefined();
+    expect(instructions.rules).toBeDefined();
+  });
 });
