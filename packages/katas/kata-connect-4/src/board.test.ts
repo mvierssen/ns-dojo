@@ -2,6 +2,7 @@ import { describe, expect, test } from "vitest";
 
 import { createBoard, getAvailableColumns, getCell } from "./board.js";
 import { CELL_SYMBOLS, CellState, COLUMN_LABELS, ROW_LABELS } from "./constants.js";
+import { BoardSchema } from "./schemas.js";
 
 describe("BoardShould", () => {
   test("have 6 rows", () => {
@@ -42,5 +43,12 @@ describe("BoardShould", () => {
     const board = createBoard();
     const available = getAvailableColumns(board);
     expect(available).toEqual([1, 2, 3, 4, 5, 6, 7]);
+  });
+
+  describe("fail cases", () => {
+    test("reject invalid board dimensions", () => {
+      const invalid = { cells: [[CellState.Empty]] };
+      expect(() => BoardSchema.parse(invalid)).toThrow();
+    });
   });
 });
