@@ -3,6 +3,7 @@ export interface GameRules {
   coinDropMechanics: string;
   turnOrder: string;
   winCondition: string;
+  drawCondition: string;
 }
 
 export interface GameInstructions {
@@ -19,6 +20,7 @@ export function getGameInstructions(): GameInstructions {
       turnOrder: "Player 1 goes first, then players alternate turns.",
       winCondition:
         "Get 4 in a row to win - horizontal, vertical, or diagonal.",
+      drawCondition: "The game is a draw if the board is full with no winner.",
     },
   };
 }
