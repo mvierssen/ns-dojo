@@ -1,6 +1,6 @@
-import { createBoard } from "./board.js";
-import { getGameInstructions, type GameInstructions } from "./instructions.js";
-import type { Board } from "./types.js";
+import {createBoard} from "./board.js";
+import {getGameInstructions, type GameInstructions} from "./instructions.js";
+import type {Board} from "./types.js";
 
 export class Game {
   private board: Board | null = null;

@@ -1,5 +1,10 @@
-import { BOARD_COLUMNS, BOARD_ROWS, CellState, COLUMN_LABELS } from "./constants.js";
-import type { Board, Position } from "./types.js";
+import {
+  BOARD_COLUMNS,
+  BOARD_ROWS,
+  CellState,
+  COLUMN_LABELS,
+} from "./constants.js";
+import type {Board, Position} from "./types.js";
 
 export function createBoard(): Board {
   const cells: CellState[][] = [];
@@ -10,7 +15,7 @@ export function createBoard(): Board {
     }
     cells.push(row);
   }
-  return { cells };
+  return {cells};
 }
 
 export function getCell(board: Board, position: Position): CellState {

@@ -1,6 +1,5 @@
-import { describe, expect, test } from "vitest";
-
-import { getGameInstructions } from "./instructions.js";
+import {describe, expect, test} from "vitest";
+import {getGameInstructions} from "./instructions.js";
 
 describe("InstructionsShould", () => {
   test("include a welcome message", () => {

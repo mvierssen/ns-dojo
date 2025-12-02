@@ -1,5 +1,5 @@
-import { LegacyRover } from "./LegacyRover.js";
-import { describe, expect, test } from "vitest";
+import {describe, expect, test} from "vitest";
+import {LegacyRover} from "./LegacyRover.js";
 
 describe("LegacyMarsRoverShould", () => {
   test.each([

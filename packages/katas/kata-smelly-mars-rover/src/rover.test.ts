@@ -1,14 +1,7 @@
-import { describe, expect, test } from "vitest";
-import {
-  run,
-  render,
-  parseStart,
-  safeStep,
-  safeRender,
-  step,
-} from "./rover.js";
-import type { RoverState } from "./types.js";
-import { Command } from "./constants.js";
+import {describe, expect, test} from "vitest";
+import {Command} from "./constants.js";
+import {parseStart, render, run, safeRender, safeStep, step} from "./rover.js";
+import type {RoverState} from "./types.js";
 
 describe("MarsRoverShould", () => {
   test.each([
@@ -51,7 +44,7 @@ describe("MarsRoverShould", () => {
 
     describe("render", () => {
       test("should throw error for invalid rover state", () => {
-        const invalidState = { position: { x: 1.5, y: 2 }, direction: "N" };
+        const invalidState = {position: {x: 1.5, y: 2}, direction: "N"};
         expect(() => render(invalidState as unknown as RoverState)).toThrow();
       });
 
@@ -75,7 +68,7 @@ describe("MarsRoverShould", () => {
     describe("safeStep", () => {
       test("should handle errors for corrupted state", () => {
         const corruptedState = {
-          position: { x: 1, y: 2 },
+          position: {x: 1, y: 2},
           direction: "INVALID",
         } as unknown as RoverState;
 
@@ -88,7 +81,7 @@ describe("MarsRoverShould", () => {
     describe("step", () => {
       test("should throw error for corrupted state", () => {
         const corruptedState = {
-          position: { x: 1, y: 2 },
+          position: {x: 1, y: 2},
           direction: "INVALID",
         } as unknown as RoverState;
 

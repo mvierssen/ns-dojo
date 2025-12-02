@@ -45,9 +45,7 @@ export async function extractWorkspaceImports(dir: string): Promise<string[]> {
       ".mjs",
     ])) {
       const content = await readFile(entry);
-      const matches = content.matchAll(
-        /from ['"]@ns-dojo\/([\w-]+)['"]/g,
-      );
+      const matches = content.matchAll(/from ['"]@ns-dojo\/([\w-]+)['"]/g);
 
       for (const match of matches) {
         const pkg = match[1];
@@ -139,9 +137,7 @@ export async function extractConfigImports(
       for (const file of files) {
         try {
           const content = await readFile(file);
-          const matches = content.matchAll(
-            /from ['"]@ns-dojo\/([\w-]+)['"]/g,
-          );
+          const matches = content.matchAll(/from ['"]@ns-dojo\/([\w-]+)['"]/g);
 
           for (const match of matches) {
             const pkg = match[1];

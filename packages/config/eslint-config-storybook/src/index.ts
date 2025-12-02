@@ -1,6 +1,4 @@
-import baseConfig, {
-  disableTypeCheckedRules,
-} from "@ns-dojo/eslint-config-base";
+import baseConfig, {disableTypeCheckedRules} from "@ns-dojo/eslint-config-base";
 import eslintStorybook from "eslint-plugin-storybook";
 import {defineConfig} from "eslint/config";
 import tseslint from "typescript-eslint";

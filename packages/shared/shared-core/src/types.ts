@@ -1,4 +1,4 @@
-import { z } from "zod";
+import {z} from "zod";
 
 export const resultSchema = <T, E = string>(
   valueSchema: z.ZodType<T>,
@@ -22,8 +22,8 @@ export const resultSchema = <T, E = string>(
 export type Result<T, E = string> = z.infer<
   ReturnType<typeof resultSchema<T, E>>
 >;
-export type SuccessResult<T> = Extract<Result<T>, { success: true }>;
-export type FailureResult<E> = Extract<Result<never, E>, { success: false }>;
+export type SuccessResult<T> = Extract<Result<T>, {success: true}>;
+export type FailureResult<E> = Extract<Result<never, E>, {success: false}>;
 
 export const resultCreateSuccess = <T>(value: T): SuccessResult<T> =>
   ({

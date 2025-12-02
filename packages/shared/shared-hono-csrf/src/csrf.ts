@@ -1,7 +1,4 @@
-import {
-  generateCsrfToken,
-  validateCsrfToken,
-} from "@ns-dojo/shared-csrf";
+import {generateCsrfToken, validateCsrfToken} from "@ns-dojo/shared-csrf";
 import {createModuleLogger} from "@ns-dojo/shared-logging";
 import type {Context, MiddlewareHandler} from "hono";
 import type {HonoCsrfConfig} from "./types.js";

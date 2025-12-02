@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 
 import baseConfig from "@ns-dojo/vitest-config-node";
-import { defineConfig, mergeConfig } from "vitest/config";
+import {defineConfig, mergeConfig} from "vitest/config";
 
 export default defineConfig(mergeConfig(baseConfig, {}));

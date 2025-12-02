@@ -1,10 +1,9 @@
-import type { z } from "zod";
-
+import type {z} from "zod";
 import type {
-  PositionDirectionStringSchema,
   InstructionStringSchema,
-  Vector2DSchema,
+  PositionDirectionStringSchema,
   RoverStateSchema,
+  Vector2DSchema,
 } from "./schemas.js";
 
 export type RoverState = z.infer<typeof RoverStateSchema>;

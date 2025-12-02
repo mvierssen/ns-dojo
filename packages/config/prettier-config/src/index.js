@@ -1,3 +1,13 @@
+import {fileURLToPath} from "node:url";
+
+const sortImportsPath = fileURLToPath(
+  import.meta.resolve("@ianvs/prettier-plugin-sort-imports"),
+);
+const astroPath = fileURLToPath(import.meta.resolve("prettier-plugin-astro"));
+const tailwindPath = fileURLToPath(
+  import.meta.resolve("prettier-plugin-tailwindcss"),
+);
+
 /** @type {import("prettier").Config} */
 export default {
   // Core formatting options
@@ -10,11 +20,7 @@ export default {
 
   // Plugin configuration
   // Note: The Tailwind CSS plugin must be loaded last
-  plugins: [
-    "@ianvs/prettier-plugin-sort-imports",
-    "prettier-plugin-astro",
-    "prettier-plugin-tailwindcss",
-  ],
+  plugins: [sortImportsPath, astroPath, tailwindPath],
 
   // Import order configuration
   importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],

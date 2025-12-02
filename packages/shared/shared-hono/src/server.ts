@@ -1,5 +1,5 @@
-import {createModuleLogger} from "@ns-dojo/shared-logging";
 import {serve, type ServerType} from "@hono/node-server";
+import {createModuleLogger} from "@ns-dojo/shared-logging";
 import {config as loadEnvFile} from "dotenv";
 import type {Env, Hono} from "hono";
 
