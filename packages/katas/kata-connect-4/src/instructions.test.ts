@@ -19,4 +19,10 @@ describe("InstructionsShould", () => {
     const instructions = getGameInstructions();
     expect(instructions.rules.coinDropMechanics).toMatch(/fall|drop|lowest/i);
   });
+
+  test("explain Player 1 goes first then players alternate", () => {
+    const instructions = getGameInstructions();
+    expect(instructions.rules.turnOrder).toMatch(/player 1.*first/i);
+    expect(instructions.rules.turnOrder).toMatch(/alternate/i);
+  });
 });
