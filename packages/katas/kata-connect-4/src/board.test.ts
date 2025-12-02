@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { createBoard } from "./board.js";
+import { createBoard, getAvailableColumns, getCell } from "./board.js";
 import { CELL_SYMBOLS, CellState, COLUMN_LABELS, ROW_LABELS } from "./constants.js";
 
 describe("BoardShould", () => {
@@ -30,5 +30,17 @@ describe("BoardShould", () => {
 
   test("label rows 1 through 6 bottom to top", () => {
     expect(ROW_LABELS).toEqual([1, 2, 3, 4, 5, 6]);
+  });
+
+  test("identify position by row and column", () => {
+    const board = createBoard();
+    const cell = getCell(board, { row: 1, column: 1 });
+    expect(cell).toBe(CellState.Empty);
+  });
+
+  test("have all 7 columns available for coin placement on empty board", () => {
+    const board = createBoard();
+    const available = getAvailableColumns(board);
+    expect(available).toEqual([1, 2, 3, 4, 5, 6, 7]);
   });
 });
