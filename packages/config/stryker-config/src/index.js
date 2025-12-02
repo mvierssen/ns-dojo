@@ -69,7 +69,7 @@ export default {
     "!packages/*/.svelte-kit/**",
     // Exclude cache and temporary files
     "!packages/*/.cache/**",
-    "!packages/*/.turbo/**",
+    "!packages/*/.moon/cache/**",
     // Exclude mobile platform files
     "!packages/*/android/**",
     "!packages/*/ios/**",

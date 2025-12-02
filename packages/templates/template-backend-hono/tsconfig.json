@@ -1,0 +1,34 @@
+{
+  "extends": "@ns-dojo/ts-config-node",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@ns-dojo/shared-hono/*": ["../../shared/shared-hono/src/*"],
+      "@ns-dojo/shared-hono": ["../../shared/shared-hono/src/index.ts"],
+      "@ns-dojo/shared-logging/*": [
+        "../../shared/shared-logging/src/*"
+      ],
+      "@ns-dojo/shared-logging": [
+        "../../shared/shared-logging/src/index.ts"
+      ]
+    }
+  },
+  "references": [
+    {
+      "path": "../../config/eslint-config-node"
+    },
+    {
+      "path": "../../shared/shared-hono"
+    },
+    {
+      "path": "../../shared/shared-logging"
+    },
+    {
+      "path": "../../config/vitest-config-node"
+    }
+  ],
+  "include": ["src", "test", "vitest.config.ts"],
+  "exclude": ["dist"]
+}

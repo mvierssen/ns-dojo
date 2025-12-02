@@ -3,6 +3,6 @@ import {defineConfig} from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  resolve: {conditions: ["@ns-white-crane-white-belt/source"]},
+  resolve: {conditions: ["source", "development"]},
   plugins: [tsconfigPaths({projects: ["./tsconfig.json"]}), tailwind()],
 });

@@ -1,4 +1,4 @@
-# NS White Crane White Belt
+# NS White Crane
 
 A TypeScript monorepo for coding katas
 

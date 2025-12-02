@@ -4,6 +4,13 @@ import {defineConfig} from "vitest/config";
 export default defineConfig({
   test: {
     includeSource: ["src/**/*.{ts,tsx,js,jsx}"],
+    exclude: [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/.next/**",
+      "**/build/**",
+      "**/.astro/**",
+    ],
     coverage: {
       provider: "istanbul",
       include: ["src/**"],
@@ -21,9 +28,11 @@ export default defineConfig({
         "Date",
       ],
     },
+    // Ensure cleanup runs even on test failure
+    teardownTimeout: 10_000,
   },
   plugins: [tsconfigPaths({projects: ["./tsconfig.json"]})],
   resolve: {
-    conditions: ["@ns-white-crane-white-belt/source"],
+    conditions: ["source"],
   },
 });

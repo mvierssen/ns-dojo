@@ -1,0 +1,59 @@
+{
+  "name": "@ns-dojo/shared-crypto",
+  "version": "0.1.0",
+  "dependencies": {
+    "bcrypt": "6.0.0",
+    "jose": "6.1.2",
+    "zod": "4.1.12"
+  },
+  "devDependencies": {
+    "@ns-dojo/eslint-config-node": "0.1.0",
+    "@ns-dojo/ts-config-lib-compiled": "0.1.0",
+    "@ns-dojo/vitest-config-node": "0.1.0",
+    "@types/bcrypt": "6.0.0",
+    "@types/node": "24.10.1",
+    "@vitest/coverage-v8": "4.0.10",
+    "typescript": "5.9.3",
+    "vitest": "4.0.10"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/src/src/index.d.ts",
+      "source": "./src/index.ts",
+      "import": "./dist/src/index.js",
+      "default": "./dist/src/index.js"
+    },
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "source": "./src/*.ts",
+      "import": "./dist/src/*.js",
+      "default": "./dist/src/*.js"
+    }
+  },
+  "files": [
+    "package.json",
+    "dist"
+  ],
+  "main": "./dist/src/index.js",
+  "private": true,
+  "scripts": {
+    "build": "tsc --build",
+    "coverage": "npm run coverage:vitest",
+    "coverage:vitest": "vitest run --coverage",
+    "fmt": "npm run fmt:prettier",
+    "fmt:check": "npm run fmt:check:prettier",
+    "fmt:check:prettier": "prettier --check .",
+    "fmt:prettier": "prettier --write .",
+    "lint": "npm run lint:eslint",
+    "lint:eslint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "npm run test:vitest",
+    "test:vitest": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "npm run typecheck:tsc",
+    "typecheck:tsc": "tsc --noemit"
+  },
+  "type": "module",
+  "types": "./dist/src/src/index.d.ts"
+}

@@ -1,5 +1,5 @@
 {
-  "extends": "@ns-white-crane-white-belt/ts-config-build",
+  "extends": "@ns-dojo/ts-config-node",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": ".",

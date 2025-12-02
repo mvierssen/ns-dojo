@@ -1,0 +1,54 @@
+# moonrepo workspace configuration
+# https://moonrepo.dev/docs/config/workspace
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/workspace.json
+
+$schema: https://moonrepo.dev/schemas/workspace.json
+
+projects:
+  - "packages/config/*"
+  - "packages/scripts/*"
+  - "packages/shared/*"
+  - "packages/templates/*"
+  - "packages/katas/*"
+
+vcs:
+  manager: "git"
+  provider: "github"
+  defaultBranch: "master"
+
+  syncHooks: false
+  hooks:
+    commit-msg:
+      - "npx commitlint --edit $ARG1"
+
+    # Pre-commit: run lint and typecheck on affected files
+    # Unset git environment variables to prevent conflicts with moon's internal git usage
+    # See: https://github.com/bufbuild/buf/issues/2463
+    pre-commit:
+      - "unset $(git rev-parse --local-env-vars 2>/dev/null || echo '') && npx moon run :lint :typecheck --affected --status=staged --concurrency=4"
+
+# Runner configuration for task execution
+runner:
+  autoCleanCache: true
+  cacheLifetime: "7 days"
+  logRunningCommand: true
+  inheritColorsForPipedTasks: true
+
+hasher:
+  optimization: "performance"
+  walkStrategy: "vcs"
+
+constraints:
+  enforceProjectTypeRelationships: true
+
+  tagRelationships:
+    tenant-templates:
+      - tenant-templates
+      - tenant-shared
+
+    tenant-scripts:
+      - tenant-scripts
+      - tenant-shared
+
+    tenant-shared:
+      - tenant-shared

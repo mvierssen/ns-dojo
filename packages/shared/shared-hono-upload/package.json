@@ -1,0 +1,63 @@
+{
+  "name": "@ns-dojo/shared-hono-upload",
+  "version": "0.1.0",
+  "description": "File upload handling and image processing middleware for Hono applications",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/src/src/index.d.ts",
+      "source": "./src/index.ts",
+      "import": "./dist/src/index.js",
+      "default": "./dist/src/index.js"
+    },
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "source": "./src/*.ts",
+      "import": "./dist/src/*.js",
+      "default": "./dist/src/*.js"
+    }
+  },
+  "files": [
+    "package.json",
+    "dist"
+  ],
+  "main": "./dist/src/index.js",
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "npm run typecheck:tsc",
+    "typecheck:tsc": "tsc --noemit",
+    "lint": "npm run lint:eslint",
+    "lint:eslint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "npm run test:vitest",
+    "test:vitest": "vitest run",
+    "coverage": "npm run coverage:vitest",
+    "coverage:vitest": "vitest run --coverage",
+    "fmt": "npm run fmt:prettier",
+    "fmt:prettier": "prettier --write .",
+    "fmt:check": "npm run fmt:check:prettier",
+    "fmt:check:prettier": "prettier --check ."
+  },
+  "dependencies": {
+    "@ns-dojo/shared-hono": "0.1.0",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@ns-dojo/eslint-config-node": "0.1.0",
+    "@ns-dojo/ts-config-lib-compiled": "0.1.0",
+    "@ns-dojo/vitest-config-node": "0.1.0",
+    "@types/node": "^24.10.1",
+    "@vitest/coverage-v8": "^4.0.10",
+    "hono": "^4.10.6",
+    "typescript": "5.9.3",
+    "vitest": "^4.0.10",
+    "zod": "^4.1.12"
+  },
+  "peerDependencies": {
+    "hono": "^4.10.0",
+    "zod": "^4.1.0"
+  },
+  "types": "./dist/src/src/index.d.ts"
+}

@@ -1,5 +1,5 @@
 {
-  "name": "@ns-white-crane-white-belt/ts-config-build",
+  "name": "@ns-dojo/ts-config-build",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,17 @@
     ".": "./src/index.json",
     "./tsconfig.json": "./src/index.json"
   },
-  "dependencies": {
-    "@ns-white-crane-white-belt/ts-config-base": "^0.1.0"
+  "dependencies": {},
+  "scripts": {
+    "lint": "echo 'No linting needed for JSON-only config package'",
+    "lint:fix": "echo 'No linting needed for JSON-only config package'",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
+    "typecheck": "echo 'No typechecking needed for JSON-only config package'",
+    "test": "echo 'No tests for config package'",
+    "build": "mkdir -p dist && echo \"No build needed for config package\" > dist/.gitkeep"
+  },
+  "devDependencies": {
+    "@ns-dojo/ts-config-base": "0.1.0"
   }
 }

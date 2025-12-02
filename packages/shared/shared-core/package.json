@@ -1,11 +1,14 @@
 {
-  "name": "@ns-white-crane-white-belt/shared-core",
+  "name": "@ns-dojo/shared-core",
   "version": "0.1.0",
+  "dependencies": {
+    "zod": "^4.1.12"
+  },
   "devDependencies": {
-    "@ns-white-crane-white-belt/vitest-config-node": "^0.1.0",
-    "@ns-white-crane-white-belt/ts-config-lib-compiled": "^0.1.0",
-    "typescript": "5.9.3",
-    "vitest": "3.2.4"
+    "@ns-dojo/eslint-config-node": "0.1.0",
+    "@ns-dojo/ts-config-lib-compiled": "0.1.0",
+    "@ns-dojo/vitest-config-node": "0.1.0",
+    "typescript": "5.9.3"
   },
   "exports": {
     "./package.json": "./package.json",
@@ -13,16 +16,16 @@
       "types": "./dist/src/index.d.ts",
       "node": "./dist/src/index.js",
       "import": {
-        "@ns-white-crane-white-belt/source": "./src/index.ts",
-        "default": "./dist/src/index.js"
+        "source": "./src/index.ts",
+        "default": "./src/index.ts"
       }
     },
     "./*": {
       "types": "./dist/src/*.d.ts",
       "node": "./dist/src/*.js",
       "import": {
-        "@ns-white-crane-white-belt/source": "./src/*.ts",
-        "default": "./dist/src/*.js"
+        "source": "./src/*.ts",
+        "default": "./src/*.ts"
       }
     }
   },
@@ -44,7 +47,6 @@
     "lint:eslint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "npm run test:vitest",
-    "test:watch": "vitest",
     "test:vitest": "vitest run",
     "typecheck": "npm run typecheck:tsc",
     "typecheck:tsc": "tsc --noemit"

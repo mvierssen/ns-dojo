@@ -1,0 +1,17 @@
+{
+  "extends": "@ns-dojo/ts-config-build",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "module": "ESNext",
+    "moduleResolution": "bundler"
+  },
+  "include": ["src"],
+  "exclude": ["dist"],
+  "references": [
+    {
+      "path": "../eslint-config-base"
+    }
+  ]
+}

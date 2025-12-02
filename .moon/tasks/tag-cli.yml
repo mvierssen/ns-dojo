@@ -1,0 +1,35 @@
+# Shared tasks for CLI tool packages (MCP servers, command-line utilities)
+# https://moonrepo.dev/docs/config/tasks
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/tasks.json
+
+$schema: https://moonrepo.dev/schemas/tasks.json
+
+extends: "./typescript-library.yml"
+
+tasks:
+  # Build CLI tool
+  build:
+    command:
+      - "npm"
+      - "run"
+      - "build"
+    inputs:
+      - "@globs(sources)"
+      - "@globs(configs)"
+    outputs:
+      - "dist"
+    options:
+      cache: true
+      runDepsInParallel: true
+
+  # Development mode with watch (if applicable)
+  dev:
+    command:
+      - "npm"
+      - "run"
+      - "dev"
+    local: true
+    options:
+      cache: false
+      runInCI: false
+      persistent: true

@@ -1,0 +1,94 @@
+# Shared tasks for backend Node.js applications with Docker support
+# https://moonrepo.dev/docs/config/tasks
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/tasks.json
+
+$schema: https://moonrepo.dev/schemas/tasks.json
+
+extends: "./typescript-application.yml"
+
+fileGroups:
+  dockerfiles:
+    - "Dockerfile"
+    - "docker/**/Dockerfile*"
+    - "**/Dockerfile*"
+
+tasks:
+  # Lint Dockerfiles with hadolint
+  lint-docker:
+    command:
+      - "npm"
+      - "run"
+      - "lint:docker"
+    inputs:
+      - "@globs(dockerfiles)"
+      - ".hadolint.yaml"
+    outputs:
+      - ".artifacts/hadolint/gl-code-quality-report.json"
+    options:
+      cache: true
+      runInCI: true
+      os:
+        - linux
+
+  # Scan Docker image for vulnerabilities with Trivy
+  scan-image:
+    command:
+      - "npm"
+      - "run"
+      - "docker:scan"
+    env:
+      IMAGE: "registry.gitlab.com/ns-dojo/platform/${npm_package_name}:${npm_package_version}"
+    inputs:
+      - "@globs(dockerfiles)"
+    outputs:
+      - "trivy.sarif"
+    options:
+      cache: false
+      runInCI: false
+
+  # Generate Software Bill of Materials (SBOM) for Docker image
+  sbom:
+    command:
+      - "npm"
+      - "run"
+      - "docker:sbom"
+    env:
+      IMAGE: "registry.gitlab.com/ns-dojo/platform/${npm_package_name}:${npm_package_version}"
+    inputs:
+      - "@globs(dockerfiles)"
+    outputs:
+      - "sbom.spdx.json"
+    options:
+      cache: false
+      runInCI: false
+
+  # Analyze Docker image layers and efficiency with Dive
+  analyze-image:
+    command:
+      - "npm"
+      - "run"
+      - "docker:analyze"
+    env:
+      IMAGE: "registry.gitlab.com/ns-dojo/platform/${npm_package_name}:${npm_package_version}"
+    inputs:
+      - "@globs(dockerfiles)"
+    outputs:
+      - "dive-report.json"
+    options:
+      cache: false
+      runInCI: false
+
+  # Optimize Docker image with DockerSlim
+  optimize-image:
+    command:
+      - "npm"
+      - "run"
+      - "docker:slim"
+    env:
+      IMAGE: "registry.gitlab.com/ns-dojo/platform/${npm_package_name}:${npm_package_version}"
+    inputs:
+      - "@globs(dockerfiles)"
+    outputs: []
+    options:
+      cache: false
+      runInCI: false

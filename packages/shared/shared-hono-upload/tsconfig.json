@@ -1,0 +1,22 @@
+{
+  "extends": "@ns-dojo/ts-config-lib-compiled",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "paths": {
+      "@ns-dojo/shared-hono": ["../shared-hono/src/index.ts"],
+      "@ns-dojo/shared-hono/*": ["../shared-hono/src/*"]
+    }
+  },
+  "references": [
+    {
+      "path": "../../config/eslint-config-node"
+    },
+    {
+      "path": "../shared-hono"
+    },
+    {
+      "path": "../../config/vitest-config-node"
+    }
+  ]
+}

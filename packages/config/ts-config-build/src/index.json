@@ -1,5 +1,5 @@
 {
-  "extends": "@ns-white-crane-white-belt/ts-config-base",
+  "extends": "@ns-dojo/ts-config-base",
   "compilerOptions": {
     "emitDeclarationOnly": false,
     "noEmit": false

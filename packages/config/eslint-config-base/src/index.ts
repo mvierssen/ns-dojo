@@ -160,7 +160,7 @@ export default defineConfig(
     "**/reports/**",
 
     // Cache and Temporary Files
-    "**/.turbo/**",
+    "**/.moon/cache/**",
     "**/.parcel-cache/**",
     "**/*.tmp",
     "**/*.bak",
@@ -275,6 +275,7 @@ export default defineConfig(
       "unicorn/no-array-callback-reference": "off",
       "unicorn/prefer-spread": "off",
       "unicorn/require-module-specifiers": "off",
+      "unicorn/number-literal-case": "off",
     },
   },
 

@@ -1,0 +1,42 @@
+{
+  "name": "@ns-dojo/vitest-config-react",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "node": "./dist/src/index.js",
+      "import": {
+        "source": "./src/index.ts",
+        "default": "./src/index.ts"
+      }
+    },
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "node": "./dist/src/*.js",
+      "import": {
+        "source": "./src/*.ts",
+        "default": "./src/*.ts"
+      }
+    }
+  },
+  "dependencies": {
+    "@ns-dojo/vitest-config-jsdom": "0.1.0",
+    "@vitejs/plugin-react": "5.1.1"
+  },
+  "devDependencies": {
+    "@ns-dojo/ts-config-build": "0.1.0",
+    "@ns-dojo/eslint-config-base": "0.1.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
+    "typecheck": "tsc --noemit",
+    "test": "echo 'No tests for config package'"
+  }
+}

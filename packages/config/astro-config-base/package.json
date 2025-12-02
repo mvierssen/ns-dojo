@@ -1,0 +1,41 @@
+{
+  "name": "@ns-dojo/astro-config-base",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/src/index.d.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "source": "./src/*.ts",
+      "types": "./dist/src/*.d.ts",
+      "import": "./src/*.ts",
+      "default": "./src/*.ts"
+    }
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "4.1.17",
+    "unplugin-fonts": "1.4.0",
+    "unplugin-icons": "22.5.0"
+  },
+  "devDependencies": {
+    "@ns-dojo/eslint-config-base": "0.1.0",
+    "@ns-dojo/ts-config-build": "0.1.0",
+    "astro": "5.15.9",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
+    "typecheck": "tsc --noemit",
+    "test": "echo 'No tests for config package'"
+  }
+}

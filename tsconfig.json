@@ -2,34 +2,39 @@
   "extends": "./tsconfig.options.json",
   "files": [],
   "references": [
-    // Shared
+    // Config Packages
     {
-      "path": "packages/shared/shared-core"
+      "path": "packages/config/astro-config-base"
     },
     {
-      "path": "packages/shared/shared-vite"
+      "path": "packages/config/astro-config-cloudflare"
     },
     {
-      "path": "packages/shared/shared-zod"
+      "path": "packages/config/astro-config-react"
     },
-    // Config
+    {
+      "path": "packages/config/astro-config-react-cloudflare"
+    },
+    {
+      "path": "packages/config/eslint-config-astro"
+    },
+    {
+      "path": "packages/config/eslint-config-astro-react"
+    },
     {
       "path": "packages/config/eslint-config-base"
+    },
+    {
+      "path": "packages/config/eslint-config-cli"
     },
     {
       "path": "packages/config/eslint-config-node"
     },
     {
-      "path": "packages/config/vite-config-base"
+      "path": "packages/config/eslint-config-react"
     },
     {
-      "path": "packages/config/vitest-config-base"
-    },
-    {
-      "path": "packages/config/vitest-config-node"
-    },
-    {
-      "path": "packages/config/vitest-config-jsdom"
+      "path": "packages/config/eslint-config-storybook"
     },
     {
       "path": "packages/config/prettier-config"
@@ -37,16 +42,87 @@
     {
       "path": "packages/config/stryker-config"
     },
-    // Templates
     {
-      "path": "packages/templates/template-base"
+      "path": "packages/config/vite-config-base"
     },
     {
-      "path": "packages/templates/template-vite"
+      "path": "packages/config/vite-config-react"
+    },
+    {
+      "path": "packages/config/vitest-config-base"
+    },
+    {
+      "path": "packages/config/vitest-config-jsdom"
+    },
+    {
+      "path": "packages/config/vitest-config-node"
+    },
+    {
+      "path": "packages/config/vitest-config-react"
     },
     // Katas
     {
       "path": "packages/katas/smelly-mars-rover"
+    },
+    // Scripts
+    {
+      "path": "packages/scripts/scripts-lib"
+    },
+    {
+      "path": "packages/scripts/scripts-monorepo"
+    },
+    // Shared Libraries
+    {
+      "path": "packages/shared/shared-crypto"
+    },
+    {
+      "path": "packages/shared/shared-csrf"
+    },
+    {
+      "path": "packages/shared/shared-hono"
+    },
+    {
+      "path": "packages/shared/shared-hono-auth"
+    },
+    {
+      "path": "packages/shared/shared-hono-csrf"
+    },
+    {
+      "path": "packages/shared/shared-hono-test-utils"
+    },
+    {
+      "path": "packages/shared/shared-hono-upload"
+    },
+    {
+      "path": "packages/shared/shared-i18n"
+    },
+    {
+      "path": "packages/shared/shared-logging"
+    },
+    {
+      "path": "packages/shared/shared-object-storage"
+    },
+    {
+      "path": "packages/shared/shared-twitter-api"
+    },
+    // Templates
+    {
+      "path": "packages/templates/template-astro"
+    },
+    {
+      "path": "packages/templates/template-backend"
+    },
+    {
+      "path": "packages/templates/template-backend-hono"
+    },
+    {
+      "path": "packages/templates/template-base"
+    },
+    {
+      "path": "packages/templates/template-frontend"
+    },
+    {
+      "path": "packages/templates/template-frontend-react"
     }
   ]
 }

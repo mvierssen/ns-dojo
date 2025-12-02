@@ -1,0 +1,71 @@
+{
+  "name": "@ns-dojo/template-frontend-react",
+  "version": "0.1.0",
+  "dependencies": {
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@ns-dojo/eslint-config-react": "0.1.0",
+    "@ns-dojo/prettier-config": "0.1.0",
+    "@ns-dojo/ts-config-react": "0.1.0",
+    "@ns-dojo/vite-config-react": "0.1.0",
+    "@ns-dojo/vitest-config-react": "0.1.0",
+    "@iconify/json": "2.2.408",
+    "@svgr/core": "8.1.0",
+    "@svgr/plugin-jsx": "8.1.0",
+    "@tailwindcss/vite": "4.1.17",
+    "@types/react": "19.2.6",
+    "@types/react-dom": "19.2.3",
+    "typescript": "5.9.3",
+    "unplugin-auto-import": "20.2.0",
+    "unplugin-fonts": "1.4.0",
+    "unplugin-icons": "22.5.0",
+    "vite": "7.2.2",
+    "vitest": "4.0.10"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "node": "./dist/src/index.js",
+      "import": {
+        "source": "./src/index.ts",
+        "default": "./src/index.ts"
+      }
+    },
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "node": "./dist/src/*.js",
+      "import": {
+        "source": "./src/*.ts",
+        "default": "./src/*.ts"
+      }
+    }
+  },
+  "files": [
+    "package.json",
+    "dist"
+  ],
+  "main": "dist/src/index.js",
+  "private": true,
+  "scripts": {
+    "build": "tsc --build && vite build",
+    "coverage": "npm run coverage:vitest",
+    "coverage:vitest": "vitest run --coverage",
+    "dev": "vite",
+    "fmt": "npm run fmt:prettier",
+    "fmt:check": "npm run fmt:check:prettier",
+    "fmt:check:prettier": "prettier --check .",
+    "fmt:prettier": "prettier --write .",
+    "lint": "npm run lint:eslint",
+    "lint:eslint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "preview": "vite preview",
+    "test": "npm run test:vitest",
+    "test:vitest": "vitest run",
+    "typecheck": "npm run typecheck:tsc",
+    "typecheck:tsc": "tsc --noemit"
+  },
+  "type": "module"
+}

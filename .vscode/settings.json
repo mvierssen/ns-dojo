@@ -1,6 +1,13 @@
 {
+  /* Terminal */
+  "terminal.integrated.cwd": "${workspaceFolder:root}",
   /* Git */
   "git.ignoreLimitWarning": true,
+  /* Python */
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-python.black-formatter",
+  },
   /* Javascript */
   "debug.javascript.unmapMissingSources": true,
   /* Typescript */
@@ -18,25 +25,24 @@
   "eslint.validate": [
     "javascript",
     "javascriptreact",
-    "astro",
     "typescript",
-    "typescriptreact"
-  ],
-  "eslint.workingDirectories": [
-    {
-      "pattern": "./packages/shared/*/"
-    },
-    {
-      "pattern": "./packages/config/*/"
-    },
-    {
-      "pattern": "./packages/templates/*/"
-    },
-    {
-      "pattern": "./packages/katas/*/"
-    }
+    "typescriptreact",
   ],
   "eslint.useFlatConfig": true,
+  /* CPP */
+  "[cpp]": {
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+  },
+  /* YAML */
+  "[yaml]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+  },
+  "yaml.customTags": ["!reference sequence"],
+  /* Kubernetes */
+  "vs-kubernetes": {
+    "disable-linters": ["resource-limits"],
+  },
   /* Vitest */
   /* https://github.com/vitest-dev/vscode/issues/610#issuecomment-2936473630 */
   "vitest.maximumConfigs": 100,
@@ -44,18 +50,18 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always"
+    "source.fixAll.eslint": "always",
   },
   "editor.quickSuggestions": {
-    "strings": "on"
+    "strings": "on",
   },
   "diffEditor.renderSideBySide": true,
   /* Excludes */
   "files.exclude": {
-    /* Workspace Packages */
-    "packages/": false,
     /* NodeJS */
     "node_modules/": true,
+    /* Vscode */
+    //"**/.vscode": false,
     /* Build */
     "**/tsconfig.tsbuildinfo": true,
     "**/dist/": true,
@@ -63,6 +69,6 @@
     "*.tmp": true,
     "*.old": true,
     "*.bak": true,
-    "*.log": true
-  }
+    "*.log": true,
+  },
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@ns-white-crane-white-belt/prettier-config",
+  "name": "@ns-dojo/prettier-config",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -10,9 +10,19 @@
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "4.7.0",
     "prettier-plugin-astro": "0.14.1",
-    "prettier-plugin-tailwindcss": "0.6.14"
+    "prettier-plugin-tailwindcss": "0.7.1"
   },
   "devDependencies": {
-    "@ns-white-crane-white-belt/ts-config-build": "^0.1.0"
+    "@ns-dojo/eslint-config-base": "0.1.0",
+    "@ns-dojo/ts-config-build": "0.1.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check .",
+    "typecheck": "tsc --noemit",
+    "test": "echo 'No tests for config package'",
+    "build": "mkdir -p dist && echo \"No build needed for config package\" > dist/.gitkeep"
   }
 }

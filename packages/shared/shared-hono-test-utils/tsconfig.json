@@ -1,0 +1,16 @@
+{
+  "extends": "@ns-dojo/ts-config-lib-compiled",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "paths": {}
+  },
+  "references": [
+    {
+      "path": "../../config/eslint-config-node"
+    },
+    {
+      "path": "../../config/vitest-config-node"
+    }
+  ]
+}
