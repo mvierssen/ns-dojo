@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import { createBoard } from "./board.js";
+import { CellState } from "./constants.js";
 
 describe("BoardShould", () => {
   test("have 6 rows", () => {
@@ -11,5 +12,11 @@ describe("BoardShould", () => {
   test("have 7 columns per row", () => {
     const board = createBoard();
     expect(board.cells[0]?.length).toBe(7);
+  });
+
+  test("initialize all 42 positions as empty", () => {
+    const board = createBoard();
+    const allEmpty = board.cells.flat().every((cell) => cell === CellState.Empty);
+    expect(allEmpty).toBe(true);
   });
 });
