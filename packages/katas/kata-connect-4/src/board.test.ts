@@ -7,4 +7,9 @@ describe("BoardShould", () => {
     const board = createBoard();
     expect(board.cells.length).toBe(6);
   });
+
+  test("have 7 columns per row", () => {
+    const board = createBoard();
+    expect(board.cells[0]?.length).toBe(7);
+  });
 });
