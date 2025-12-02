@@ -14,3 +14,4 @@ export const CELL_SYMBOLS: Record<CellState, string> = {
 };
 
 export const COLUMN_LABELS = [1, 2, 3, 4, 5, 6, 7] as const;
+export const ROW_LABELS = [1, 2, 3, 4, 5, 6] as const;
