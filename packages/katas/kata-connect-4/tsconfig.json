@@ -1,0 +1,24 @@
+{
+  "extends": "@ns-dojo/ts-config-lib-compiled",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@ns-dojo/shared-core/*": ["../../shared/shared-core/src/*"]
+    }
+  },
+  "include": ["src", "vitest.config.ts"],
+  "exclude": ["dist"],
+  "references": [
+    {
+      "path": "../../config/eslint-config-node"
+    },
+    {
+      "path": "../../config/vitest-config-node"
+    },
+    {
+      "path": "../../shared/shared-core"
+    }
+  ]
+}
