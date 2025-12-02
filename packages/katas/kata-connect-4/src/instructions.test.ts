@@ -14,4 +14,9 @@ describe("InstructionsShould", () => {
     expect(instructions.rules.boardDimensions).toContain("6");
     expect(instructions.rules.boardDimensions).toContain("7");
   });
+
+  test("explain coins fall to lowest available row", () => {
+    const instructions = getGameInstructions();
+    expect(instructions.rules.coinDropMechanics).toMatch(/fall|drop|lowest/i);
+  });
 });
