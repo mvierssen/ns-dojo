@@ -25,4 +25,12 @@ describe("InstructionsShould", () => {
     expect(instructions.rules.turnOrder).toMatch(/player 1.*first/i);
     expect(instructions.rules.turnOrder).toMatch(/alternate/i);
   });
+
+  test("explain 4-in-a-row wins (horizontal, vertical, diagonal)", () => {
+    const instructions = getGameInstructions();
+    expect(instructions.rules.winCondition).toMatch(/4.*row|four.*row/i);
+    expect(instructions.rules.winCondition).toMatch(/horizontal/i);
+    expect(instructions.rules.winCondition).toMatch(/vertical/i);
+    expect(instructions.rules.winCondition).toMatch(/diagonal/i);
+  });
 });
