@@ -39,4 +39,9 @@ describe("InstructionsShould", () => {
     expect(instructions.rules.drawCondition).toMatch(/draw|tie/i);
     expect(instructions.rules.drawCondition).toMatch(/full/i);
   });
+
+  test("clarify columns 1-7 are used for selection", () => {
+    const instructions = getGameInstructions();
+    expect(instructions.rules.columnSelection).toMatch(/1.*7/);
+  });
 });

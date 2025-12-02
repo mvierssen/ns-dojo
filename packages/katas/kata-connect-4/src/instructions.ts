@@ -4,6 +4,7 @@ export interface GameRules {
   turnOrder: string;
   winCondition: string;
   drawCondition: string;
+  columnSelection: string;
 }
 
 export interface GameInstructions {
@@ -21,6 +22,7 @@ export function getGameInstructions(): GameInstructions {
       winCondition:
         "Get 4 in a row to win - horizontal, vertical, or diagonal.",
       drawCondition: "The game is a draw if the board is full with no winner.",
+      columnSelection: "Select a column from 1 to 7 to drop your coin.",
     },
   };
 }
