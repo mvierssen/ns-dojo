@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import { createBoard } from "./board.js";
-import { CellState } from "./constants.js";
+import { CELL_SYMBOLS, CellState } from "./constants.js";
 
 describe("BoardShould", () => {
   test("have 6 rows", () => {
@@ -18,5 +18,9 @@ describe("BoardShould", () => {
     const board = createBoard();
     const allEmpty = board.cells.flat().every((cell) => cell === CellState.Empty);
     expect(allEmpty).toBe(true);
+  });
+
+  test("represent empty cells with ◯ symbol", () => {
+    expect(CELL_SYMBOLS[CellState.Empty]).toBe("◯");
   });
 });
