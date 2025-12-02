@@ -16,7 +16,7 @@ vcs:
   provider: "github"
   defaultBranch: "master"
 
-  syncHooks: false
+  syncHooks: true
   hooks:
     commit-msg:
       - "npx commitlint --edit $ARG1"
