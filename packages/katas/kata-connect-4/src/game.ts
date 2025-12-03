@@ -2,6 +2,7 @@ import {createBoard} from "./board.js";
 import {getGameInstructions, type GameInstructions} from "./instructions.js";
 import type {Board} from "./types.js";
 
+// Facade Class
 export class Game {
   private board: Board | null = null;
 
