@@ -6,9 +6,7 @@ $schema: https://moonrepo.dev/schemas/workspace.json
 
 projects:
   - "packages/config/*"
-  - "packages/scripts/*"
   - "packages/shared/*"
-  - "packages/templates/*"
   - "packages/katas/*"
 
 vcs:
