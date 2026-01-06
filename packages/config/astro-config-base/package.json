@@ -19,14 +19,14 @@
     }
   },
   "dependencies": {
-    "@tailwindcss/vite": "4.1.17",
+    "@tailwindcss/vite": "4.1.18",
     "unplugin-fonts": "1.4.0",
     "unplugin-icons": "22.5.0"
   },
   "devDependencies": {
     "@ns-dojo/eslint-config-base": "0.1.0",
     "@ns-dojo/ts-config-build": "0.1.0",
-    "astro": "5.15.9",
+    "astro": "5.16.6",
     "typescript": "5.9.3"
   },
   "scripts": {

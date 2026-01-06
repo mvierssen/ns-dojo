@@ -8,9 +8,9 @@
     ".": "./src/index.js"
   },
   "dependencies": {
-    "@stryker-mutator/core": "9.3.0",
-    "@stryker-mutator/typescript-checker": "9.3.0",
-    "@stryker-mutator/vitest-runner": "9.3.0"
+    "@stryker-mutator/core": "9.4.0",
+    "@stryker-mutator/typescript-checker": "9.4.0",
+    "@stryker-mutator/vitest-runner": "9.4.0"
   },
   "devDependencies": {
     "@ns-dojo/eslint-config-base": "0.1.0",

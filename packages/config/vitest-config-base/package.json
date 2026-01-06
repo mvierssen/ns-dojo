@@ -23,7 +23,7 @@
     }
   },
   "dependencies": {
-    "vite-tsconfig-paths": "5.1.4"
+    "vite-tsconfig-paths": "6.0.3"
   },
   "devDependencies": {
     "@ns-dojo/eslint-config-base": "0.1.0",
