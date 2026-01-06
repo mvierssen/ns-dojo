@@ -6,8 +6,6 @@
   "workspaces": [
     "packages/config/*",
     "packages/shared/*",
-    "packages/scripts/*",
-    "packages/templates/*",
     "packages/katas/*"
   ],
   "devDependencies": {
