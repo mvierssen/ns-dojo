@@ -4,6 +4,7 @@ import {
   getAvailableColumns,
   getCell,
   renderBoard,
+  renderBoardComplete,
   renderBoardWithLabels,
   renderBoardWithRowLabels,
   renderRow,
@@ -100,6 +101,22 @@ describe("BoardShould", () => {
     const lines = rendered.split("\n");
     expect(lines[0]).toContain("6 |");
     expect(lines[5]).toContain("1 |");
+  });
+
+  test("render board with coins at correct positions", () => {
+    const board = createBoard();
+    // Manually place coins: Player1 at (1,1), Player2 at (1,2)
+    // Row 1 is at index 5, columns are 0-indexed in array
+    board.cells[5]![0] = CellState.Player1;
+    board.cells[5]![1] = CellState.Player2;
+
+    const rendered = renderBoardComplete(board);
+    const lines = rendered.split("\n");
+
+    // Row 1 should contain Player1 (🟡) and Player2 (🔴) coins
+    expect(lines[5]).toContain("1 | 🟡 🔴");
+    // Column labels should be present at bottom
+    expect(lines[6]).toBe("    1 2 3 4 5 6 7");
   });
 
   test("label columns 1 through 7 left to right", () => {
