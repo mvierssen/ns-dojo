@@ -134,4 +134,28 @@ describe("GameShould", () => {
     const row1Line = lines.find((line) => line.startsWith("1 |"));
     expect(row1Line).toContain("🟡");
   });
+
+  test("dropCoin multiple times stacks coins correctly", () => {
+    const game = new Game();
+    game.start();
+
+    const result1 = game.dropCoin(3, CellState.Player1);
+    const result2 = game.dropCoin(3, CellState.Player2);
+    const result3 = game.dropCoin(3, CellState.Player1);
+
+    expect(resultIsSuccess(result1)).toBe(true);
+    expect(resultIsSuccess(result2)).toBe(true);
+    expect(resultIsSuccess(result3)).toBe(true);
+
+    if (resultIsSuccess(result1) && resultIsSuccess(result2) && resultIsSuccess(result3)) {
+      expect(result1.value).toEqual({row: 1, column: 3});
+      expect(result2.value).toEqual({row: 2, column: 3});
+      expect(result3.value).toEqual({row: 3, column: 3});
+    }
+
+    const board = game.getBoard();
+    expect(getCell(board, {row: 1, column: 3})).toBe(CellState.Player1);
+    expect(getCell(board, {row: 2, column: 3})).toBe(CellState.Player2);
+    expect(getCell(board, {row: 3, column: 3})).toBe(CellState.Player1);
+  });
 });
