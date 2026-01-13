@@ -12,3 +12,7 @@ ${instructions.rules.columnSelection}
 
 ${instructions.startPrompt}`;
 }
+
+export function formatBoard(boardDisplay: string): string {
+  return boardDisplay;
+}
