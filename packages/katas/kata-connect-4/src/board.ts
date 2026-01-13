@@ -103,6 +103,23 @@ export function setCell(board: Board, position: Position, cellState: CellState):
   return {cells: newCells};
 }
 
+export function dropCoin(
+  board: Board,
+  column: number,
+  player: CellState
+): Result<{board: Board; position: Position}, string> {
+  const row = findLowestEmptyRow(board, column);
+
+  if (row === null) {
+    return resultCreateFailure(`Column ${column} is full`);
+  }
+
+  const position: Position = {row, column};
+  const newBoard = setCell(board, position, player);
+
+  return resultCreateSuccess({board: newBoard, position});
+}
+
 export function parseColumnInput(input: string): Result<number> {
   const trimmed = input.trim();
   const parsed = Number(trimmed);
