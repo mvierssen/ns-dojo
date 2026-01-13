@@ -1,7 +1,12 @@
 import type {Result} from "@ns-dojo/shared-core";
 import {resultCreateSuccess} from "@ns-dojo/shared-core";
 import {parseColumnInput} from "./board.js";
+import type {Game} from "./game.js";
 import type {GameInstructions} from "./instructions.js";
+
+export class GameLoop {
+  constructor(private game: Game) {}
+}
 
 export function formatWelcome(): string {
   return "Welcome to Connect 4!";

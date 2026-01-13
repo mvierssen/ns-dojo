@@ -7,8 +7,10 @@ import {
   formatPrompt,
   formatSuccess,
   formatWelcome,
+  GameLoop,
   processColumnInput,
 } from "./cli.js";
+import {Game} from "./game.js";
 import type {GameInstructions} from "./instructions.js";
 
 describe("CliOutputShould", () => {
@@ -115,5 +117,13 @@ describe("CliInputProcessingShould", () => {
 
     expect(resultIsSuccess(resultUpper)).toBe(true);
     expect(resultIsSuccess(resultMixed)).toBe(true);
+  });
+});
+
+describe("GameLoopShould", () => {
+  test("be created with a Game instance", () => {
+    const game = new Game();
+    const gameLoop = new GameLoop(game);
+    expect(gameLoop).toBeDefined();
   });
 });
