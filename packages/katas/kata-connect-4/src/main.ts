@@ -1,4 +1,5 @@
 import readline from "node:readline/promises";
+import {CellState} from "./constants.js";
 import {Game} from "./game.js";
 import {GameLoop} from "./cli.js";
 
@@ -29,7 +30,10 @@ export async function createCli(): Promise<void> {
   // Game loop
   let isRunning = true;
   while (isRunning) {
-    const input = await rl.question("Enter column (1-7) or 'q' to quit: ");
+    const currentPlayer = gameLoop.getCurrentPlayer();
+    const playerSymbol = currentPlayer === CellState.Player1 ? "🟡" : "🔴";
+    const playerName = currentPlayer === CellState.Player1 ? "Player 1" : "Player 2";
+    const input = await rl.question(`${playerSymbol} ${playerName}, enter column (1-7) or 'q' to quit: `);
     const response = gameLoop.handleInput(input);
 
     console.log(response.message);
