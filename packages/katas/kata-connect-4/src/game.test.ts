@@ -121,4 +121,17 @@ describe("GameShould", () => {
       expect(result.error).toContain("full");
     }
   });
+
+  test("displayBoard shows dropped coin at correct position", () => {
+    const game = new Game();
+    game.start();
+
+    game.dropCoin(4, CellState.Player1);
+    const display = game.displayBoard();
+
+    // Row 1 should show Player1 coin in column 4
+    const lines = display.split("\n");
+    const row1Line = lines.find((line) => line.startsWith("1 |"));
+    expect(row1Line).toContain("🟡");
+  });
 });
