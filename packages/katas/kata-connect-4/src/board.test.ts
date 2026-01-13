@@ -165,4 +165,12 @@ describe("ColumnInputParsingShould", () => {
       expect(result.value).toBe(1);
     }
   });
+
+  test("return success for column '7' (max)", () => {
+    const result = parseColumnInput("7");
+    expect(resultIsSuccess(result)).toBe(true);
+    if (resultIsSuccess(result)) {
+      expect(result.value).toBe(7);
+    }
+  });
 });
