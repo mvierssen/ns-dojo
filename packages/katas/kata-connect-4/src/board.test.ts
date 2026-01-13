@@ -5,6 +5,7 @@ import {
   getCell,
   renderBoard,
   renderBoardWithLabels,
+  renderBoardWithRowLabels,
   renderRow,
   renderRowWithLabel,
 } from "./board.js";
@@ -91,6 +92,14 @@ describe("BoardShould", () => {
     const rendered = renderBoardWithLabels(board);
     const lines = rendered.split("\n");
     expect(lines[lines.length - 1]).toBe("    1 2 3 4 5 6 7");
+  });
+
+  test("render rows in correct order with row 6 at top and row 1 at bottom", () => {
+    const board = createBoard();
+    const rendered = renderBoardWithRowLabels(board);
+    const lines = rendered.split("\n");
+    expect(lines[0]).toContain("6 |");
+    expect(lines[5]).toContain("1 |");
   });
 
   test("label columns 1 through 7 left to right", () => {
