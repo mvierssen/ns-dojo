@@ -372,4 +372,23 @@ describe("DropCoinShould", () => {
       expect(result.error).toContain("full");
     }
   });
+
+  test("not modify original board", () => {
+    const board = createBoard();
+    const originalCell = getCell(board, {row: 1, column: 3});
+
+    const result = dropCoin(board, 3, CellState.Player1);
+
+    // Original board should be unchanged
+    const cellAfter = getCell(board, {row: 1, column: 3});
+    expect(cellAfter).toBe(originalCell);
+    expect(cellAfter).toBe(CellState.Empty);
+
+    // Result should have new board with coin
+    expect(resultIsSuccess(result)).toBe(true);
+    if (resultIsSuccess(result)) {
+      const newCell = getCell(result.value.board, {row: 1, column: 3});
+      expect(newCell).toBe(CellState.Player1);
+    }
+  });
 });
