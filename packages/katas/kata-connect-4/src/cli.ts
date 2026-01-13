@@ -4,10 +4,10 @@ import {parseColumnInput} from "./board.js";
 import type {Game} from "./game.js";
 import type {GameInstructions} from "./instructions.js";
 
-export type GameLoopResponse = {
+export interface GameLoopResponse {
   type: "success" | "error" | "quit";
   message: string;
-};
+}
 
 export class GameLoop {
   constructor(private game: Game) {}
@@ -27,7 +27,7 @@ export class GameLoop {
     if (resultIsSuccess(result) && typeof result.value === "number") {
       return {
         type: "success",
-        message: formatSuccess(`Coin placed in column ${result.value}`),
+        message: formatSuccess(`Coin placed in column ${String(result.value)}`),
       };
     }
     if (resultIsFailure(result)) {
@@ -64,7 +64,7 @@ export function formatBoard(boardDisplay: string): string {
 }
 
 export function formatPrompt(player: number): string {
-  return `Player ${player}, select a column (1-7):`;
+  return `Player ${String(player)}, select a column (1-7):`;
 }
 
 export function formatError(message: string): string {
@@ -75,10 +75,10 @@ export function formatSuccess(message: string): string {
   return message;
 }
 
-export function processColumnInput(input: string): Result<number | "quit", string> {
+export function processColumnInput(input: string): Result<number | "quit"> {
   const normalized = input.trim().toLowerCase();
   if (normalized === "q" || normalized === "quit") {
-    return resultCreateSuccess("quit");
+    return resultCreateSuccess<number | "quit">("quit");
   }
   return parseColumnInput(input);
 }
