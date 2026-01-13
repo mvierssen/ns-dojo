@@ -10,7 +10,7 @@ export enum CellState {
 export const CELL_SYMBOLS: Record<CellState, string> = {
   [CellState.Empty]: "◯",
   [CellState.Player1]: "🟡",
-  [CellState.Player2]: "🟡",
+  [CellState.Player2]: "🔴",
 };
 
 export const COLUMN_LABELS = [1, 2, 3, 4, 5, 6, 7] as const;
