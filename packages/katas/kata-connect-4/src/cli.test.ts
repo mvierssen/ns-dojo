@@ -1,5 +1,5 @@
 import {describe, expect, test} from "vitest";
-import {formatBoard, formatError, formatInstructions, formatPrompt, formatWelcome} from "./cli.js";
+import {formatBoard, formatError, formatInstructions, formatPrompt, formatSuccess, formatWelcome} from "./cli.js";
 import type {GameInstructions} from "./instructions.js";
 
 describe("CliOutputShould", () => {
@@ -52,5 +52,11 @@ describe("CliOutputShould", () => {
     const formatted = formatError(errorMsg);
     expect(formatted).toContain(errorMsg);
     expect(formatted).toMatch(/error|invalid/i);
+  });
+
+  test("format success message for display", () => {
+    const successMsg = "Coin placed in column 4";
+    const formatted = formatSuccess(successMsg);
+    expect(formatted).toContain(successMsg);
   });
 });

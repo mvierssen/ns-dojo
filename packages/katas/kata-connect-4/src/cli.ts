@@ -24,3 +24,7 @@ export function formatPrompt(player: number): string {
 export function formatError(message: string): string {
   return `Error: ${message}`;
 }
+
+export function formatSuccess(message: string): string {
+  return message;
+}
