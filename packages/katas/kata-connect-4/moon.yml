@@ -19,3 +19,8 @@ tasks:
     local: true
     options:
       runInCI: false
+
+  docker-build:
+    command: "docker build -t connect4 -f packages/katas/kata-connect-4/Dockerfile ."
+    options:
+      runFromWorkspaceRoot: true
