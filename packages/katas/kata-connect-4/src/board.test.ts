@@ -262,4 +262,21 @@ describe("SetCellShould", () => {
     const cell = getCell(newBoard, position);
     expect(cell).toBe(CellState.Player2);
   });
+
+  test("return new board without mutating original", () => {
+    const board = createBoard();
+    const position: Position = {row: 1, column: 1};
+    const originalCell = getCell(board, position);
+
+    const newBoard = setCell(board, position, CellState.Player1);
+
+    // Original board should be unchanged
+    const originalCellAfter = getCell(board, position);
+    expect(originalCellAfter).toBe(originalCell);
+    expect(originalCellAfter).toBe(CellState.Empty);
+
+    // New board should have the change
+    const newCell = getCell(newBoard, position);
+    expect(newCell).toBe(CellState.Player1);
+  });
 });
