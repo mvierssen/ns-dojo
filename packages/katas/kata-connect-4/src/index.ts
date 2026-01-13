@@ -23,3 +23,6 @@ export {
 
 // Schemas
 export {BoardSchema, CellStateSchema, PositionSchema} from "./schemas.js";
+
+// CLI
+export {createCli} from "./main.js";
