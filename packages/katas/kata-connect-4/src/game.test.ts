@@ -90,4 +90,16 @@ describe("GameShould", () => {
     const cell = getCell(board, {row: 1, column: 3});
     expect(cell).toBe(CellState.Player1);
   });
+
+  test("dropCoin returns success with position for valid move", () => {
+    const game = new Game();
+    game.start();
+
+    const result = game.dropCoin(5, CellState.Player2);
+
+    expect(resultIsSuccess(result)).toBe(true);
+    if (resultIsSuccess(result)) {
+      expect(result.value).toEqual({row: 1, column: 5});
+    }
+  });
 });
