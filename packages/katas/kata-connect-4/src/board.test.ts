@@ -1,8 +1,10 @@
 import {describe, expect, test} from "vitest";
+import {resultIsSuccess} from "@ns-dojo/shared-core";
 import {
   createBoard,
   getAvailableColumns,
   getCell,
+  parseColumnInput,
   renderBoard,
   renderBoardComplete,
   renderBoardWithLabels,
@@ -144,5 +146,15 @@ describe("BoardShould", () => {
       const invalid = {cells: [[CellState.Empty]]};
       expect(() => BoardSchema.parse(invalid)).toThrow();
     });
+  });
+});
+
+describe("ColumnInputParsingShould", () => {
+  test("return success for valid column '4'", () => {
+    const result = parseColumnInput("4");
+    expect(resultIsSuccess(result)).toBe(true);
+    if (resultIsSuccess(result)) {
+      expect(result.value).toBe(4);
+    }
   });
 });
