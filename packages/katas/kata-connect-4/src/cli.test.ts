@@ -1,5 +1,14 @@
 import {describe, expect, test} from "vitest";
-import {formatBoard, formatError, formatInstructions, formatPrompt, formatSuccess, formatWelcome} from "./cli.js";
+import {resultIsSuccess} from "@ns-dojo/shared-core";
+import {
+  formatBoard,
+  formatError,
+  formatInstructions,
+  formatPrompt,
+  formatSuccess,
+  formatWelcome,
+  processColumnInput,
+} from "./cli.js";
 import type {GameInstructions} from "./instructions.js";
 
 describe("CliOutputShould", () => {
@@ -58,5 +67,15 @@ describe("CliOutputShould", () => {
     const successMsg = "Coin placed in column 4";
     const formatted = formatSuccess(successMsg);
     expect(formatted).toContain(successMsg);
+  });
+});
+
+describe("CliInputProcessingShould", () => {
+  test("process valid column input and return success with column number", () => {
+    const result = processColumnInput("4");
+    expect(resultIsSuccess(result)).toBe(true);
+    if (resultIsSuccess(result)) {
+      expect(result.value).toBe(4);
+    }
   });
 });
