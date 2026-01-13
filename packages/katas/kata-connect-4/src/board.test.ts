@@ -279,4 +279,17 @@ describe("SetCellShould", () => {
     const newCell = getCell(newBoard, position);
     expect(newCell).toBe(CellState.Player1);
   });
+
+  test("work correctly at position row 1 column 1 (corner)", () => {
+    const board = createBoard();
+    const position: Position = {row: 1, column: 1};
+    const newBoard = setCell(board, position, CellState.Player1);
+
+    const cell = getCell(newBoard, position);
+    expect(cell).toBe(CellState.Player1);
+
+    // Verify other cells remain empty
+    const adjacentCell = getCell(newBoard, {row: 1, column: 2});
+    expect(adjacentCell).toBe(CellState.Empty);
+  });
 });
