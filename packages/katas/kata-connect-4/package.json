@@ -5,6 +5,9 @@
     "@ns-dojo/shared-core": "0.1.0",
     "zod": "^4.3.5"
   },
+  "bin": {
+    "connect4": "./dist/main.js"
+  },
   "devDependencies": {
     "@ns-dojo/eslint-config-node": "0.1.0",
     "@ns-dojo/ts-config-lib-compiled": "0.1.0",
