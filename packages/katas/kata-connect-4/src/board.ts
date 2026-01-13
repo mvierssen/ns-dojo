@@ -67,3 +67,9 @@ export function renderBoardWithRowLabels(board: Board): string {
     })
     .join("\n");
 }
+
+export function renderBoardComplete(board: Board): string {
+  const boardWithRowLabels = renderBoardWithRowLabels(board);
+  const columnLabels = "    1 2 3 4 5 6 7";
+  return `${boardWithRowLabels}\n${columnLabels}`;
+}
