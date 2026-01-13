@@ -16,4 +16,9 @@ describe("ColumnInputSchemaShould", () => {
     const result = ColumnInputSchema.safeParse(0);
     expect(result.success).toBe(false);
   });
+
+  test("reject column 8 (above range)", () => {
+    const result = ColumnInputSchema.safeParse(8);
+    expect(result.success).toBe(false);
+  });
 });
