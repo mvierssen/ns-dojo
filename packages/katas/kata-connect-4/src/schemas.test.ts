@@ -21,4 +21,9 @@ describe("ColumnInputSchemaShould", () => {
     const result = ColumnInputSchema.safeParse(8);
     expect(result.success).toBe(false);
   });
+
+  test("reject non-integer values", () => {
+    const result = ColumnInputSchema.safeParse(3.5);
+    expect(result.success).toBe(false);
+  });
 });
