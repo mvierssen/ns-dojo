@@ -1,7 +1,9 @@
 import type {Result} from "@ns-dojo/shared-core";
-import {createBoard, parseColumnInput, renderBoardComplete} from "./board.js";
+import {resultCreateFailure, resultCreateSuccess, resultIsSuccess} from "@ns-dojo/shared-core";
+import {createBoard, dropCoin, parseColumnInput, renderBoardComplete} from "./board.js";
+import type {CellState} from "./constants.js";
 import {getGameInstructions, type GameInstructions} from "./instructions.js";
-import type {Board} from "./types.js";
+import type {Board, Position} from "./types.js";
 
 // Facade Class
 export class Game {
@@ -31,5 +33,20 @@ export class Game {
 
   validateColumnInput(input: string): Result<number> {
     return parseColumnInput(input);
+  }
+
+  dropCoin(column: number, player: CellState): Result<Position, string> {
+    if (this.board === null) {
+      return resultCreateFailure("Game has not been started");
+    }
+
+    const result = dropCoin(this.board, column, player);
+
+    if (resultIsSuccess(result)) {
+      this.board = result.value.board;
+      return resultCreateSuccess(result.value.position);
+    }
+
+    return resultCreateFailure(result.error);
   }
 }

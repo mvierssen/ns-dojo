@@ -1,5 +1,6 @@
 import {describe, expect, test} from "vitest";
 import {resultIsFailure, resultIsSuccess} from "@ns-dojo/shared-core";
+import {getCell} from "./board.js";
 import {CellState} from "./constants.js";
 import {Game} from "./game.js";
 
@@ -76,5 +77,17 @@ describe("GameShould", () => {
     const result = game.validateColumnInput("abc");
     expect(resultIsFailure(result)).toBe(true);
     expect((result as {error: string}).error).toMatch(/not a number|numeric/i);
+  });
+
+  test("dropCoin updates board state with Player1 coin", () => {
+    const game = new Game();
+    game.start();
+
+    const result = game.dropCoin(3, CellState.Player1);
+
+    expect(resultIsSuccess(result)).toBe(true);
+    const board = game.getBoard();
+    const cell = getCell(board, {row: 1, column: 3});
+    expect(cell).toBe(CellState.Player1);
   });
 });
