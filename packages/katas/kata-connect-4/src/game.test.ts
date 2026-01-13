@@ -27,8 +27,8 @@ describe("GameShould", () => {
 
     expect(display).toContain("6 |");
     expect(display).toContain("1 |");
-    expect(display).toContain("1 2 3 4 5 6 7");
-    expect(display).toContain("◯");
+    expect(display).toContain("1  2  3  4  5  6  7");
+    expect(display).toContain("⚪");
   });
 
   test("display board updates after state change", () => {
@@ -37,7 +37,7 @@ describe("GameShould", () => {
 
     // Get initial display
     const initialDisplay = game.displayBoard();
-    expect(initialDisplay).toContain("◯ ◯ ◯ ◯ ◯ ◯ ◯");
+    expect(initialDisplay).toContain("⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪");
 
     // Manually modify board for testing (will be replaced with proper move method later)
     const board = game.getBoard();

@@ -61,7 +61,7 @@ export function renderBoard(board: Board): string {
 
 export function renderBoardWithLabels(board: Board): string {
   const boardRows = renderBoard(board);
-  const columnLabels = "    1 2 3 4 5 6 7";
+  const columnLabels = "    1  2  3  4  5  6  7";
   return `${boardRows}\n${columnLabels}`;
 }
 
@@ -76,7 +76,7 @@ export function renderBoardWithRowLabels(board: Board): string {
 
 export function renderBoardComplete(board: Board): string {
   const boardWithRowLabels = renderBoardWithRowLabels(board);
-  const columnLabels = "    1 2 3 4 5 6 7";
+  const columnLabels = "    1  2  3  4  5  6  7";
   return `${boardWithRowLabels}\n${columnLabels}`;
 }
 
