@@ -1,3 +1,5 @@
+import type {Result} from "@ns-dojo/shared-core";
+import {parseColumnInput} from "./board.js";
 import type {GameInstructions} from "./instructions.js";
 
 export function formatWelcome(): string {
@@ -27,4 +29,8 @@ export function formatError(message: string): string {
 
 export function formatSuccess(message: string): string {
   return message;
+}
+
+export function processColumnInput(input: string): Result<number, string> {
+  return parseColumnInput(input);
 }
