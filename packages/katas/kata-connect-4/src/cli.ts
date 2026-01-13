@@ -1,4 +1,5 @@
 import type {Result} from "@ns-dojo/shared-core";
+import {resultCreateSuccess} from "@ns-dojo/shared-core";
 import {parseColumnInput} from "./board.js";
 import type {GameInstructions} from "./instructions.js";
 
@@ -31,6 +32,9 @@ export function formatSuccess(message: string): string {
   return message;
 }
 
-export function processColumnInput(input: string): Result<number, string> {
+export function processColumnInput(input: string): Result<number | "quit", string> {
+  if (input === "q") {
+    return resultCreateSuccess("quit");
+  }
   return parseColumnInput(input);
 }
