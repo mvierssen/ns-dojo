@@ -16,3 +16,7 @@ ${instructions.startPrompt}`;
 export function formatBoard(boardDisplay: string): string {
   return boardDisplay;
 }
+
+export function formatPrompt(player: number): string {
+  return `Player ${player}, select a column (1-7):`;
+}
