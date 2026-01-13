@@ -100,4 +100,20 @@ describe("CliInputProcessingShould", () => {
       expect(result.value).toBe("quit");
     }
   });
+
+  test("recognize 'quit' as quit command", () => {
+    const result = processColumnInput("quit");
+    expect(resultIsSuccess(result)).toBe(true);
+    if (resultIsSuccess(result)) {
+      expect(result.value).toBe("quit");
+    }
+  });
+
+  test("handle quit command case-insensitively", () => {
+    const resultUpper = processColumnInput("QUIT");
+    const resultMixed = processColumnInput("Quit");
+
+    expect(resultIsSuccess(resultUpper)).toBe(true);
+    expect(resultIsSuccess(resultMixed)).toBe(true);
+  });
 });

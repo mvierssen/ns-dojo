@@ -33,7 +33,8 @@ export function formatSuccess(message: string): string {
 }
 
 export function processColumnInput(input: string): Result<number | "quit", string> {
-  if (input === "q") {
+  const normalized = input.trim().toLowerCase();
+  if (normalized === "q" || normalized === "quit") {
     return resultCreateSuccess("quit");
   }
   return parseColumnInput(input);
