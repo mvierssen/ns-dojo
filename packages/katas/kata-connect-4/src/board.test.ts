@@ -216,4 +216,16 @@ describe("FindLowestEmptyRowShould", () => {
     const lowestRow = findLowestEmptyRow(board, 3);
     expect(lowestRow).toBe(2);
   });
+
+  test("return row 6 when rows 1-5 are occupied", () => {
+    const board = createBoard();
+    // Fill column 4 from row 1 to row 5
+    // Row 1: cells[5][3], Row 2: cells[4][3], ..., Row 5: cells[1][3]
+    for (let rowIndex = 5; rowIndex >= 1; rowIndex--) {
+      board.cells[rowIndex]![3] = CellState.Player1;
+    }
+
+    const lowestRow = findLowestEmptyRow(board, 4);
+    expect(lowestRow).toBe(6);
+  });
 });
