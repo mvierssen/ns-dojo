@@ -1,5 +1,6 @@
 import {describe, expect, test} from "vitest";
 import {resultIsSuccess, resultIsFailure} from "@ns-dojo/shared-core";
+import {getCell} from "./board.js";
 import {
   formatBoard,
   formatError,
@@ -10,6 +11,7 @@ import {
   GameLoop,
   processColumnInput,
 } from "./cli.js";
+import {CellState} from "./constants.js";
 import {Game} from "./game.js";
 import type {GameInstructions} from "./instructions.js";
 
@@ -185,5 +187,32 @@ describe("GameLoopShould", () => {
 
     const response = gameLoop.handleInput("quit");
     expect(response.type).toBe("quit");
+  });
+
+  test("handleInput places coin on board for valid column", () => {
+    const game = new Game();
+    game.start();
+    const gameLoop = new GameLoop(game);
+
+    gameLoop.handleInput("3");
+
+    const board = game.getBoard();
+    const cell = getCell(board, {row: 1, column: 3});
+    expect(cell).toBe(CellState.Player1);
+  });
+
+  test("handleInput alternates players between moves", () => {
+    const game = new Game();
+    game.start();
+    const gameLoop = new GameLoop(game);
+
+    gameLoop.handleInput("1");
+    gameLoop.handleInput("2");
+    gameLoop.handleInput("1");
+
+    const board = game.getBoard();
+    expect(getCell(board, {row: 1, column: 1})).toBe(CellState.Player1);
+    expect(getCell(board, {row: 1, column: 2})).toBe(CellState.Player2);
+    expect(getCell(board, {row: 2, column: 1})).toBe(CellState.Player1);
   });
 });

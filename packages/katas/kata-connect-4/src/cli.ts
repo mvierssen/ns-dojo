@@ -1,6 +1,7 @@
 import type {Result} from "@ns-dojo/shared-core";
 import {resultCreateSuccess, resultIsFailure, resultIsSuccess} from "@ns-dojo/shared-core";
 import {parseColumnInput} from "./board.js";
+import {CellState} from "./constants.js";
 import type {Game} from "./game.js";
 import type {GameInstructions} from "./instructions.js";
 
@@ -10,6 +11,8 @@ export interface GameLoopResponse {
 }
 
 export class GameLoop {
+  private currentPlayer: CellState = CellState.Player1;
+
   constructor(private game: Game) {}
 
   getWelcomeOutput(): string {
@@ -22,26 +25,48 @@ export class GameLoop {
     return formatBoard(boardDisplay);
   }
 
+  getCurrentPlayer(): CellState {
+    return this.currentPlayer;
+  }
+
   handleInput(input: string): GameLoopResponse {
-    const result = processColumnInput(input);
-    if (resultIsSuccess(result) && typeof result.value === "number") {
-      return {
-        type: "success",
-        message: formatSuccess(`Coin placed in column ${String(result.value)}`),
-      };
-    }
-    if (resultIsFailure(result)) {
-      return {
-        type: "error",
-        message: formatError(result.error),
-      };
-    }
-    if (resultIsSuccess(result) && result.value === "quit") {
+    const parseResult = processColumnInput(input);
+
+    if (resultIsSuccess(parseResult) && parseResult.value === "quit") {
       return {
         type: "quit",
         message: "Goodbye!",
       };
     }
+
+    if (resultIsFailure(parseResult)) {
+      return {
+        type: "error",
+        message: formatError(parseResult.error),
+      };
+    }
+
+    if (resultIsSuccess(parseResult) && typeof parseResult.value === "number") {
+      const column = parseResult.value;
+      const dropResult = this.game.dropCoin(column, this.currentPlayer);
+
+      if (resultIsFailure(dropResult)) {
+        return {
+          type: "error",
+          message: formatError(dropResult.error),
+        };
+      }
+
+      const playerName = this.currentPlayer === CellState.Player1 ? "Player 1" : "Player 2";
+      this.currentPlayer =
+        this.currentPlayer === CellState.Player1 ? CellState.Player2 : CellState.Player1;
+
+      return {
+        type: "success",
+        message: formatSuccess(`${playerName} placed coin in column ${String(column)}`),
+      };
+    }
+
     return {type: "success", message: ""};
   }
 }
