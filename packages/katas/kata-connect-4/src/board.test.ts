@@ -49,6 +49,20 @@ describe("BoardShould", () => {
     expect(rendered).toBe("◯ ◯ ◯ ◯ ◯ ◯ ◯");
   });
 
+  test("render row with mixed cell states", () => {
+    const row: CellState[] = [
+      CellState.Player1,
+      CellState.Empty,
+      CellState.Player2,
+      CellState.Empty,
+      CellState.Player1,
+      CellState.Player2,
+      CellState.Empty,
+    ];
+    const rendered = renderRow(row);
+    expect(rendered).toBe("🟡 ◯ 🔴 ◯ 🟡 🔴 ◯");
+  });
+
   test("label columns 1 through 7 left to right", () => {
     expect(COLUMN_LABELS).toEqual([1, 2, 3, 4, 5, 6, 7]);
   });
