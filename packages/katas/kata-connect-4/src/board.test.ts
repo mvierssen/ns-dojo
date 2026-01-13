@@ -253,4 +253,13 @@ describe("SetCellShould", () => {
     const cell = getCell(newBoard, position);
     expect(cell).toBe(CellState.Player1);
   });
+
+  test("place Player2 coin at specified position", () => {
+    const board = createBoard();
+    const position: Position = {row: 2, column: 5};
+    const newBoard = setCell(board, position, CellState.Player2);
+
+    const cell = getCell(newBoard, position);
+    expect(cell).toBe(CellState.Player2);
+  });
 });
