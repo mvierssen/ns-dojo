@@ -333,4 +333,15 @@ describe("DropCoinShould", () => {
       expect(cell).toBe(CellState.Player2);
     }
   });
+
+  test("return success with updated board and position", () => {
+    const board = createBoard();
+    const result = dropCoin(board, 5, CellState.Player1);
+
+    expect(resultIsSuccess(result)).toBe(true);
+    if (resultIsSuccess(result)) {
+      expect(result.value.board).toBeDefined();
+      expect(result.value.position).toEqual({row: 1, column: 5});
+    }
+  });
 });
