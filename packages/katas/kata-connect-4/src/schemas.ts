@@ -13,3 +13,5 @@ export const BoardSchema = z.object({
     .array(z.array(CellStateSchema).length(BOARD_COLUMNS))
     .length(BOARD_ROWS),
 });
+
+export const ColumnInputSchema = z.number().int().min(1).max(BOARD_COLUMNS);
