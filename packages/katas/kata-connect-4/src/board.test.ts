@@ -356,4 +356,20 @@ describe("DropCoinShould", () => {
 
     expect(resultIsFailure(result)).toBe(true);
   });
+
+  test("failure message indicates which column is full", () => {
+    const board = createBoard();
+    // Fill entire column 7
+    for (let rowIndex = 0; rowIndex < BOARD_ROWS; rowIndex++) {
+      board.cells[rowIndex]![6] = CellState.Player1;
+    }
+
+    const result = dropCoin(board, 7, CellState.Player2);
+
+    expect(resultIsFailure(result)).toBe(true);
+    if (resultIsFailure(result)) {
+      expect(result.error).toContain("7");
+      expect(result.error).toContain("full");
+    }
+  });
 });
