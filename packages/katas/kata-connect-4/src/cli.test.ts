@@ -155,4 +155,24 @@ describe("GameLoopShould", () => {
     expect(response.type).toBe("success");
     expect(response.message).toContain("4");
   });
+
+  test("handle invalid column input and return error response", () => {
+    const game = new Game();
+    game.start();
+    const gameLoop = new GameLoop(game);
+
+    const response = gameLoop.handleInput("abc");
+    expect(response.type).toBe("error");
+    expect(response.message).toMatch(/not a number|invalid/i);
+  });
+
+  test("handle out-of-range column and return error response", () => {
+    const game = new Game();
+    game.start();
+    const gameLoop = new GameLoop(game);
+
+    const response = gameLoop.handleInput("9");
+    expect(response.type).toBe("error");
+    expect(response.message).toMatch(/between 1 and 7/i);
+  });
 });
