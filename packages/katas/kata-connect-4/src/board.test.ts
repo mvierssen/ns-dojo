@@ -44,12 +44,12 @@ describe("BoardShould", () => {
     expect(allEmpty).toBe(true);
   });
 
-  test("represent empty cells with ◯ symbol", () => {
-    expect(CELL_SYMBOLS[CellState.Empty]).toBe("◯");
+  test("represent empty cells with ⚪ symbol", () => {
+    expect(CELL_SYMBOLS[CellState.Empty]).toBe("⚪");
   });
 
   test("render empty cell as hollow circle symbol", () => {
-    expect(CELL_SYMBOLS[CellState.Empty]).toBe("◯");
+    expect(CELL_SYMBOLS[CellState.Empty]).toBe("⚪");
   });
 
   test("render player 1 cell as yellow circle symbol", () => {
@@ -63,7 +63,7 @@ describe("BoardShould", () => {
   test("render single row of empty cells with 7 symbols", () => {
     const row: CellState[] = Array.from({length: 7}, () => CellState.Empty);
     const rendered = renderRow(row);
-    expect(rendered).toBe("◯ ◯ ◯ ◯ ◯ ◯ ◯");
+    expect(rendered).toBe("⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪");
   });
 
   test("render row with mixed cell states", () => {
@@ -77,14 +77,14 @@ describe("BoardShould", () => {
       CellState.Empty,
     ];
     const rendered = renderRow(row);
-    expect(rendered).toBe("🟡 ◯ 🔴 ◯ 🟡 🔴 ◯");
+    expect(rendered).toBe("🟡 ⚪ 🔴 ⚪ 🟡 🔴 ⚪");
   });
 
   test("render row with row number label on left side", () => {
     const row: CellState[] = Array.from({length: 7}, () => CellState.Empty);
     const rowNumber = 3;
     const rendered = renderRowWithLabel(row, rowNumber);
-    expect(rendered).toBe("3 | ◯ ◯ ◯ ◯ ◯ ◯ ◯");
+    expect(rendered).toBe("3 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪");
   });
 
   test("render empty board with all 6 rows", () => {
@@ -92,14 +92,14 @@ describe("BoardShould", () => {
     const rendered = renderBoard(board);
     const lines = rendered.split("\n");
     expect(lines.length).toBe(6);
-    expect(lines[0]).toContain("◯ ◯ ◯ ◯ ◯ ◯ ◯");
+    expect(lines[0]).toContain("⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪");
   });
 
   test("render board with column labels at bottom", () => {
     const board = createBoard();
     const rendered = renderBoardWithLabels(board);
     const lines = rendered.split("\n");
-    expect(lines.at(-1)).toBe("    1 2 3 4 5 6 7");
+    expect(lines.at(-1)).toBe("    1  2  3  4  5  6  7");
   });
 
   test("render rows in correct order with row 6 at top and row 1 at bottom", () => {
@@ -126,7 +126,7 @@ describe("BoardShould", () => {
     // Row 1 should contain Player1 (🟡) and Player2 (🔴) coins
     expect(lines[5]).toContain("1 | 🟡 🔴");
     // Column labels should be present at bottom
-    expect(lines[6]).toBe("    1 2 3 4 5 6 7");
+    expect(lines[6]).toBe("    1  2  3  4  5  6  7");
   });
 
   test("label columns 1 through 7 left to right", () => {

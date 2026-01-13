@@ -42,11 +42,11 @@ describe("CliOutputShould", () => {
   });
 
   test("format board string for console display", () => {
-    const boardDisplay = "6 | ◯ ◯ ◯ ◯ ◯ ◯ ◯\n5 | ◯ ◯ ◯ ◯ ◯ ◯ ◯\n4 | ◯ ◯ ◯ ◯ ◯ ◯ ◯\n3 | ◯ ◯ ◯ ◯ ◯ ◯ ◯\n2 | ◯ ◯ ◯ ◯ ◯ ◯ ◯\n1 | ◯ ◯ ◯ ◯ ◯ ◯ ◯\n    1 2 3 4 5 6 7";
+    const boardDisplay = "6 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n5 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n4 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n3 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n2 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n1 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n    1  2  3  4  5  6  7";
 
     const formatted = formatBoard(boardDisplay);
     expect(formatted).toContain("6 |");
-    expect(formatted).toContain("1 2 3 4 5 6 7");
+    expect(formatted).toContain("1  2  3  4  5  6  7");
   });
 
   test("format player turn prompt", () => {
@@ -137,7 +137,7 @@ describe("GameLoopShould", () => {
 
     const output = gameLoop.getBoardOutput();
     expect(output).toContain("6 |");
-    expect(output).toContain("1 2 3 4 5 6 7");
+    expect(output).toContain("1  2  3  4  5  6  7");
   });
 
   test("handle valid column input and return success response", () => {
