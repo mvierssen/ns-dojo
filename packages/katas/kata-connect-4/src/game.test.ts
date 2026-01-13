@@ -40,7 +40,8 @@ describe("GameShould", () => {
 
     // Manually modify board for testing (will be replaced with proper move method later)
     const board = game.getBoard();
-    board.cells[5]![0] = CellState.Player1;
+    const row = board.cells[5];
+    if (row) row[0] = CellState.Player1;
 
     // Get updated display
     const updatedDisplay = game.displayBoard();
@@ -52,36 +53,28 @@ describe("GameShould", () => {
     const game = new Game();
     const result = game.validateColumnInput("4");
     expect(resultIsSuccess(result)).toBe(true);
-    if (resultIsSuccess(result)) {
-      expect(result.value).toBe(4);
-    }
+    expect((result as {value: number}).value).toBe(4);
   });
 
   test("validate column input and return failure with error message for invalid input", () => {
     const game = new Game();
     const result = game.validateColumnInput("abc");
     expect(resultIsFailure(result)).toBe(true);
-    if (resultIsFailure(result)) {
-      expect(result.error).toBeDefined();
-      expect(result.error.length).toBeGreaterThan(0);
-    }
+    expect((result as {error: string}).error).toBeDefined();
+    expect((result as {error: string}).error.length).toBeGreaterThan(0);
   });
 
   test("provide meaningful error message for out-of-range column", () => {
     const game = new Game();
     const result = game.validateColumnInput("8");
     expect(resultIsFailure(result)).toBe(true);
-    if (resultIsFailure(result)) {
-      expect(result.error).toMatch(/column|range|1.*7/i);
-    }
+    expect((result as {error: string}).error).toMatch(/column|range|1.*7/i);
   });
 
   test("provide meaningful error message for non-numeric input", () => {
     const game = new Game();
     const result = game.validateColumnInput("abc");
     expect(resultIsFailure(result)).toBe(true);
-    if (resultIsFailure(result)) {
-      expect(result.error).toMatch(/not a number|numeric/i);
-    }
+    expect((result as {error: string}).error).toMatch(/not a number|numeric/i);
   });
 });

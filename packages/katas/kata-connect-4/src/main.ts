@@ -46,9 +46,7 @@ export async function createCli(): Promise<void> {
   rl.close();
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
-  createCli().catch((error) => {
-    console.error("Error running CLI:", error);
-    process.exit(1);
-  });
+const scriptPath = process.argv[1] ?? "";
+if (import.meta.url === `file://${scriptPath}`) {
+  await createCli();
 }

@@ -58,7 +58,7 @@ describe("BoardShould", () => {
   });
 
   test("render single row of empty cells with 7 symbols", () => {
-    const row: CellState[] = Array(7).fill(CellState.Empty);
+    const row: CellState[] = Array.from({length: 7}, () => CellState.Empty);
     const rendered = renderRow(row);
     expect(rendered).toBe("◯ ◯ ◯ ◯ ◯ ◯ ◯");
   });
@@ -78,7 +78,7 @@ describe("BoardShould", () => {
   });
 
   test("render row with row number label on left side", () => {
-    const row: CellState[] = Array(7).fill(CellState.Empty);
+    const row: CellState[] = Array.from({length: 7}, () => CellState.Empty);
     const rowNumber = 3;
     const rendered = renderRowWithLabel(row, rowNumber);
     expect(rendered).toBe("3 | ◯ ◯ ◯ ◯ ◯ ◯ ◯");
@@ -96,7 +96,7 @@ describe("BoardShould", () => {
     const board = createBoard();
     const rendered = renderBoardWithLabels(board);
     const lines = rendered.split("\n");
-    expect(lines[lines.length - 1]).toBe("    1 2 3 4 5 6 7");
+    expect(lines.at(-1)).toBe("    1 2 3 4 5 6 7");
   });
 
   test("render rows in correct order with row 6 at top and row 1 at bottom", () => {
@@ -111,8 +111,11 @@ describe("BoardShould", () => {
     const board = createBoard();
     // Manually place coins: Player1 at (1,1), Player2 at (1,2)
     // Row 1 is at index 5, columns are 0-indexed in array
-    board.cells[5]![0] = CellState.Player1;
-    board.cells[5]![1] = CellState.Player2;
+    const row = board.cells[5];
+    if (row) {
+      row[0] = CellState.Player1;
+      row[1] = CellState.Player2;
+    }
 
     const rendered = renderBoardComplete(board);
     const lines = rendered.split("\n");
@@ -155,25 +158,19 @@ describe("ColumnInputParsingShould", () => {
   test("return success for valid column '4'", () => {
     const result = parseColumnInput("4");
     expect(resultIsSuccess(result)).toBe(true);
-    if (resultIsSuccess(result)) {
-      expect(result.value).toBe(4);
-    }
+    expect((result as {value: number}).value).toBe(4);
   });
 
   test("return success for column '1' (min)", () => {
     const result = parseColumnInput("1");
     expect(resultIsSuccess(result)).toBe(true);
-    if (resultIsSuccess(result)) {
-      expect(result.value).toBe(1);
-    }
+    expect((result as {value: number}).value).toBe(1);
   });
 
   test("return success for column '7' (max)", () => {
     const result = parseColumnInput("7");
     expect(resultIsSuccess(result)).toBe(true);
-    if (resultIsSuccess(result)) {
-      expect(result.value).toBe(7);
-    }
+    expect((result as {value: number}).value).toBe(7);
   });
 
   test("return failure for '0'", () => {
@@ -212,7 +209,8 @@ describe("FindLowestEmptyRowShould", () => {
   test("return row 2 when row 1 is occupied", () => {
     const board = createBoard();
     // Manually place coin at row 1, column 3 (array index: cells[5][2])
-    board.cells[5]![2] = CellState.Player1;
+    const row = board.cells[5];
+    if (row) row[2] = CellState.Player1;
 
     const lowestRow = findLowestEmptyRow(board, 3);
     expect(lowestRow).toBe(2);
@@ -223,7 +221,8 @@ describe("FindLowestEmptyRowShould", () => {
     // Fill column 4 from row 1 to row 5
     // Row 1: cells[5][3], Row 2: cells[4][3], ..., Row 5: cells[1][3]
     for (let rowIndex = 5; rowIndex >= 1; rowIndex--) {
-      board.cells[rowIndex]![3] = CellState.Player1;
+      const row = board.cells[rowIndex];
+      if (row) row[3] = CellState.Player1;
     }
 
     const lowestRow = findLowestEmptyRow(board, 4);
@@ -234,7 +233,8 @@ describe("FindLowestEmptyRowShould", () => {
     const board = createBoard();
     // Fill entire column 2 (all 6 rows)
     for (let rowIndex = 0; rowIndex < BOARD_ROWS; rowIndex++) {
-      board.cells[rowIndex]![1] = CellState.Player2;
+      const row = board.cells[rowIndex];
+      if (row) row[1] = CellState.Player2;
     }
 
     const lowestRow = findLowestEmptyRow(board, 2);

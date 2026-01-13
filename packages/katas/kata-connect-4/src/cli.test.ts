@@ -76,18 +76,14 @@ describe("CliInputProcessingShould", () => {
   test("process valid column input and return success with column number", () => {
     const result = processColumnInput("4");
     expect(resultIsSuccess(result)).toBe(true);
-    if (resultIsSuccess(result)) {
-      expect(result.value).toBe(4);
-    }
+    expect((result as {value: number}).value).toBe(4);
   });
 
   test("process invalid column input and return failure with error message", () => {
     const result = processColumnInput("abc");
     expect(resultIsFailure(result)).toBe(true);
-    if (resultIsFailure(result)) {
-      expect(result.error).toBeDefined();
-      expect(result.error.length).toBeGreaterThan(0);
-    }
+    expect((result as {error: string}).error).toBeDefined();
+    expect((result as {error: string}).error.length).toBeGreaterThan(0);
   });
 
   test("process out-of-range column and return failure", () => {
@@ -98,17 +94,13 @@ describe("CliInputProcessingShould", () => {
   test("recognize 'q' as quit command", () => {
     const result = processColumnInput("q");
     expect(resultIsSuccess(result)).toBe(true);
-    if (resultIsSuccess(result)) {
-      expect(result.value).toBe("quit");
-    }
+    expect((result as {value: string}).value).toBe("quit");
   });
 
   test("recognize 'quit' as quit command", () => {
     const result = processColumnInput("quit");
     expect(resultIsSuccess(result)).toBe(true);
-    if (resultIsSuccess(result)) {
-      expect(result.value).toBe("quit");
-    }
+    expect((result as {value: string}).value).toBe("quit");
   });
 
   test("handle quit command case-insensitively", () => {

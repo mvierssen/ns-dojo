@@ -29,7 +29,7 @@ export class Game {
     return renderBoardComplete(this.board);
   }
 
-  validateColumnInput(input: string): Result<number, string> {
+  validateColumnInput(input: string): Result<number> {
     return parseColumnInput(input);
   }
 }

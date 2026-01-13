@@ -52,7 +52,7 @@ export function renderRow(row: CellState[]): string {
 }
 
 export function renderRowWithLabel(row: CellState[], rowNumber: number): string {
-  return `${rowNumber} | ${renderRow(row)}`;
+  return `${String(rowNumber)} | ${renderRow(row)}`;
 }
 
 export function renderBoard(board: Board): string {
@@ -90,11 +90,11 @@ export function findLowestEmptyRow(board: Board, column: number): number | null 
   return null;
 }
 
-export function parseColumnInput(input: string): Result<number, string> {
+export function parseColumnInput(input: string): Result<number> {
   const trimmed = input.trim();
   const parsed = Number(trimmed);
 
-  if (isNaN(parsed)) {
+  if (Number.isNaN(parsed)) {
     return resultCreateFailure("Invalid column input: not a number");
   }
 
@@ -105,7 +105,7 @@ export function parseColumnInput(input: string): Result<number, string> {
   }
 
   if (parsed < 1 || parsed > BOARD_COLUMNS) {
-    return resultCreateFailure(`Column must be between 1 and ${BOARD_COLUMNS}`);
+    return resultCreateFailure(`Column must be between 1 and ${String(BOARD_COLUMNS)}`);
   }
 
   return resultCreateFailure("Invalid column input");
