@@ -157,4 +157,12 @@ describe("ColumnInputParsingShould", () => {
       expect(result.value).toBe(4);
     }
   });
+
+  test("return success for column '1' (min)", () => {
+    const result = parseColumnInput("1");
+    expect(resultIsSuccess(result)).toBe(true);
+    if (resultIsSuccess(result)) {
+      expect(result.value).toBe(1);
+    }
+  });
 });
