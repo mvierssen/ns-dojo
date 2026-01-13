@@ -1,5 +1,5 @@
 import {describe, expect, test} from "vitest";
-import {formatInstructions, formatWelcome} from "./cli.js";
+import {formatBoard, formatInstructions, formatWelcome} from "./cli.js";
 import type {GameInstructions} from "./instructions.js";
 
 describe("CliOutputShould", () => {
@@ -26,5 +26,13 @@ describe("CliOutputShould", () => {
     expect(formatted).toContain("Welcome to Connect 4!");
     expect(formatted).toContain("6 rows and 7 columns");
     expect(formatted).toContain("column from 1 to 7");
+  });
+
+  test("format board string for console display", () => {
+    const boardDisplay = "6 | ◯ ◯ ◯ ◯ ◯ ◯ ◯\n5 | ◯ ◯ ◯ ◯ ◯ ◯ ◯\n4 | ◯ ◯ ◯ ◯ ◯ ◯ ◯\n3 | ◯ ◯ ◯ ◯ ◯ ◯ ◯\n2 | ◯ ◯ ◯ ◯ ◯ ◯ ◯\n1 | ◯ ◯ ◯ ◯ ◯ ◯ ◯\n    1 2 3 4 5 6 7";
+
+    const formatted = formatBoard(boardDisplay);
+    expect(formatted).toContain("6 |");
+    expect(formatted).toContain("1 2 3 4 5 6 7");
   });
 });
