@@ -193,4 +193,9 @@ describe("ColumnInputParsingShould", () => {
     const result = parseColumnInput("");
     expect(resultIsSuccess(result)).toBe(false);
   });
+
+  test("return failure for decimal '3.5'", () => {
+    const result = parseColumnInput("3.5");
+    expect(resultIsSuccess(result)).toBe(false);
+  });
 });
