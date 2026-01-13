@@ -36,6 +36,12 @@ export class GameLoop {
         message: formatError(result.error),
       };
     }
+    if (resultIsSuccess(result) && result.value === "quit") {
+      return {
+        type: "quit",
+        message: "Goodbye!",
+      };
+    }
     return {type: "success", message: ""};
   }
 }

@@ -175,4 +175,23 @@ describe("GameLoopShould", () => {
     expect(response.type).toBe("error");
     expect(response.message).toMatch(/between 1 and 7/i);
   });
+
+  test("handle quit command and return quit signal", () => {
+    const game = new Game();
+    game.start();
+    const gameLoop = new GameLoop(game);
+
+    const response = gameLoop.handleInput("q");
+    expect(response.type).toBe("quit");
+    expect(response.message).toMatch(/goodbye|exit|quit/i);
+  });
+
+  test("handle 'quit' command and return quit signal", () => {
+    const game = new Game();
+    game.start();
+    const gameLoop = new GameLoop(game);
+
+    const response = gameLoop.handleInput("quit");
+    expect(response.type).toBe("quit");
+  });
 });
