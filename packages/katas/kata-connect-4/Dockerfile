@@ -23,4 +23,5 @@ COPY --from=build --chown=65532:65532 /app/node_modules ./node_modules
 COPY --from=build --chown=65532:65532 /app/packages ./packages
 WORKDIR /app/packages/katas/kata-connect-4
 ENV NODE_ENV=production
+# Run with: docker run -it connect4
 CMD ["dist/main.js"]
