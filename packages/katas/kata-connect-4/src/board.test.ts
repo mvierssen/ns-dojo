@@ -2,6 +2,7 @@ import {describe, expect, test} from "vitest";
 import {resultIsSuccess} from "@ns-dojo/shared-core";
 import {
   createBoard,
+  findLowestEmptyRow,
   getAvailableColumns,
   getCell,
   parseColumnInput,
@@ -197,5 +198,13 @@ describe("ColumnInputParsingShould", () => {
   test("return failure for decimal '3.5'", () => {
     const result = parseColumnInput("3.5");
     expect(resultIsSuccess(result)).toBe(false);
+  });
+});
+
+describe("FindLowestEmptyRowShould", () => {
+  test("return row 1 for empty column", () => {
+    const board = createBoard();
+    const lowestRow = findLowestEmptyRow(board, 3);
+    expect(lowestRow).toBe(1);
   });
 });

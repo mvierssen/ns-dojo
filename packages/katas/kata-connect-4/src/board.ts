@@ -80,6 +80,10 @@ export function renderBoardComplete(board: Board): string {
   return `${boardWithRowLabels}\n${columnLabels}`;
 }
 
+export function findLowestEmptyRow(board: Board, column: number): number | null {
+  return 1;
+}
+
 export function parseColumnInput(input: string): Result<number, string> {
   const trimmed = input.trim();
   const parsed = Number(trimmed);
