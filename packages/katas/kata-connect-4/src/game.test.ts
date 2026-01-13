@@ -102,4 +102,23 @@ describe("GameShould", () => {
       expect(result.value).toEqual({row: 1, column: 5});
     }
   });
+
+  test("dropCoin returns failure for full column", () => {
+    const game = new Game();
+    game.start();
+
+    // Fill column 2 completely
+    const board = game.getBoard();
+    for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
+      board.cells[rowIndex]![1] = CellState.Player1;
+    }
+
+    const result = game.dropCoin(2, CellState.Player2);
+
+    expect(resultIsFailure(result)).toBe(true);
+    if (resultIsFailure(result)) {
+      expect(result.error).toContain("2");
+      expect(result.error).toContain("full");
+    }
+  });
 });
