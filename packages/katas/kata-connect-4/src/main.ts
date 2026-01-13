@@ -1,8 +1,11 @@
+import readline from "node:readline/promises";
+import {Game} from "./game.js";
+import {GameLoop} from "./cli.js";
+
 export function createCli(): void {
-  // Will be implemented in Story 4.6
+  // Stub - will implement in next steps
 }
 
-// If executed directly, run CLI
 if (import.meta.url === `file://${process.argv[1]}`) {
   createCli();
 }

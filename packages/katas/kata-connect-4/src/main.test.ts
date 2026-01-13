@@ -1,9 +1,15 @@
 import {describe, expect, test} from "vitest";
-import {createCli} from "./main.js";
+import * as main from "./main.js";
 
 describe("MainEntrypointShould", () => {
   test("export createCli function", () => {
-    expect(createCli).toBeDefined();
-    expect(typeof createCli).toBe("function");
+    expect(main.createCli).toBeDefined();
+    expect(typeof main.createCli).toBe("function");
+  });
+
+  test("import required modules", async () => {
+    // Verify imports by checking the module can be loaded
+    const module = await import("./main.js");
+    expect(module).toBeDefined();
   });
 });
