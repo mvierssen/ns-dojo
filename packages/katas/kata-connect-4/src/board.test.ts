@@ -14,6 +14,7 @@ import {
   renderRowWithLabel,
 } from "./board.js";
 import {
+  BOARD_ROWS,
   CELL_SYMBOLS,
   CellState,
   COLUMN_LABELS,
@@ -227,5 +228,16 @@ describe("FindLowestEmptyRowShould", () => {
 
     const lowestRow = findLowestEmptyRow(board, 4);
     expect(lowestRow).toBe(6);
+  });
+
+  test("return null when column is full", () => {
+    const board = createBoard();
+    // Fill entire column 2 (all 6 rows)
+    for (let rowIndex = 0; rowIndex < BOARD_ROWS; rowIndex++) {
+      board.cells[rowIndex]![1] = CellState.Player2;
+    }
+
+    const lowestRow = findLowestEmptyRow(board, 2);
+    expect(lowestRow).toBe(null);
   });
 });
