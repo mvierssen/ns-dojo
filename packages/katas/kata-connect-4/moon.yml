@@ -24,3 +24,11 @@ tasks:
     command: "docker build -t connect4 -f packages/katas/kata-connect-4/Dockerfile ."
     options:
       runFromWorkspaceRoot: true
+
+  docker-run:
+    command: "docker run -it --rm connect4"
+    deps:
+      - docker-build
+    local: true
+    options:
+      runInCI: false
