@@ -6,6 +6,11 @@ import type {GameInstructions} from "./instructions.js";
 
 export class GameLoop {
   constructor(private game: Game) {}
+
+  getWelcomeOutput(): string {
+    const instructions = this.game.getInstructions();
+    return `${formatWelcome()}\n\n${formatInstructions(instructions)}`;
+  }
 }
 
 export function formatWelcome(): string {
