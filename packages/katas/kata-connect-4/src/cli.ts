@@ -1,5 +1,5 @@
 import type {Result} from "@ns-dojo/shared-core";
-import {resultCreateSuccess, resultIsSuccess} from "@ns-dojo/shared-core";
+import {resultCreateSuccess, resultIsFailure, resultIsSuccess} from "@ns-dojo/shared-core";
 import {parseColumnInput} from "./board.js";
 import type {Game} from "./game.js";
 import type {GameInstructions} from "./instructions.js";
@@ -28,6 +28,12 @@ export class GameLoop {
       return {
         type: "success",
         message: formatSuccess(`Coin placed in column ${result.value}`),
+      };
+    }
+    if (resultIsFailure(result)) {
+      return {
+        type: "error",
+        message: formatError(result.error),
       };
     }
     return {type: "success", message: ""};
