@@ -173,4 +173,9 @@ describe("ColumnInputParsingShould", () => {
       expect(result.value).toBe(7);
     }
   });
+
+  test("return failure for '0'", () => {
+    const result = parseColumnInput("0");
+    expect(resultIsSuccess(result)).toBe(false);
+  });
 });
