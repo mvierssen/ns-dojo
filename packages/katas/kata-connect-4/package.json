@@ -38,6 +38,7 @@
   "private": true,
   "scripts": {
     "build": "tsc --build",
+    "dev": "vite",
     "coverage": "npm run coverage:vitest",
     "coverage:vitest": "vitest run --coverage",
     "fmt": "npm run fmt:prettier",
