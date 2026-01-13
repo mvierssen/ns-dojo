@@ -1,0 +1,18 @@
+# Connect 4 Game Stack
+#
+# Usage:
+#   docker compose -f connect4.yaml build                  # Build image
+#   docker compose -f connect4.yaml run --rm connect4-game # Run interactive game
+
+name: connect4
+
+services:
+  connect4-game:
+    build:
+      context: ..
+      dockerfile: packages/katas/kata-connect-4/Dockerfile
+    image: connect4:latest
+    container_name: connect4-game
+    stdin_open: true
+    tty: true
+    restart: "no"
