@@ -90,6 +90,19 @@ export function findLowestEmptyRow(board: Board, column: number): number | null 
   return null;
 }
 
+export function setCell(board: Board, position: Position, cellState: CellState): Board {
+  const rowIndex = BOARD_ROWS - position.row;
+  const columnIndex = position.column - 1;
+
+  const newCells = board.cells.map((row, rIdx) =>
+    rIdx === rowIndex
+      ? row.map((cell, cIdx) => (cIdx === columnIndex ? cellState : cell))
+      : row
+  );
+
+  return {cells: newCells};
+}
+
 export function parseColumnInput(input: string): Result<number> {
   const trimmed = input.trim();
   const parsed = Number(trimmed);

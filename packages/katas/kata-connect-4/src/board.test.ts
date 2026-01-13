@@ -12,7 +12,9 @@ import {
   renderBoardWithRowLabels,
   renderRow,
   renderRowWithLabel,
+  setCell,
 } from "./board.js";
+import type {Position} from "./types.js";
 import {
   BOARD_ROWS,
   CELL_SYMBOLS,
@@ -239,5 +241,16 @@ describe("FindLowestEmptyRowShould", () => {
 
     const lowestRow = findLowestEmptyRow(board, 2);
     expect(lowestRow).toBe(null);
+  });
+});
+
+describe("SetCellShould", () => {
+  test("place Player1 coin at specified position", () => {
+    const board = createBoard();
+    const position: Position = {row: 1, column: 3};
+    const newBoard = setCell(board, position, CellState.Player1);
+
+    const cell = getCell(newBoard, position);
+    expect(cell).toBe(CellState.Player1);
   });
 });
