@@ -11,6 +11,11 @@ export class GameLoop {
     const instructions = this.game.getInstructions();
     return `${formatWelcome()}\n\n${formatInstructions(instructions)}`;
   }
+
+  getBoardOutput(): string {
+    const boardDisplay = this.game.displayBoard();
+    return formatBoard(boardDisplay);
+  }
 }
 
 export function formatWelcome(): string {

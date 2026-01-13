@@ -135,4 +135,14 @@ describe("GameLoopShould", () => {
     expect(output).toContain("Connect 4");
     expect(output).toContain("6 rows and 7 columns");
   });
+
+  test("return current board display", () => {
+    const game = new Game();
+    game.start();
+    const gameLoop = new GameLoop(game);
+
+    const output = gameLoop.getBoardOutput();
+    expect(output).toContain("6 |");
+    expect(output).toContain("1 2 3 4 5 6 7");
+  });
 });
