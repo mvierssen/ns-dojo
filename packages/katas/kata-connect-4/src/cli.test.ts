@@ -92,4 +92,12 @@ describe("CliInputProcessingShould", () => {
     const result = processColumnInput("9");
     expect(resultIsFailure(result)).toBe(true);
   });
+
+  test("recognize 'q' as quit command", () => {
+    const result = processColumnInput("q");
+    expect(resultIsSuccess(result)).toBe(true);
+    if (resultIsSuccess(result)) {
+      expect(result.value).toBe("quit");
+    }
+  });
 });
