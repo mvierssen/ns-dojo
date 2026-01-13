@@ -81,7 +81,13 @@ export function renderBoardComplete(board: Board): string {
 }
 
 export function findLowestEmptyRow(board: Board, column: number): number | null {
-  return 1;
+  for (let row = 1; row <= BOARD_ROWS; row++) {
+    const cell = getCell(board, {row, column});
+    if (cell === CellState.Empty) {
+      return row;
+    }
+  }
+  return null;
 }
 
 export function parseColumnInput(input: string): Result<number, string> {

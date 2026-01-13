@@ -207,4 +207,13 @@ describe("FindLowestEmptyRowShould", () => {
     const lowestRow = findLowestEmptyRow(board, 3);
     expect(lowestRow).toBe(1);
   });
+
+  test("return row 2 when row 1 is occupied", () => {
+    const board = createBoard();
+    // Manually place coin at row 1, column 3 (array index: cells[5][2])
+    board.cells[5]![2] = CellState.Player1;
+
+    const lowestRow = findLowestEmptyRow(board, 3);
+    expect(lowestRow).toBe(2);
+  });
 });
