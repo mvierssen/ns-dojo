@@ -1,5 +1,5 @@
 import {describe, expect, test} from "vitest";
-import {resultIsSuccess} from "@ns-dojo/shared-core";
+import {resultIsSuccess, resultIsFailure} from "@ns-dojo/shared-core";
 import {
   formatBoard,
   formatError,
@@ -77,5 +77,19 @@ describe("CliInputProcessingShould", () => {
     if (resultIsSuccess(result)) {
       expect(result.value).toBe(4);
     }
+  });
+
+  test("process invalid column input and return failure with error message", () => {
+    const result = processColumnInput("abc");
+    expect(resultIsFailure(result)).toBe(true);
+    if (resultIsFailure(result)) {
+      expect(result.error).toBeDefined();
+      expect(result.error.length).toBeGreaterThan(0);
+    }
+  });
+
+  test("process out-of-range column and return failure", () => {
+    const result = processColumnInput("9");
+    expect(resultIsFailure(result)).toBe(true);
   });
 });
