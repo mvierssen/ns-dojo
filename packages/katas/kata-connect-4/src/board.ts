@@ -58,3 +58,12 @@ export function renderBoardWithLabels(board: Board): string {
   const columnLabels = "    1 2 3 4 5 6 7";
   return `${boardRows}\n${columnLabels}`;
 }
+
+export function renderBoardWithRowLabels(board: Board): string {
+  return board.cells
+    .map((row, index) => {
+      const rowNumber = BOARD_ROWS - index;
+      return renderRowWithLabel(row, rowNumber);
+    })
+    .join("\n");
+}
