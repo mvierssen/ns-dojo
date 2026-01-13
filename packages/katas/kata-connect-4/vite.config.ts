@@ -14,6 +14,7 @@ export default mergeConfig(
         external: [
           "readline",
           "node:readline",
+          "node:readline/promises",
           "@ns-dojo/shared-core",
           "zod",
         ],
