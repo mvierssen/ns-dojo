@@ -20,3 +20,7 @@ export function formatBoard(boardDisplay: string): string {
 export function formatPrompt(player: number): string {
   return `Player ${player}, select a column (1-7):`;
 }
+
+export function formatError(message: string): string {
+  return `Error: ${message}`;
+}
