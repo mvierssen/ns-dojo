@@ -83,10 +83,19 @@ export function renderBoardComplete(board: Board): string {
 export function parseColumnInput(input: string): Result<number, string> {
   const trimmed = input.trim();
   const parsed = Number(trimmed);
+
+  if (isNaN(parsed)) {
+    return resultCreateFailure("Invalid column input: not a number");
+  }
+
   const validation = ColumnInputSchema.safeParse(parsed);
 
   if (validation.success) {
     return resultCreateSuccess(validation.data);
+  }
+
+  if (parsed < 1 || parsed > BOARD_COLUMNS) {
+    return resultCreateFailure(`Column must be between 1 and ${BOARD_COLUMNS}`);
   }
 
   return resultCreateFailure("Invalid column input");
