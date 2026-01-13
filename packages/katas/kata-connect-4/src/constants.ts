@@ -9,7 +9,7 @@ export enum CellState {
 
 export const CELL_SYMBOLS: Record<CellState, string> = {
   [CellState.Empty]: "◯",
-  [CellState.Player1]: "🔴",
+  [CellState.Player1]: "🟡",
   [CellState.Player2]: "🟡",
 };
 
