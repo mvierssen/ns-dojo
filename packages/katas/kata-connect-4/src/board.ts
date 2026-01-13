@@ -44,3 +44,7 @@ export function getAvailableColumns(board: Board): number[] {
 export function renderRow(row: CellState[]): string {
   return row.map((cell) => CELL_SYMBOLS[cell]).join(" ");
 }
+
+export function renderRowWithLabel(row: CellState[], rowNumber: number): string {
+  return `${rowNumber} | ${renderRow(row)}`;
+}

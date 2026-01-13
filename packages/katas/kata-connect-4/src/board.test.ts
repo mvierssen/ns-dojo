@@ -1,5 +1,11 @@
 import {describe, expect, test} from "vitest";
-import {createBoard, getAvailableColumns, getCell, renderRow} from "./board.js";
+import {
+  createBoard,
+  getAvailableColumns,
+  getCell,
+  renderRow,
+  renderRowWithLabel,
+} from "./board.js";
 import {
   CELL_SYMBOLS,
   CellState,
@@ -61,6 +67,13 @@ describe("BoardShould", () => {
     ];
     const rendered = renderRow(row);
     expect(rendered).toBe("🟡 ◯ 🔴 ◯ 🟡 🔴 ◯");
+  });
+
+  test("render row with row number label on left side", () => {
+    const row: CellState[] = Array(7).fill(CellState.Empty);
+    const rowNumber = 3;
+    const rendered = renderRowWithLabel(row, rowNumber);
+    expect(rendered).toBe("3 | ◯ ◯ ◯ ◯ ◯ ◯ ◯");
   });
 
   test("label columns 1 through 7 left to right", () => {
