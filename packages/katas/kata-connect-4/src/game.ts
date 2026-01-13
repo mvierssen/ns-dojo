@@ -1,4 +1,4 @@
-import {createBoard} from "./board.js";
+import {createBoard, renderBoardComplete} from "./board.js";
 import {getGameInstructions, type GameInstructions} from "./instructions.js";
 import type {Board} from "./types.js";
 
@@ -19,5 +19,12 @@ export class Game {
 
   getInstructions(): GameInstructions {
     return getGameInstructions();
+  }
+
+  displayBoard(): string {
+    if (this.board === null) {
+      throw new Error("Game has not been started");
+    }
+    return renderBoardComplete(this.board);
   }
 }
