@@ -28,4 +28,22 @@ describe("GameShould", () => {
     expect(display).toContain("1 2 3 4 5 6 7");
     expect(display).toContain("◯");
   });
+
+  test("display board updates after state change", () => {
+    const game = new Game();
+    game.start();
+
+    // Get initial display
+    const initialDisplay = game.displayBoard();
+    expect(initialDisplay).toContain("◯ ◯ ◯ ◯ ◯ ◯ ◯");
+
+    // Manually modify board for testing (will be replaced with proper move method later)
+    const board = game.getBoard();
+    board.cells[5]![0] = CellState.Player1;
+
+    // Get updated display
+    const updatedDisplay = game.displayBoard();
+    expect(updatedDisplay).toContain("🟡");
+    expect(updatedDisplay).not.toBe(initialDisplay);
+  });
 });
