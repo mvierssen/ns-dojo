@@ -37,7 +37,7 @@
   "main": "dist/src/index.js",
   "private": true,
   "scripts": {
-    "build": "tsc --build",
+    "build": "vite build && tsc --build",
     "dev": "vite",
     "coverage": "npm run coverage:vitest",
     "coverage:vitest": "vitest run --coverage",
