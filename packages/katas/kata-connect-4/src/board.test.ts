@@ -188,4 +188,9 @@ describe("ColumnInputParsingShould", () => {
     const result = parseColumnInput("abc");
     expect(resultIsSuccess(result)).toBe(false);
   });
+
+  test("return failure for empty string", () => {
+    const result = parseColumnInput("");
+    expect(resultIsSuccess(result)).toBe(false);
+  });
 });
