@@ -1,7 +1,8 @@
 import {describe, expect, test} from "vitest";
-import {resultIsSuccess} from "@ns-dojo/shared-core";
+import {resultIsSuccess, resultIsFailure} from "@ns-dojo/shared-core";
 import {
   createBoard,
+  dropCoin,
   findLowestEmptyRow,
   getAvailableColumns,
   getCell,
@@ -304,5 +305,18 @@ describe("SetCellShould", () => {
     // Verify other cells remain empty
     const adjacentCell = getCell(newBoard, {row: 6, column: 6});
     expect(adjacentCell).toBe(CellState.Empty);
+  });
+});
+
+describe("DropCoinShould", () => {
+  test("place coin at row 1 in empty column", () => {
+    const board = createBoard();
+    const result = dropCoin(board, 3, CellState.Player1);
+
+    expect(resultIsSuccess(result)).toBe(true);
+    if (resultIsSuccess(result)) {
+      const cell = getCell(result.value.board, {row: 1, column: 3});
+      expect(cell).toBe(CellState.Player1);
+    }
   });
 });
