@@ -13,3 +13,9 @@ tasks:
       - ts-config-lib-compiled:build
       - vite-config-base:build
       - vitest-config-node:build
+
+  dev:
+    command: "npm run dev"
+    local: true
+    options:
+      runInCI: false
