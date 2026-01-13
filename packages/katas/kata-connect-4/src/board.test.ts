@@ -183,4 +183,9 @@ describe("ColumnInputParsingShould", () => {
     const result = parseColumnInput("8");
     expect(resultIsSuccess(result)).toBe(false);
   });
+
+  test("return failure for non-numeric 'abc'", () => {
+    const result = parseColumnInput("abc");
+    expect(resultIsSuccess(result)).toBe(false);
+  });
 });
