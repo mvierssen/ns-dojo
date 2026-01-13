@@ -1,4 +1,5 @@
 import {describe, expect, test} from "vitest";
+import {resultIsFailure, resultIsSuccess} from "@ns-dojo/shared-core";
 import {CellState} from "./constants.js";
 import {Game} from "./game.js";
 
@@ -45,5 +46,14 @@ describe("GameShould", () => {
     const updatedDisplay = game.displayBoard();
     expect(updatedDisplay).toContain("🟡");
     expect(updatedDisplay).not.toBe(initialDisplay);
+  });
+
+  test("validate column input and return success for valid input", () => {
+    const game = new Game();
+    const result = game.validateColumnInput("4");
+    expect(resultIsSuccess(result)).toBe(true);
+    if (resultIsSuccess(result)) {
+      expect(result.value).toBe(4);
+    }
   });
 });
