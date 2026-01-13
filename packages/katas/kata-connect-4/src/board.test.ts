@@ -319,4 +319,18 @@ describe("DropCoinShould", () => {
       expect(cell).toBe(CellState.Player1);
     }
   });
+
+  test("place coin at row 2 when row 1 is occupied", () => {
+    const board = createBoard();
+    // Place a coin at row 1, column 4
+    board.cells[5]![3] = CellState.Player1;
+
+    const result = dropCoin(board, 4, CellState.Player2);
+
+    expect(resultIsSuccess(result)).toBe(true);
+    if (resultIsSuccess(result)) {
+      const cell = getCell(result.value.board, {row: 2, column: 4});
+      expect(cell).toBe(CellState.Player2);
+    }
+  });
 });
