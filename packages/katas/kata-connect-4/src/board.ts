@@ -1,6 +1,7 @@
 import {
   BOARD_COLUMNS,
   BOARD_ROWS,
+  CELL_SYMBOLS,
   CellState,
   COLUMN_LABELS,
 } from "./constants.js";
@@ -38,4 +39,8 @@ export function getAvailableColumns(board: Board): number[] {
     if (topRow === undefined) return false;
     return topRow[column - 1] === CellState.Empty;
   });
+}
+
+export function renderRow(row: CellState[]): string {
+  return row.map((cell) => CELL_SYMBOLS[cell]).join(" ");
 }
