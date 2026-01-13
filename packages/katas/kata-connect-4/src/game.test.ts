@@ -56,4 +56,14 @@ describe("GameShould", () => {
       expect(result.value).toBe(4);
     }
   });
+
+  test("validate column input and return failure with error message for invalid input", () => {
+    const game = new Game();
+    const result = game.validateColumnInput("abc");
+    expect(resultIsFailure(result)).toBe(true);
+    if (resultIsFailure(result)) {
+      expect(result.error).toBeDefined();
+      expect(result.error.length).toBeGreaterThan(0);
+    }
+  });
 });
