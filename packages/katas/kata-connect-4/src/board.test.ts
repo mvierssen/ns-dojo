@@ -31,6 +31,10 @@ describe("BoardShould", () => {
     expect(CELL_SYMBOLS[CellState.Empty]).toBe("◯");
   });
 
+  test("render empty cell as hollow circle symbol", () => {
+    expect(CELL_SYMBOLS[CellState.Empty]).toBe("◯");
+  });
+
   test("label columns 1 through 7 left to right", () => {
     expect(COLUMN_LABELS).toEqual([1, 2, 3, 4, 5, 6, 7]);
   });
