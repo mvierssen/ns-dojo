@@ -1,4 +1,5 @@
-import {createBoard, renderBoardComplete} from "./board.js";
+import type {Result} from "@ns-dojo/shared-core";
+import {createBoard, parseColumnInput, renderBoardComplete} from "./board.js";
 import {getGameInstructions, type GameInstructions} from "./instructions.js";
 import type {Board} from "./types.js";
 
@@ -26,5 +27,9 @@ export class Game {
       throw new Error("Game has not been started");
     }
     return renderBoardComplete(this.board);
+  }
+
+  validateColumnInput(input: string): Result<number, string> {
+    return parseColumnInput(input);
   }
 }
