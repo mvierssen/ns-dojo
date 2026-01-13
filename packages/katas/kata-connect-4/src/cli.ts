@@ -1,8 +1,13 @@
 import type {Result} from "@ns-dojo/shared-core";
-import {resultCreateSuccess} from "@ns-dojo/shared-core";
+import {resultCreateSuccess, resultIsSuccess} from "@ns-dojo/shared-core";
 import {parseColumnInput} from "./board.js";
 import type {Game} from "./game.js";
 import type {GameInstructions} from "./instructions.js";
+
+export type GameLoopResponse = {
+  type: "success" | "error" | "quit";
+  message: string;
+};
 
 export class GameLoop {
   constructor(private game: Game) {}
@@ -15,6 +20,17 @@ export class GameLoop {
   getBoardOutput(): string {
     const boardDisplay = this.game.displayBoard();
     return formatBoard(boardDisplay);
+  }
+
+  handleInput(input: string): GameLoopResponse {
+    const result = processColumnInput(input);
+    if (resultIsSuccess(result) && typeof result.value === "number") {
+      return {
+        type: "success",
+        message: formatSuccess(`Coin placed in column ${result.value}`),
+      };
+    }
+    return {type: "success", message: ""};
   }
 }
 
