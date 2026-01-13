@@ -66,4 +66,13 @@ describe("GameShould", () => {
       expect(result.error.length).toBeGreaterThan(0);
     }
   });
+
+  test("provide meaningful error message for out-of-range column", () => {
+    const game = new Game();
+    const result = game.validateColumnInput("8");
+    expect(resultIsFailure(result)).toBe(true);
+    if (resultIsFailure(result)) {
+      expect(result.error).toMatch(/column|range|1.*7/i);
+    }
+  });
 });
