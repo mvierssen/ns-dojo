@@ -1,5 +1,5 @@
 import {describe, expect, test} from "vitest";
-import {formatBoard, formatInstructions, formatWelcome} from "./cli.js";
+import {formatBoard, formatInstructions, formatPrompt, formatWelcome} from "./cli.js";
 import type {GameInstructions} from "./instructions.js";
 
 describe("CliOutputShould", () => {
@@ -34,5 +34,16 @@ describe("CliOutputShould", () => {
     const formatted = formatBoard(boardDisplay);
     expect(formatted).toContain("6 |");
     expect(formatted).toContain("1 2 3 4 5 6 7");
+  });
+
+  test("format player turn prompt", () => {
+    const prompt = formatPrompt(1);
+    expect(prompt).toContain("Player 1");
+    expect(prompt).toMatch(/column|select|enter/i);
+  });
+
+  test("format player 2 turn prompt", () => {
+    const prompt = formatPrompt(2);
+    expect(prompt).toContain("Player 2");
   });
 });
