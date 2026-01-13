@@ -35,6 +35,10 @@ describe("BoardShould", () => {
     expect(CELL_SYMBOLS[CellState.Empty]).toBe("◯");
   });
 
+  test("render player 1 cell as yellow circle symbol", () => {
+    expect(CELL_SYMBOLS[CellState.Player1]).toBe("🟡");
+  });
+
   test("label columns 1 through 7 left to right", () => {
     expect(COLUMN_LABELS).toEqual([1, 2, 3, 4, 5, 6, 7]);
   });
