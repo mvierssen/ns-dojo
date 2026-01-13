@@ -1,5 +1,5 @@
 import {describe, expect, test} from "vitest";
-import {createBoard, getAvailableColumns, getCell} from "./board.js";
+import {createBoard, getAvailableColumns, getCell, renderRow} from "./board.js";
 import {
   CELL_SYMBOLS,
   CellState,
@@ -41,6 +41,12 @@ describe("BoardShould", () => {
 
   test("render player 2 cell as red circle symbol", () => {
     expect(CELL_SYMBOLS[CellState.Player2]).toBe("🔴");
+  });
+
+  test("render single row of empty cells with 7 symbols", () => {
+    const row: CellState[] = Array(7).fill(CellState.Empty);
+    const rendered = renderRow(row);
+    expect(rendered).toBe("◯ ◯ ◯ ◯ ◯ ◯ ◯");
   });
 
   test("label columns 1 through 7 left to right", () => {
