@@ -15,3 +15,12 @@ RUN npm ci
 COPY --from=skeleton /app/.moon/docker/sources .
 RUN moon run kata-connect-4:build
 RUN moon docker prune
+
+# Runtime stage
+FROM gcr.io/distroless/nodejs22-debian12:nonroot AS runtime
+WORKDIR /app
+COPY --from=build --chown=65532:65532 /app/node_modules ./node_modules
+COPY --from=build --chown=65532:65532 /app/packages ./packages
+WORKDIR /app/packages/katas/kata-connect-4
+ENV NODE_ENV=production
+CMD ["dist/main.js"]
