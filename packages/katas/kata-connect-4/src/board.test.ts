@@ -4,6 +4,7 @@ import {
   getAvailableColumns,
   getCell,
   renderBoard,
+  renderBoardWithLabels,
   renderRow,
   renderRowWithLabel,
 } from "./board.js";
@@ -83,6 +84,13 @@ describe("BoardShould", () => {
     const lines = rendered.split("\n");
     expect(lines.length).toBe(6);
     expect(lines[0]).toContain("◯ ◯ ◯ ◯ ◯ ◯ ◯");
+  });
+
+  test("render board with column labels at bottom", () => {
+    const board = createBoard();
+    const rendered = renderBoardWithLabels(board);
+    const lines = rendered.split("\n");
+    expect(lines[lines.length - 1]).toBe("    1 2 3 4 5 6 7");
   });
 
   test("label columns 1 through 7 left to right", () => {

@@ -52,3 +52,9 @@ export function renderRowWithLabel(row: CellState[], rowNumber: number): string 
 export function renderBoard(board: Board): string {
   return board.cells.map((row) => renderRow(row)).join("\n");
 }
+
+export function renderBoardWithLabels(board: Board): string {
+  const boardRows = renderBoard(board);
+  const columnLabels = "    1 2 3 4 5 6 7";
+  return `${boardRows}\n${columnLabels}`;
+}
