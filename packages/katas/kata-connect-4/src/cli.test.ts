@@ -145,4 +145,14 @@ describe("GameLoopShould", () => {
     expect(output).toContain("6 |");
     expect(output).toContain("1 2 3 4 5 6 7");
   });
+
+  test("handle valid column input and return success response", () => {
+    const game = new Game();
+    game.start();
+    const gameLoop = new GameLoop(game);
+
+    const response = gameLoop.handleInput("4");
+    expect(response.type).toBe("success");
+    expect(response.message).toContain("4");
+  });
 });
