@@ -126,4 +126,13 @@ describe("GameLoopShould", () => {
     const gameLoop = new GameLoop(game);
     expect(gameLoop).toBeDefined();
   });
+
+  test("return welcome output with instructions", () => {
+    const game = new Game();
+    const gameLoop = new GameLoop(game);
+
+    const output = gameLoop.getWelcomeOutput();
+    expect(output).toContain("Connect 4");
+    expect(output).toContain("6 rows and 7 columns");
+  });
 });
