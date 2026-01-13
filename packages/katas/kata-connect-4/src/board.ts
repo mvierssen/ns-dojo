@@ -48,3 +48,7 @@ export function renderRow(row: CellState[]): string {
 export function renderRowWithLabel(row: CellState[], rowNumber: number): string {
   return `${rowNumber} | ${renderRow(row)}`;
 }
+
+export function renderBoard(board: Board): string {
+  return board.cells.map((row) => renderRow(row)).join("\n");
+}
