@@ -1,5 +1,5 @@
 import {describe, expect, test} from "vitest";
-import {formatBoard, formatInstructions, formatPrompt, formatWelcome} from "./cli.js";
+import {formatBoard, formatError, formatInstructions, formatPrompt, formatWelcome} from "./cli.js";
 import type {GameInstructions} from "./instructions.js";
 
 describe("CliOutputShould", () => {
@@ -45,5 +45,12 @@ describe("CliOutputShould", () => {
   test("format player 2 turn prompt", () => {
     const prompt = formatPrompt(2);
     expect(prompt).toContain("Player 2");
+  });
+
+  test("format error message for display", () => {
+    const errorMsg = "Column must be between 1 and 7";
+    const formatted = formatError(errorMsg);
+    expect(formatted).toContain(errorMsg);
+    expect(formatted).toMatch(/error|invalid/i);
   });
 });
