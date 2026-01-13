@@ -17,4 +17,15 @@ describe("GameShould", () => {
     expect(instructions.welcome).toBeDefined();
     expect(instructions.rules).toBeDefined();
   });
+
+  test("display board state", () => {
+    const game = new Game();
+    game.start();
+    const display = game.displayBoard();
+
+    expect(display).toContain("6 |");
+    expect(display).toContain("1 |");
+    expect(display).toContain("1 2 3 4 5 6 7");
+    expect(display).toContain("◯");
+  });
 });
