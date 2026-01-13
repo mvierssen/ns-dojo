@@ -1,10 +1,16 @@
 import {
+  resultCreateFailure,
+  resultCreateSuccess,
+  type Result,
+} from "@ns-dojo/shared-core";
+import {
   BOARD_COLUMNS,
   BOARD_ROWS,
   CELL_SYMBOLS,
   CellState,
   COLUMN_LABELS,
 } from "./constants.js";
+import {ColumnInputSchema} from "./schemas.js";
 import type {Board, Position} from "./types.js";
 
 export function createBoard(): Board {
@@ -72,4 +78,16 @@ export function renderBoardComplete(board: Board): string {
   const boardWithRowLabels = renderBoardWithRowLabels(board);
   const columnLabels = "    1 2 3 4 5 6 7";
   return `${boardWithRowLabels}\n${columnLabels}`;
+}
+
+export function parseColumnInput(input: string): Result<number, string> {
+  const trimmed = input.trim();
+  const parsed = Number(trimmed);
+  const validation = ColumnInputSchema.safeParse(parsed);
+
+  if (validation.success) {
+    return resultCreateSuccess(validation.data);
+  }
+
+  return resultCreateFailure("Invalid column input");
 }
