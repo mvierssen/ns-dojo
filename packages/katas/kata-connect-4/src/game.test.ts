@@ -75,4 +75,13 @@ describe("GameShould", () => {
       expect(result.error).toMatch(/column|range|1.*7/i);
     }
   });
+
+  test("provide meaningful error message for non-numeric input", () => {
+    const game = new Game();
+    const result = game.validateColumnInput("abc");
+    expect(resultIsFailure(result)).toBe(true);
+    if (resultIsFailure(result)) {
+      expect(result.error).toMatch(/not a number|numeric/i);
+    }
+  });
 });
