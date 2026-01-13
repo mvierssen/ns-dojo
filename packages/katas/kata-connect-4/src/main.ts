@@ -19,6 +19,13 @@ export async function createCli(): Promise<void> {
     output: process.stdout,
   });
 
+  // Handle Ctrl+C gracefully
+  process.on("SIGINT", () => {
+    console.log("\n\nGoodbye! Thanks for playing Connect 4!");
+    rl.close();
+    process.exit(0);
+  });
+
   // Game loop
   let isRunning = true;
   while (isRunning) {
