@@ -344,4 +344,16 @@ describe("DropCoinShould", () => {
       expect(result.value.position).toEqual({row: 1, column: 5});
     }
   });
+
+  test("return failure when column is full", () => {
+    const board = createBoard();
+    // Fill entire column 2
+    for (let rowIndex = 0; rowIndex < BOARD_ROWS; rowIndex++) {
+      board.cells[rowIndex]![1] = CellState.Player1;
+    }
+
+    const result = dropCoin(board, 2, CellState.Player2);
+
+    expect(resultIsFailure(result)).toBe(true);
+  });
 });
