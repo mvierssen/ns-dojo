@@ -132,3 +132,7 @@ Once the module structure is stable, add the Column type. Doing it earlier would
 ### Clean up tests
 
 Create proper test builders to replace the manual array mutations. Wait until after the refactoring settles down.
+
+### Finally, add win detection
+
+Implement horizontal, vertical, and diagonal checks. Easier to do after the architecture is cleaned up. Should also add the IGame interface at this point since we'll know the full API by then.
