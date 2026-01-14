@@ -94,3 +94,11 @@ if (row) row[0] = CellState.Player1;
 ```
 
 Brittle and verbose. Should have test builders that use domain operations instead.
+
+---
+
+### No win detection
+
+**Where:** nowhere (that's the problem)
+
+The game says "Get 4 in a row to win" but there's no code to actually detect wins. Game just keeps going forever. This is the biggest gap, the game isn't really playable without it.
