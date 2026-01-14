@@ -38,7 +38,7 @@ Should change to `Result<CellState>` to match the rest.
 
 ---
 
-### CLI mixes formatting with game logic
+### CLI mixes formatting with game logic - DONE
 
 **Where:** `src/cli.ts`
 
