@@ -107,11 +107,11 @@ export function dropCoin(
   board: Board,
   column: number,
   player: CellState
-): Result<{board: Board; position: Position}, string> {
+): Result<{board: Board; position: Position}> {
   const row = findLowestEmptyRow(board, column);
 
   if (row === null) {
-    return resultCreateFailure(`Column ${column} is full`);
+    return resultCreateFailure(`Column ${String(column)} is full`);
   }
 
   const position: Position = {row, column};

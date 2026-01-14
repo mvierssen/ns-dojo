@@ -35,7 +35,7 @@ export class Game {
     return parseColumnInput(input);
   }
 
-  dropCoin(column: number, player: CellState): Result<Position, string> {
+  dropCoin(column: number, player: CellState): Result<Position> {
     if (this.board === null) {
       return resultCreateFailure("Game has not been started");
     }
