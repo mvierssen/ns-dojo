@@ -4,10 +4,10 @@ import {parseColumnInput, renderBoardComplete} from "./board.js";
 import type {CellState} from "./constants.js";
 import {initializeGameState, processMove, type GameState} from "./game-state.js";
 import {getGameInstructions, type GameInstructions} from "./instructions.js";
-import type {Board, Column, Position} from "./types.js";
+import type {Board, Column, IGame, Position} from "./types.js";
 
 // Facade Class
-export class Game {
+export class Game implements IGame {
   private gameState: GameState | null = null;
 
   start(): void {
