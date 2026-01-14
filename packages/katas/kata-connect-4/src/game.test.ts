@@ -4,6 +4,12 @@ import {getCell} from "./board.js";
 import {validateColumn} from "./column.js";
 import {CellState} from "./constants.js";
 import {Game} from "./game.js";
+import type {IGame} from "./types.js";
+
+test("Game implements IGame interface", () => {
+  const game: IGame = new Game();
+  expect(game).toBeDefined();
+});
 
 describe("GameShould", () => {
   test("begin with a fresh board when started", () => {
