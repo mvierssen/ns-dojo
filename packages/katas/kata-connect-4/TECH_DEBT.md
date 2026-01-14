@@ -28,7 +28,7 @@ A facade should just coordinate, not hold state or do validation. Makes testing 
 
 ---
 
-### getCell throws instead of returning Result
+### getCell throws instead of returning Result - DONE
 
 **Where:** `src/board.ts` lines 28-40
 
