@@ -197,8 +197,8 @@ describe("GameLoopShould", () => {
     gameLoop.handleInput("3");
 
     const board = game.getBoard();
-    const cell = getCell(board, {row: 1, column: 3});
-    expect(cell).toBe(CellState.Player1);
+    const cellResult = getCell(board, {row: 1, column: 3});
+    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(CellState.Player1);
   });
 
   test("handleInput alternates players between moves", () => {
@@ -211,9 +211,12 @@ describe("GameLoopShould", () => {
     gameLoop.handleInput("1");
 
     const board = game.getBoard();
-    expect(getCell(board, {row: 1, column: 1})).toBe(CellState.Player1);
-    expect(getCell(board, {row: 1, column: 2})).toBe(CellState.Player2);
-    expect(getCell(board, {row: 2, column: 1})).toBe(CellState.Player1);
+    const cell11 = getCell(board, {row: 1, column: 1});
+    const cell12 = getCell(board, {row: 1, column: 2});
+    const cell21 = getCell(board, {row: 2, column: 1});
+    expect(resultIsSuccess(cell11) && cell11.value).toBe(CellState.Player1);
+    expect(resultIsSuccess(cell12) && cell12.value).toBe(CellState.Player2);
+    expect(resultIsSuccess(cell21) && cell21.value).toBe(CellState.Player1);
   });
 
   test("start with Player 1 as current player", () => {

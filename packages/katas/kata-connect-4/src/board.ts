@@ -1,6 +1,7 @@
 import {
   resultCreateFailure,
   resultCreateSuccess,
+  resultIsSuccess,
   type Result,
 } from "@ns-dojo/shared-core";
 import {
@@ -26,18 +27,18 @@ export function createBoard(): Board {
   return {cells};
 }
 
-export function getCell(board: Board, position: Position): CellState {
+export function getCell(board: Board, position: Position): Result<CellState> {
   const rowIndex = BOARD_ROWS - position.row;
   const columnIndex = position.column - 1;
   const row = board.cells[rowIndex];
   if (row === undefined) {
-    throw new Error(`Invalid row index: ${String(rowIndex)}`);
+    return resultCreateFailure(`Invalid row index: ${String(rowIndex)}`);
   }
   const cell = row[columnIndex];
   if (cell === undefined) {
-    throw new Error(`Invalid column index: ${String(columnIndex)}`);
+    return resultCreateFailure(`Invalid column index: ${String(columnIndex)}`);
   }
-  return cell;
+  return resultCreateSuccess(cell);
 }
 
 export function getAvailableColumns(board: Board): number[] {
@@ -83,8 +84,11 @@ export function renderBoardComplete(board: Board): string {
 
 export function findLowestEmptyRow(board: Board, column: number): number | null {
   for (let row = 1; row <= BOARD_ROWS; row++) {
-    const cell = getCell(board, {row, column});
-    if (cell === CellState.Empty) {
+    const cellResult = getCell(board, {row, column});
+    if (!resultIsSuccess(cellResult)) {
+      return null;
+    }
+    if (cellResult.value === CellState.Empty) {
       return row;
     }
   }

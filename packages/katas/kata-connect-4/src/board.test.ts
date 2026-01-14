@@ -154,8 +154,8 @@ describe("BoardShould", () => {
 
   test("identify position by row and column", () => {
     const board = createBoard();
-    const cell = getCell(board, {row: 1, column: 1});
-    expect(cell).toBe(CellState.Empty);
+    const result = getCell(board, {row: 1, column: 1});
+    expect(resultIsSuccess(result) && result.value).toBe(CellState.Empty);
   });
 
   test("have all 7 columns available for coin placement on empty board", () => {
@@ -266,8 +266,8 @@ describe("SetCellShould", () => {
     const position: Position = {row: 1, column: 3};
     const newBoard = setCell(board, position, CellState.Player1);
 
-    const cell = getCell(newBoard, position);
-    expect(cell).toBe(CellState.Player1);
+    const cellResult = getCell(newBoard, position);
+    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(CellState.Player1);
   });
 
   test("place Player2 coin at specified position", () => {
@@ -275,25 +275,27 @@ describe("SetCellShould", () => {
     const position: Position = {row: 2, column: 5};
     const newBoard = setCell(board, position, CellState.Player2);
 
-    const cell = getCell(newBoard, position);
-    expect(cell).toBe(CellState.Player2);
+    const cellResult = getCell(newBoard, position);
+    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(CellState.Player2);
   });
 
   test("return new board without mutating original", () => {
     const board = createBoard();
     const position: Position = {row: 1, column: 1};
-    const originalCell = getCell(board, position);
+    const originalResult = getCell(board, position);
+    const originalCell = resultIsSuccess(originalResult) ? originalResult.value : null;
 
     const newBoard = setCell(board, position, CellState.Player1);
 
     // Original board should be unchanged
-    const originalCellAfter = getCell(board, position);
+    const originalResultAfter = getCell(board, position);
+    const originalCellAfter = resultIsSuccess(originalResultAfter) ? originalResultAfter.value : null;
     expect(originalCellAfter).toBe(originalCell);
     expect(originalCellAfter).toBe(CellState.Empty);
 
     // New board should have the change
-    const newCell = getCell(newBoard, position);
-    expect(newCell).toBe(CellState.Player1);
+    const newResult = getCell(newBoard, position);
+    expect(resultIsSuccess(newResult) && newResult.value).toBe(CellState.Player1);
   });
 
   test("work correctly at position row 1 column 1 (corner)", () => {
@@ -301,12 +303,12 @@ describe("SetCellShould", () => {
     const position: Position = {row: 1, column: 1};
     const newBoard = setCell(board, position, CellState.Player1);
 
-    const cell = getCell(newBoard, position);
-    expect(cell).toBe(CellState.Player1);
+    const cellResult = getCell(newBoard, position);
+    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(CellState.Player1);
 
     // Verify other cells remain empty
-    const adjacentCell = getCell(newBoard, {row: 1, column: 2});
-    expect(adjacentCell).toBe(CellState.Empty);
+    const adjacentResult = getCell(newBoard, {row: 1, column: 2});
+    expect(resultIsSuccess(adjacentResult) && adjacentResult.value).toBe(CellState.Empty);
   });
 
   test("work correctly at position row 6 column 7 (opposite corner)", () => {
@@ -314,12 +316,22 @@ describe("SetCellShould", () => {
     const position: Position = {row: 6, column: 7};
     const newBoard = setCell(board, position, CellState.Player2);
 
-    const cell = getCell(newBoard, position);
-    expect(cell).toBe(CellState.Player2);
+    const cellResult = getCell(newBoard, position);
+    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(CellState.Player2);
 
     // Verify other cells remain empty
-    const adjacentCell = getCell(newBoard, {row: 6, column: 6});
-    expect(adjacentCell).toBe(CellState.Empty);
+    const adjacentResult = getCell(newBoard, {row: 6, column: 6});
+    expect(resultIsSuccess(adjacentResult) && adjacentResult.value).toBe(CellState.Empty);
+  });
+});
+
+describe("GetCellShould", () => {
+  test("return success with cell state for valid position", () => {
+    const board = createBoard();
+    const result = getCell(board, {row: 1, column: 1});
+
+    expect(resultIsSuccess(result)).toBe(true);
+    expect(resultIsSuccess(result) && result.value).toBe(CellState.Empty);
   });
 });
 
@@ -330,8 +342,8 @@ describe("DropCoinShould", () => {
 
     expect(resultIsSuccess(result)).toBe(true);
     const successResult = result as {value: {board: typeof board; position: Position}};
-    const cell = getCell(successResult.value.board, {row: 1, column: 3});
-    expect(cell).toBe(CellState.Player1);
+    const cellResult = getCell(successResult.value.board, {row: 1, column: 3});
+    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(CellState.Player1);
   });
 
   test("place coin at row 2 when row 1 is occupied", () => {
@@ -345,8 +357,8 @@ describe("DropCoinShould", () => {
 
     expect(resultIsSuccess(result)).toBe(true);
     const successResult = result as {value: {board: typeof board; position: Position}};
-    const cell = getCell(successResult.value.board, {row: 2, column: 4});
-    expect(cell).toBe(CellState.Player2);
+    const cellResult = getCell(successResult.value.board, {row: 2, column: 4});
+    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(CellState.Player2);
   });
 
   test("return success with updated board and position", () => {
@@ -392,19 +404,21 @@ describe("DropCoinShould", () => {
 
   test("not modify original board", () => {
     const board = createBoard();
-    const originalCell = getCell(board, {row: 1, column: 3});
+    const originalResult = getCell(board, {row: 1, column: 3});
+    const originalCell = resultIsSuccess(originalResult) ? originalResult.value : null;
 
     const result = dropCoin(board, 3, CellState.Player1);
 
     // Original board should be unchanged
-    const cellAfter = getCell(board, {row: 1, column: 3});
+    const cellAfterResult = getCell(board, {row: 1, column: 3});
+    const cellAfter = resultIsSuccess(cellAfterResult) ? cellAfterResult.value : null;
     expect(cellAfter).toBe(originalCell);
     expect(cellAfter).toBe(CellState.Empty);
 
     // Result should have new board with coin
     expect(resultIsSuccess(result)).toBe(true);
     const successResult = result as {value: {board: typeof board; position: Position}};
-    const newCell = getCell(successResult.value.board, {row: 1, column: 3});
-    expect(newCell).toBe(CellState.Player1);
+    const newCellResult = getCell(successResult.value.board, {row: 1, column: 3});
+    expect(resultIsSuccess(newCellResult) && newCellResult.value).toBe(CellState.Player1);
   });
 });
