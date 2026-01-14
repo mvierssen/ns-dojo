@@ -45,3 +45,27 @@ export function checkVerticalWin(
 
   return false;
 }
+
+export function checkDiagonalWin(
+  board: Board,
+  position: Position,
+  player: CellState
+): boolean {
+  // Check diagonal down-right (↘)
+  let count = 0;
+  for (let offset = -3; offset <= 3; offset++) {
+    const row = position.row + offset;
+    const col = position.column + offset;
+    if (row < 1 || row > 6 || col < 1 || col > 7) continue;
+
+    const cellResult = getCell(board, {row, column: col});
+    if (resultIsSuccess(cellResult) && cellResult.value === player) {
+      count++;
+      if (count >= 4) return true;
+    } else {
+      count = 0;
+    }
+  }
+
+  return false;
+}
