@@ -35,3 +35,15 @@ A facade should just coordinate, not hold state or do validation. Makes testing 
 Everything else in this codebase uses Result types for errors, but `getCell` throws an exception. Inconsistent and breaks the functional composition pattern.
 
 Should change to `Result<CellState>` to match the rest.
+
+---
+
+### CLI mixes formatting with game logic
+
+**Where:** `src/cli.ts`
+
+This file has:
+- Pure formatting functions (formatWelcome, formatBoard, formatError, etc.)
+- The GameLoop class which manages player turns
+
+Player turn management is game logic, not CLI stuff. Should be separate.
