@@ -72,3 +72,11 @@ Way too many reasons to change. Should split into focused modules.
 Column values are plain `number` everywhere. Could use a branded type to catch invalid columns at compile time instead of runtime.
 
 Low priority since runtime validation exists, but would be nice.
+
+---
+
+### GameLoop depends on concrete Game
+
+**Where:** `src/cli.ts` line 16
+
+`constructor(private game: Game) {}` takes a concrete class, not an interface. Makes it harder to test with mocks.
