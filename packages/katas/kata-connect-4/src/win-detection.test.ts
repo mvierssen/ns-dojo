@@ -123,4 +123,25 @@ describe("WinDetectionShould", () => {
     const result = checkWin(board, {row: 4, column: 5}, CellState.Player2);
     expect(result).toBe(true);
   });
+
+  test("checkWin handles corner position win", () => {
+    const board = BoardBuilder.empty()
+      .withCoin({row: 1, column: 1}, CellState.Player1)
+      .withCoin({row: 1, column: 2}, CellState.Player1)
+      .withCoin({row: 1, column: 3}, CellState.Player1)
+      .withCoin({row: 1, column: 4}, CellState.Player1)
+      .build();
+
+    const result = checkWin(board, {row: 1, column: 1}, CellState.Player1);
+    expect(result).toBe(true);
+  });
+
+  test("checkWin returns false for no win at edge", () => {
+    const board = BoardBuilder.empty()
+      .withCoin({row: 1, column: 7}, CellState.Player2)
+      .build();
+
+    const result = checkWin(board, {row: 1, column: 7}, CellState.Player2);
+    expect(result).toBe(false);
+  });
 });
