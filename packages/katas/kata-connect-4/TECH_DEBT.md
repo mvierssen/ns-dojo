@@ -25,3 +25,13 @@ It's called a "Facade" but it's really doing:
 - Delegating game logic
 
 A facade should just coordinate, not hold state or do validation. Makes testing awkward too.
+
+---
+
+### getCell throws instead of returning Result
+
+**Where:** `src/board.ts` lines 28-40
+
+Everything else in this codebase uses Result types for errors, but `getCell` throws an exception. Inconsistent and breaks the functional composition pattern.
+
+Should change to `Result<CellState>` to match the rest.
