@@ -4,7 +4,7 @@ Some notes on things that smell in this codebase and ideas for fixing them.
 
 ## The Smells
 
-### Hardcoded column labels
+### Hardcoded column labels - DONE
 
 **Where:** `src/board.ts` lines 64, 79
 
