@@ -6,9 +6,9 @@ import {
 } from "@ns-dojo/shared-core";
 import {BOARD_ROWS, CellState} from "./constants.js";
 import {getCell} from "./board-core.js";
-import type {Board, Position} from "./types.js";
+import type {Board, Column, Position} from "./types.js";
 
-export function findLowestEmptyRow(board: Board, column: number): number | null {
+export function findLowestEmptyRow(board: Board, column: Column): number | null {
   for (let row = 1; row <= BOARD_ROWS; row++) {
     const cellResult = getCell(board, {row, column});
     if (!resultIsSuccess(cellResult)) {
@@ -36,7 +36,7 @@ export function setCell(board: Board, position: Position, cellState: CellState):
 
 export function dropCoin(
   board: Board,
-  column: number,
+  column: Column,
   player: CellState
 ): Result<{board: Board; position: Position}> {
   const row = findLowestEmptyRow(board, column);

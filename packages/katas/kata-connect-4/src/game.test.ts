@@ -1,6 +1,7 @@
 import {describe, expect, test} from "vitest";
 import {resultIsFailure, resultIsSuccess} from "@ns-dojo/shared-core";
 import {getCell} from "./board.js";
+import {validateColumn} from "./column.js";
 import {CellState} from "./constants.js";
 import {Game} from "./game.js";
 
@@ -83,7 +84,10 @@ describe("GameShould", () => {
     const game = new Game();
     game.start();
 
-    const result = game.dropCoin(3, CellState.Player1);
+    const col = validateColumn(3);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const result = game.dropCoin(col.value, CellState.Player1);
 
     expect(resultIsSuccess(result)).toBe(true);
     const board = game.getBoard();
@@ -95,7 +99,10 @@ describe("GameShould", () => {
     const game = new Game();
     game.start();
 
-    const result = game.dropCoin(5, CellState.Player2);
+    const col = validateColumn(5);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const result = game.dropCoin(col.value, CellState.Player2);
 
     expect(resultIsSuccess(result)).toBe(true);
     const successResult = result as {value: {row: number; column: number}};
@@ -114,7 +121,10 @@ describe("GameShould", () => {
       row[1] = CellState.Player1;
     }
 
-    const result = game.dropCoin(2, CellState.Player2);
+    const col = validateColumn(2);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const result = game.dropCoin(col.value, CellState.Player2);
 
     expect(resultIsFailure(result)).toBe(true);
     const failureResult = result as {error: string};
@@ -126,7 +136,10 @@ describe("GameShould", () => {
     const game = new Game();
     game.start();
 
-    game.dropCoin(4, CellState.Player1);
+    const col = validateColumn(4);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    game.dropCoin(col.value, CellState.Player1);
     const display = game.displayBoard();
 
     // Row 1 should show Player1 coin in column 4
@@ -139,9 +152,12 @@ describe("GameShould", () => {
     const game = new Game();
     game.start();
 
-    const result1 = game.dropCoin(3, CellState.Player1);
-    const result2 = game.dropCoin(3, CellState.Player2);
-    const result3 = game.dropCoin(3, CellState.Player1);
+    const col = validateColumn(3);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const result1 = game.dropCoin(col.value, CellState.Player1);
+    const result2 = game.dropCoin(col.value, CellState.Player2);
+    const result3 = game.dropCoin(col.value, CellState.Player1);
 
     expect(resultIsSuccess(result1)).toBe(true);
     expect(resultIsSuccess(result2)).toBe(true);

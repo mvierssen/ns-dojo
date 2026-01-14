@@ -15,6 +15,7 @@ import {
   renderRowWithLabel,
   setCell,
 } from "./board.js";
+import {validateColumn} from "./column.js";
 import type {Position} from "./types.js";
 import {
   BOARD_ROWS,
@@ -220,7 +221,10 @@ describe("ColumnInputParsingShould", () => {
 describe("FindLowestEmptyRowShould", () => {
   test("return row 1 for empty column", () => {
     const board = createBoard();
-    const lowestRow = findLowestEmptyRow(board, 3);
+    const col = validateColumn(3);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const lowestRow = findLowestEmptyRow(board, col.value);
     expect(lowestRow).toBe(1);
   });
 
@@ -230,7 +234,10 @@ describe("FindLowestEmptyRowShould", () => {
     const row = board.cells[5];
     if (row) row[2] = CellState.Player1;
 
-    const lowestRow = findLowestEmptyRow(board, 3);
+    const col = validateColumn(3);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const lowestRow = findLowestEmptyRow(board, col.value);
     expect(lowestRow).toBe(2);
   });
 
@@ -243,7 +250,10 @@ describe("FindLowestEmptyRowShould", () => {
       if (row) row[3] = CellState.Player1;
     }
 
-    const lowestRow = findLowestEmptyRow(board, 4);
+    const col = validateColumn(4);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const lowestRow = findLowestEmptyRow(board, col.value);
     expect(lowestRow).toBe(6);
   });
 
@@ -255,13 +265,19 @@ describe("FindLowestEmptyRowShould", () => {
       if (row) row[1] = CellState.Player2;
     }
 
-    const lowestRow = findLowestEmptyRow(board, 2);
+    const col = validateColumn(2);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const lowestRow = findLowestEmptyRow(board, col.value);
     expect(lowestRow).toBe(null);
   });
 
   test("handle Result from getCell correctly", () => {
     const board = createBoard();
-    const result = findLowestEmptyRow(board, 1);
+    const col = validateColumn(1);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const result = findLowestEmptyRow(board, col.value);
 
     expect(result).toBe(1);
   });
@@ -371,7 +387,10 @@ describe("GetCellShould", () => {
 describe("DropCoinShould", () => {
   test("place coin at row 1 in empty column", () => {
     const board = createBoard();
-    const result = dropCoin(board, 3, CellState.Player1);
+    const col = validateColumn(3);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const result = dropCoin(board, col.value, CellState.Player1);
 
     expect(resultIsSuccess(result)).toBe(true);
     const successResult = result as {value: {board: typeof board; position: Position}};
@@ -386,7 +405,10 @@ describe("DropCoinShould", () => {
     if (row5 === undefined) throw new Error("Row 5 should exist");
     row5[3] = CellState.Player1;
 
-    const result = dropCoin(board, 4, CellState.Player2);
+    const col = validateColumn(4);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const result = dropCoin(board, col.value, CellState.Player2);
 
     expect(resultIsSuccess(result)).toBe(true);
     const successResult = result as {value: {board: typeof board; position: Position}};
@@ -396,7 +418,10 @@ describe("DropCoinShould", () => {
 
   test("return success with updated board and position", () => {
     const board = createBoard();
-    const result = dropCoin(board, 5, CellState.Player1);
+    const col = validateColumn(5);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const result = dropCoin(board, col.value, CellState.Player1);
 
     expect(resultIsSuccess(result)).toBe(true);
     const successResult = result as {value: {board: typeof board; position: Position}};
@@ -413,7 +438,10 @@ describe("DropCoinShould", () => {
       row[1] = CellState.Player1;
     }
 
-    const result = dropCoin(board, 2, CellState.Player2);
+    const col = validateColumn(2);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const result = dropCoin(board, col.value, CellState.Player2);
 
     expect(resultIsFailure(result)).toBe(true);
   });
@@ -427,7 +455,10 @@ describe("DropCoinShould", () => {
       row[6] = CellState.Player1;
     }
 
-    const result = dropCoin(board, 7, CellState.Player2);
+    const col = validateColumn(7);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const result = dropCoin(board, col.value, CellState.Player2);
 
     expect(resultIsFailure(result)).toBe(true);
     const failureResult = result as {error: string};
@@ -440,7 +471,10 @@ describe("DropCoinShould", () => {
     const originalResult = getCell(board, {row: 1, column: 3});
     const originalCell = resultIsSuccess(originalResult) ? originalResult.value : null;
 
-    const result = dropCoin(board, 3, CellState.Player1);
+    const col = validateColumn(3);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const result = dropCoin(board, col.value, CellState.Player1);
 
     // Original board should be unchanged
     const cellAfterResult = getCell(board, {row: 1, column: 3});

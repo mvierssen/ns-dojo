@@ -7,7 +7,7 @@ import {
 import {createBoard} from "./board-core.js";
 import {dropCoin} from "./board-logic.js";
 import type {CellState} from "./constants.js";
-import type {Board, Position} from "./types.js";
+import type {Board, Column, Position} from "./types.js";
 
 export interface GameState {
   board: Board;
@@ -21,7 +21,7 @@ export function initializeGameState(): GameState {
 
 export function processMove(
   gameState: GameState,
-  column: number,
+  column: Column,
   player: CellState
 ): Result<{gameState: GameState; position: Position}> {
   const dropResult = dropCoin(gameState.board, column, player);

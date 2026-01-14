@@ -1,10 +1,12 @@
 import type {Result} from "@ns-dojo/shared-core";
 import {resultCreateSuccess, resultIsFailure, resultIsSuccess} from "@ns-dojo/shared-core";
 import {parseColumnInput} from "./board.js";
+import {validateColumn} from "./column.js";
 import {CellState} from "./constants.js";
 import type {Game} from "./game.js";
 import type {GameInstructions} from "./instructions.js";
 import {createTurnManager, advanceTurn, type TurnManager} from "./turn-manager.js";
+import type {Column} from "./types.js";
 
 export interface GameLoopResponse {
   type: "success" | "error" | "quit";
@@ -57,7 +59,14 @@ export class GameLoop {
     }
 
     if (resultIsSuccess(parseResult) && typeof parseResult.value === "number") {
-      const column = parseResult.value;
+      const columnResult = validateColumn(parseResult.value);
+      if (resultIsFailure(columnResult)) {
+        return {
+          type: "error",
+          message: formatError(columnResult.error),
+        };
+      }
+      const column: Column = columnResult.value;
       const dropResult = this.game.dropCoin(column, this.turnManager.currentPlayer);
 
       if (resultIsFailure(dropResult)) {
