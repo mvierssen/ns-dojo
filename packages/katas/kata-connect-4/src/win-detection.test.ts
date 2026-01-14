@@ -85,4 +85,16 @@ describe("WinDetectionShould", () => {
     const result = checkDiagonalWin(board, {row: 6, column: 4}, CellState.Player1);
     expect(result).toBe(true);
   });
+
+  test("detect diagonal win down-left", () => {
+    const board = BoardBuilder.empty()
+      .withCoin({row: 3, column: 7}, CellState.Player2)
+      .withCoin({row: 4, column: 6}, CellState.Player2)
+      .withCoin({row: 5, column: 5}, CellState.Player2)
+      .withCoin({row: 6, column: 4}, CellState.Player2)
+      .build();
+
+    const result = checkDiagonalWin(board, {row: 5, column: 5}, CellState.Player2);
+    expect(result).toBe(true);
+  });
 });
