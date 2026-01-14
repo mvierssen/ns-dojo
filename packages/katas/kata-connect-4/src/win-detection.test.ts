@@ -1,5 +1,5 @@
 import {describe, expect, test} from "vitest";
-import {checkHorizontalWin} from "./win-detection.js";
+import {checkHorizontalWin, checkVerticalWin} from "./win-detection.js";
 import {BoardBuilder} from "./test-utils/board-builder.js";
 import {CellState} from "./constants.js";
 
@@ -49,5 +49,19 @@ describe("WinDetectionShould", () => {
 
     const result = checkHorizontalWin(board, {row: 1, column: 2}, CellState.Player1);
     expect(result).toBe(false);
+  });
+
+  test("detect vertical win with 4 in column", () => {
+    const board = BoardBuilder.empty()
+      .withColumn(3, [
+        CellState.Player1,
+        CellState.Player1,
+        CellState.Player1,
+        CellState.Player1,
+      ])
+      .build();
+
+    const result = checkVerticalWin(board, {row: 4, column: 3}, CellState.Player1);
+    expect(result).toBe(true);
   });
 });
