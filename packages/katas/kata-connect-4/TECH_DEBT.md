@@ -116,3 +116,11 @@ Fix the duplicated column labels first. Quick, low risk, and removes the most ob
 ### Then standardize error handling
 
 Change `getCell` to return Result. This should happen before bigger refactors so we're not rewriting things twice.
+
+### Split up the big modules
+
+1. Break up `board.ts` into core/render/logic pieces
+2. Pull game logic out of `cli.ts`
+3. Clean up the Game class to be a proper facade
+
+Order matters here, do board.ts first since the others depend on it.
