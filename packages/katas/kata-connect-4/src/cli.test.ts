@@ -243,4 +243,18 @@ describe("GameLoopShould", () => {
     const prompt = gameLoop.getPlayerPrompt();
     expect(prompt).toBe("Player 2's turn (🔴)");
   });
+
+  test("getPlayerPrompt updates after each successful move", () => {
+    const game = new Game();
+    game.start();
+    const gameLoop = new GameLoop(game);
+
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+
+    gameLoop.handleInput("1");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 2's turn (🔴)");
+
+    gameLoop.handleInput("2");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+  });
 });
