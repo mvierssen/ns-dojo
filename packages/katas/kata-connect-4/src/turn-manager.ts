@@ -9,3 +9,12 @@ export function createTurnManager(): TurnManager {
     currentPlayer: CellState.Player1,
   };
 }
+
+export function advanceTurn(turnManager: TurnManager): TurnManager {
+  return {
+    currentPlayer:
+      turnManager.currentPlayer === CellState.Player1
+        ? CellState.Player2
+        : CellState.Player1,
+  };
+}
