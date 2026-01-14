@@ -19,6 +19,14 @@ export class BoardBuilder {
     return this;
   }
 
+  withColumn(column: number, coins: CellState[]): this {
+    for (const [index, coin] of coins.entries()) {
+      const row = index + 1;
+      this.board = setCell(this.board, {row, column}, coin);
+    }
+    return this;
+  }
+
   build(): Board {
     return this.board;
   }
