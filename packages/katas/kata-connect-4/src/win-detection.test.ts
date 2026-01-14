@@ -1,5 +1,5 @@
 import {describe, expect, test} from "vitest";
-import {checkHorizontalWin, checkVerticalWin} from "./win-detection.js";
+import {checkDiagonalWin, checkHorizontalWin, checkVerticalWin} from "./win-detection.js";
 import {BoardBuilder} from "./test-utils/board-builder.js";
 import {CellState} from "./constants.js";
 
@@ -72,5 +72,17 @@ describe("WinDetectionShould", () => {
 
     const result = checkVerticalWin(board, {row: 3, column: 2}, CellState.Player2);
     expect(result).toBe(false);
+  });
+
+  test("detect diagonal win down-right", () => {
+    const board = BoardBuilder.empty()
+      .withCoin({row: 3, column: 1}, CellState.Player1)
+      .withCoin({row: 4, column: 2}, CellState.Player1)
+      .withCoin({row: 5, column: 3}, CellState.Player1)
+      .withCoin({row: 6, column: 4}, CellState.Player1)
+      .build();
+
+    const result = checkDiagonalWin(board, {row: 6, column: 4}, CellState.Player1);
+    expect(result).toBe(true);
   });
 });
