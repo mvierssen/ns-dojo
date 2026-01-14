@@ -77,7 +77,7 @@ export function renderBoardWithRowLabels(board: Board): string {
 
 export function renderBoardComplete(board: Board): string {
   const boardWithRowLabels = renderBoardWithRowLabels(board);
-  const columnLabels = "    1  2  3  4  5  6  7";
+  const columnLabels = COLUMN_LABELS_STRING;
   return `${boardWithRowLabels}\n${columnLabels}`;
 }
 
