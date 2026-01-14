@@ -50,7 +50,7 @@ Player turn management is game logic, not CLI stuff. Should be separate.
 
 ---
 
-### board.ts is a kitchen sink
+### board.ts is a kitchen sink - DONE
 
 **Where:** `src/board.ts`
 
