@@ -1,5 +1,7 @@
 import {createBoard} from "../board-core.js";
-import type {Board} from "../types.js";
+import {setCell} from "../board-logic.js";
+import type {CellState} from "../constants.js";
+import type {Board, Position} from "../types.js";
 
 export class BoardBuilder {
   private board: Board;
@@ -10,6 +12,11 @@ export class BoardBuilder {
 
   static empty(): BoardBuilder {
     return new BoardBuilder(createBoard());
+  }
+
+  withCoin(position: Position, player: CellState): this {
+    this.board = setCell(this.board, position, player);
+    return this;
   }
 
   build(): Board {
