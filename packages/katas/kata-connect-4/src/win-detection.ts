@@ -24,3 +24,24 @@ export function checkHorizontalWin(
 
   return false;
 }
+
+export function checkVerticalWin(
+  board: Board,
+  position: Position,
+  player: CellState
+): boolean {
+  const {column} = position;
+  let count = 0;
+
+  for (let row = 1; row <= 6; row++) {
+    const cellResult = getCell(board, {row, column});
+    if (resultIsSuccess(cellResult) && cellResult.value === player) {
+      count++;
+      if (count >= 4) return true;
+    } else {
+      count = 0;
+    }
+  }
+
+  return false;
+}
