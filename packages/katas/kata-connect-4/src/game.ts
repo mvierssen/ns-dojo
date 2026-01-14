@@ -4,7 +4,7 @@ import {parseColumnInput, renderBoardComplete} from "./board.js";
 import type {CellState} from "./constants.js";
 import {initializeGameState, processMove, type GameState} from "./game-state.js";
 import {getGameInstructions, type GameInstructions} from "./instructions.js";
-import type {Board, Position} from "./types.js";
+import type {Board, Column, Position} from "./types.js";
 
 // Facade Class
 export class Game {
@@ -36,7 +36,7 @@ export class Game {
     return parseColumnInput(input);
   }
 
-  dropCoin(column: number, player: CellState): Result<Position> {
+  dropCoin(column: Column, player: CellState): Result<Position> {
     if (this.gameState === null) {
       return resultCreateFailure("Game has not been started");
     }

@@ -3,6 +3,7 @@ import {resultIsSuccess, resultIsFailure} from "@ns-dojo/shared-core";
 import type {GameState} from "./game-state.js";
 import {initializeGameState, processMove} from "./game-state.js";
 import {createBoard} from "./board-core.js";
+import {validateColumn} from "./column.js";
 import {CellState} from "./constants.js";
 
 describe("GameStateShould", () => {
@@ -24,7 +25,10 @@ describe("GameStateShould", () => {
 
   test("process move and return new game state", () => {
     const gameState = initializeGameState();
-    const result = processMove(gameState, 3, CellState.Player1);
+    const col = validateColumn(3);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    const result = processMove(gameState, col.value, CellState.Player1);
 
     expect(resultIsSuccess(result)).toBe(true);
     expect(resultIsSuccess(result) && result.value.gameState).toBeDefined();
@@ -33,15 +37,18 @@ describe("GameStateShould", () => {
 
   test("return failure when column is full", () => {
     const gameState = initializeGameState();
+    const col = validateColumn(1);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
     let currentState = gameState;
     for (let i = 0; i < 6; i++) {
-      const result = processMove(currentState, 1, CellState.Player1);
+      const result = processMove(currentState, col.value, CellState.Player1);
       if (resultIsSuccess(result)) {
         currentState = result.value.gameState;
       }
     }
 
-    const result = processMove(currentState, 1, CellState.Player2);
+    const result = processMove(currentState, col.value, CellState.Player2);
     expect(resultIsFailure(result)).toBe(true);
   });
 });
