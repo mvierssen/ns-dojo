@@ -1,6 +1,12 @@
 import {describe, expect, test} from "vitest";
-import {resultIsSuccess, resultIsFailure} from "@ns-dojo/shared-core";
-import {getCell} from "./board.js";
+import type {Result} from "@ns-dojo/shared-core";
+import {
+  resultIsSuccess,
+  resultIsFailure,
+  resultCreateSuccess,
+  resultCreateFailure,
+} from "@ns-dojo/shared-core";
+import {createBoard, getCell} from "./board.js";
 import {
   formatBoard,
   formatError,
@@ -14,7 +20,7 @@ import {
 import {CellState} from "./constants.js";
 import {Game} from "./game.js";
 import type {GameInstructions} from "./instructions.js";
-import type {IGame} from "./types.js";
+import type {Board, Column, IGame, Position} from "./types.js";
 
 test("GameLoop accepts IGame interface", () => {
   const game: IGame = new Game();
@@ -322,5 +328,68 @@ describe("GameLoopShould", () => {
     const response = gameLoop.handleInput("3");
     expect(response.type).toBe("error");
     expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+  });
+});
+
+class MockGame implements IGame {
+  private board = createBoard();
+
+  start(): void {
+    // Mock implementation - no-op
+  }
+
+  getBoard(): Board {
+    return this.board;
+  }
+
+  getInstructions(): GameInstructions {
+    return {
+      welcome: "Test",
+      rules: {
+        boardDimensions: "",
+        coinDropMechanics: "",
+        turnOrder: "",
+        winCondition: "",
+        drawCondition: "",
+        columnSelection: "",
+      },
+      startPrompt: "",
+    };
+  }
+
+  displayBoard(): string {
+    return "mock board";
+  }
+
+  validateColumnInput(input: string): Result<Column> {
+    const num = Number(input);
+    if (num >= 1 && num <= 7) {
+      return resultCreateSuccess(num as Column);
+    }
+    return resultCreateFailure("Invalid");
+  }
+
+  dropCoin(column: Column, _player: CellState): Result<Position> {
+    return resultCreateSuccess({row: 1, column});
+  }
+}
+
+describe("GameLoopWithMockShould", () => {
+  test("work with mock game implementation", () => {
+    const mockGame = new MockGame();
+    mockGame.start();
+    const gameLoop = new GameLoop(mockGame);
+
+    const response = gameLoop.handleInput("3");
+    expect(response.type).toBe("success");
+  });
+
+  test("display mock board output", () => {
+    const mockGame = new MockGame();
+    mockGame.start();
+    const gameLoop = new GameLoop(mockGame);
+
+    const output = gameLoop.getBoardOutput();
+    expect(output).toBe("mock board");
   });
 });
