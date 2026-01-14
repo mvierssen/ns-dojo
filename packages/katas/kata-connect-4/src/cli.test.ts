@@ -293,4 +293,22 @@ describe("GameLoopShould", () => {
     expect(response.type).toBe("error");
     expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
   });
+
+  test("keep current player unchanged when move fails due to full column", () => {
+    const game = new Game();
+    game.start();
+    const gameLoop = new GameLoop(game);
+
+    // Fill column 3 completely (6 rows) by making alternating moves
+    for (let i = 0; i < 6; i++) {
+      gameLoop.handleInput("3");
+    }
+
+    // After 6 moves, it's Player 1's turn again (started P1, alternated 6 times)
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+
+    const response = gameLoop.handleInput("3");
+    expect(response.type).toBe("error");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+  });
 });
