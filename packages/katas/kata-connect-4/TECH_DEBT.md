@@ -108,3 +108,7 @@ The game says "Get 4 in a row to win" but there's no code to actually detect win
 ## What to fix and when
 
 Rough plan for tackling this stuff:
+
+### Start with the easy wins
+
+Fix the duplicated column labels first. Quick, low risk, and removes the most obvious smell.
