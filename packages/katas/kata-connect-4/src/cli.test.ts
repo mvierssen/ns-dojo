@@ -223,4 +223,12 @@ describe("GameLoopShould", () => {
     const currentPlayer = gameLoop.getCurrentPlayer();
     expect(currentPlayer).toBe(CellState.Player1);
   });
+
+  test("getPlayerPrompt returns Player 1's turn indicator with emoji", () => {
+    const game = new Game();
+    const gameLoop = new GameLoop(game);
+
+    const prompt = gameLoop.getPlayerPrompt();
+    expect(prompt).toBe("Player 1's turn (🟡)");
+  });
 });
