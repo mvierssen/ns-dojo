@@ -83,7 +83,7 @@ Low priority since runtime validation exists, but would be nice.
 
 ---
 
-### Tests mutate arrays directly
+### Tests mutate arrays directly - DONE
 
 **Where:** `src/board.test.ts`, `src/game.test.ts`
 
