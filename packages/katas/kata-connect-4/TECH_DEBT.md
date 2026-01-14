@@ -102,3 +102,9 @@ Brittle and verbose. Should have test builders that use domain operations instea
 **Where:** nowhere (that's the problem)
 
 The game says "Get 4 in a row to win" but there's no code to actually detect wins. Game just keeps going forever. This is the biggest gap, the game isn't really playable without it.
+
+---
+
+## What to fix and when
+
+Rough plan for tackling this stuff:
