@@ -258,6 +258,13 @@ describe("FindLowestEmptyRowShould", () => {
     const lowestRow = findLowestEmptyRow(board, 2);
     expect(lowestRow).toBe(null);
   });
+
+  test("handle Result from getCell correctly", () => {
+    const board = createBoard();
+    const result = findLowestEmptyRow(board, 1);
+
+    expect(result).toBe(1);
+  });
 });
 
 describe("SetCellShould", () => {
