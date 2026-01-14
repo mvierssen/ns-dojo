@@ -29,6 +29,13 @@ export class GameLoop {
     return this.currentPlayer;
   }
 
+  getPlayerPrompt(): string {
+    if (this.currentPlayer === CellState.Player1) {
+      return "Player 1's turn (🟡)";
+    }
+    return "Player 2's turn (🔴)";
+  }
+
   handleInput(input: string): GameLoopResponse {
     const parseResult = processColumnInput(input);
 
