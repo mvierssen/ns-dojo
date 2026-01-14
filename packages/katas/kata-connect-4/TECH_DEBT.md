@@ -14,7 +14,7 @@ Extract to a constant or generate from the array.
 
 ---
 
-### Game class is doing too much
+### Game class is doing too much - DONE
 
 **Where:** `src/game.ts`
 
