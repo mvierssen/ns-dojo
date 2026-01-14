@@ -231,4 +231,16 @@ describe("GameLoopShould", () => {
     const prompt = gameLoop.getPlayerPrompt();
     expect(prompt).toBe("Player 1's turn (🟡)");
   });
+
+  test("getPlayerPrompt returns Player 2's turn indicator with emoji", () => {
+    const game = new Game();
+    game.start();
+    const gameLoop = new GameLoop(game);
+
+    // Make one move to switch to Player 2
+    gameLoop.handleInput("1");
+
+    const prompt = gameLoop.getPlayerPrompt();
+    expect(prompt).toBe("Player 2's turn (🔴)");
+  });
 });
