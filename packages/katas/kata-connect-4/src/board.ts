@@ -9,6 +9,7 @@ import {
   CELL_SYMBOLS,
   CellState,
   COLUMN_LABELS,
+  COLUMN_LABELS_STRING,
 } from "./constants.js";
 import {ColumnInputSchema} from "./schemas.js";
 import type {Board, Position} from "./types.js";
@@ -61,7 +62,7 @@ export function renderBoard(board: Board): string {
 
 export function renderBoardWithLabels(board: Board): string {
   const boardRows = renderBoard(board);
-  const columnLabels = "    1  2  3  4  5  6  7";
+  const columnLabels = COLUMN_LABELS_STRING;
   return `${boardRows}\n${columnLabels}`;
 }
 

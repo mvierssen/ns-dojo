@@ -21,6 +21,7 @@ import {
   CELL_SYMBOLS,
   CellState,
   COLUMN_LABELS,
+  COLUMN_LABELS_STRING,
   ROW_LABELS,
 } from "./constants.js";
 import {BoardSchema} from "./schemas.js";
@@ -100,6 +101,13 @@ describe("BoardShould", () => {
     const rendered = renderBoardWithLabels(board);
     const lines = rendered.split("\n");
     expect(lines.at(-1)).toBe("    1  2  3  4  5  6  7");
+  });
+
+  test("use COLUMN_LABELS_STRING constant for column labels", () => {
+    const board = createBoard();
+    const rendered = renderBoardWithLabels(board);
+    const lines = rendered.split("\n");
+    expect(lines.at(-1)).toBe(COLUMN_LABELS_STRING);
   });
 
   test("render rows in correct order with row 6 at top and row 1 at bottom", () => {
