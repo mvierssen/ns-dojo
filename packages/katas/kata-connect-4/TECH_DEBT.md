@@ -128,3 +128,7 @@ Order matters here, do board.ts first since the others depend on it.
 ### Add the branded Column type
 
 Once the module structure is stable, add the Column type. Doing it earlier would mean updating it during all the refactoring.
+
+### Clean up tests
+
+Create proper test builders to replace the manual array mutations. Wait until after the refactoring settles down.
