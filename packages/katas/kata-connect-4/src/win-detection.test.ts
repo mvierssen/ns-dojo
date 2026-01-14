@@ -27,4 +27,27 @@ describe("WinDetectionShould", () => {
     const result = checkHorizontalWin(board, {row: 2, column: 3}, CellState.Player2);
     expect(result).toBe(true);
   });
+
+  test("return false when only 3 in horizontal row", () => {
+    const board = BoardBuilder.empty()
+      .withCoin({row: 1, column: 1}, CellState.Player1)
+      .withCoin({row: 1, column: 2}, CellState.Player1)
+      .withCoin({row: 1, column: 3}, CellState.Player1)
+      .build();
+
+    const result = checkHorizontalWin(board, {row: 1, column: 3}, CellState.Player1);
+    expect(result).toBe(false);
+  });
+
+  test("return false when 4 cells interrupted", () => {
+    const board = BoardBuilder.empty()
+      .withCoin({row: 1, column: 1}, CellState.Player1)
+      .withCoin({row: 1, column: 2}, CellState.Player1)
+      .withCoin({row: 1, column: 3}, CellState.Player2)
+      .withCoin({row: 1, column: 4}, CellState.Player1)
+      .build();
+
+    const result = checkHorizontalWin(board, {row: 1, column: 2}, CellState.Player1);
+    expect(result).toBe(false);
+  });
 });
