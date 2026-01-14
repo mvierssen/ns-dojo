@@ -98,9 +98,8 @@ describe("GameShould", () => {
     const result = game.dropCoin(5, CellState.Player2);
 
     expect(resultIsSuccess(result)).toBe(true);
-    if (resultIsSuccess(result)) {
-      expect(result.value).toEqual({row: 1, column: 5});
-    }
+    const successResult = result as {value: {row: number; column: number}};
+    expect(successResult.value).toEqual({row: 1, column: 5});
   });
 
   test("dropCoin returns failure for full column", () => {
@@ -110,16 +109,17 @@ describe("GameShould", () => {
     // Fill column 2 completely
     const board = game.getBoard();
     for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
-      board.cells[rowIndex]![1] = CellState.Player1;
+      const row = board.cells[rowIndex];
+      if (row === undefined) throw new Error(`Row ${String(rowIndex)} should exist`);
+      row[1] = CellState.Player1;
     }
 
     const result = game.dropCoin(2, CellState.Player2);
 
     expect(resultIsFailure(result)).toBe(true);
-    if (resultIsFailure(result)) {
-      expect(result.error).toContain("2");
-      expect(result.error).toContain("full");
-    }
+    const failureResult = result as {error: string};
+    expect(failureResult.error).toContain("2");
+    expect(failureResult.error).toContain("full");
   });
 
   test("displayBoard shows dropped coin at correct position", () => {
@@ -147,11 +147,12 @@ describe("GameShould", () => {
     expect(resultIsSuccess(result2)).toBe(true);
     expect(resultIsSuccess(result3)).toBe(true);
 
-    if (resultIsSuccess(result1) && resultIsSuccess(result2) && resultIsSuccess(result3)) {
-      expect(result1.value).toEqual({row: 1, column: 3});
-      expect(result2.value).toEqual({row: 2, column: 3});
-      expect(result3.value).toEqual({row: 3, column: 3});
-    }
+    const successResult1 = result1 as {value: {row: number; column: number}};
+    const successResult2 = result2 as {value: {row: number; column: number}};
+    const successResult3 = result3 as {value: {row: number; column: number}};
+    expect(successResult1.value).toEqual({row: 1, column: 3});
+    expect(successResult2.value).toEqual({row: 2, column: 3});
+    expect(successResult3.value).toEqual({row: 3, column: 3});
 
     const board = game.getBoard();
     expect(getCell(board, {row: 1, column: 3})).toBe(CellState.Player1);

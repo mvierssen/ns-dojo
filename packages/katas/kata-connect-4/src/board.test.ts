@@ -314,24 +314,24 @@ describe("DropCoinShould", () => {
     const result = dropCoin(board, 3, CellState.Player1);
 
     expect(resultIsSuccess(result)).toBe(true);
-    if (resultIsSuccess(result)) {
-      const cell = getCell(result.value.board, {row: 1, column: 3});
-      expect(cell).toBe(CellState.Player1);
-    }
+    const successResult = result as {value: {board: typeof board; position: Position}};
+    const cell = getCell(successResult.value.board, {row: 1, column: 3});
+    expect(cell).toBe(CellState.Player1);
   });
 
   test("place coin at row 2 when row 1 is occupied", () => {
     const board = createBoard();
     // Place a coin at row 1, column 4
-    board.cells[5]![3] = CellState.Player1;
+    const row5 = board.cells[5];
+    if (row5 === undefined) throw new Error("Row 5 should exist");
+    row5[3] = CellState.Player1;
 
     const result = dropCoin(board, 4, CellState.Player2);
 
     expect(resultIsSuccess(result)).toBe(true);
-    if (resultIsSuccess(result)) {
-      const cell = getCell(result.value.board, {row: 2, column: 4});
-      expect(cell).toBe(CellState.Player2);
-    }
+    const successResult = result as {value: {board: typeof board; position: Position}};
+    const cell = getCell(successResult.value.board, {row: 2, column: 4});
+    expect(cell).toBe(CellState.Player2);
   });
 
   test("return success with updated board and position", () => {
@@ -339,17 +339,18 @@ describe("DropCoinShould", () => {
     const result = dropCoin(board, 5, CellState.Player1);
 
     expect(resultIsSuccess(result)).toBe(true);
-    if (resultIsSuccess(result)) {
-      expect(result.value.board).toBeDefined();
-      expect(result.value.position).toEqual({row: 1, column: 5});
-    }
+    const successResult = result as {value: {board: typeof board; position: Position}};
+    expect(successResult.value.board).toBeDefined();
+    expect(successResult.value.position).toEqual({row: 1, column: 5});
   });
 
   test("return failure when column is full", () => {
     const board = createBoard();
     // Fill entire column 2
     for (let rowIndex = 0; rowIndex < BOARD_ROWS; rowIndex++) {
-      board.cells[rowIndex]![1] = CellState.Player1;
+      const row = board.cells[rowIndex];
+      if (row === undefined) throw new Error(`Row ${String(rowIndex)} should exist`);
+      row[1] = CellState.Player1;
     }
 
     const result = dropCoin(board, 2, CellState.Player2);
@@ -361,16 +362,17 @@ describe("DropCoinShould", () => {
     const board = createBoard();
     // Fill entire column 7
     for (let rowIndex = 0; rowIndex < BOARD_ROWS; rowIndex++) {
-      board.cells[rowIndex]![6] = CellState.Player1;
+      const row = board.cells[rowIndex];
+      if (row === undefined) throw new Error(`Row ${String(rowIndex)} should exist`);
+      row[6] = CellState.Player1;
     }
 
     const result = dropCoin(board, 7, CellState.Player2);
 
     expect(resultIsFailure(result)).toBe(true);
-    if (resultIsFailure(result)) {
-      expect(result.error).toContain("7");
-      expect(result.error).toContain("full");
-    }
+    const failureResult = result as {error: string};
+    expect(failureResult.error).toContain("7");
+    expect(failureResult.error).toContain("full");
   });
 
   test("not modify original board", () => {
@@ -386,9 +388,8 @@ describe("DropCoinShould", () => {
 
     // Result should have new board with coin
     expect(resultIsSuccess(result)).toBe(true);
-    if (resultIsSuccess(result)) {
-      const newCell = getCell(result.value.board, {row: 1, column: 3});
-      expect(newCell).toBe(CellState.Player1);
-    }
+    const successResult = result as {value: {board: typeof board; position: Position}};
+    const newCell = getCell(successResult.value.board, {row: 1, column: 3});
+    expect(newCell).toBe(CellState.Player1);
   });
 });
