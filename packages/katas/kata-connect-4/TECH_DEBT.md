@@ -47,3 +47,18 @@ This file has:
 - The GameLoop class which manages player turns
 
 Player turn management is game logic, not CLI stuff. Should be separate.
+
+---
+
+### board.ts is a kitchen sink
+
+**Where:** `src/board.ts`
+
+This one file handles:
+- Creating boards
+- Cell access/mutation
+- Rendering (multiple functions)
+- Game logic (dropCoin, findLowestEmptyRow, etc.)
+- Input parsing
+
+Way too many reasons to change. Should split into focused modules.
