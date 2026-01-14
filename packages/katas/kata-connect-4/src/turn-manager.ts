@@ -1,4 +1,4 @@
-import {CellState} from "./constants.js";
+import {CellState, CELL_SYMBOLS} from "./constants.js";
 
 export interface TurnManager {
   currentPlayer: CellState;
@@ -17,4 +17,8 @@ export function advanceTurn(turnManager: TurnManager): TurnManager {
         ? CellState.Player2
         : CellState.Player1,
   };
+}
+
+export function getPlayerSymbol(player: CellState): string {
+  return CELL_SYMBOLS[player];
 }

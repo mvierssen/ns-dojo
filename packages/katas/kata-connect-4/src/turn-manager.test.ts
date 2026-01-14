@@ -1,5 +1,5 @@
 import {describe, expect, test} from "vitest";
-import {createTurnManager, advanceTurn} from "./turn-manager.js";
+import {createTurnManager, advanceTurn, getPlayerSymbol} from "./turn-manager.js";
 import {CellState} from "./constants.js";
 
 describe("TurnManagerShould", () => {
@@ -21,5 +21,20 @@ describe("TurnManagerShould", () => {
     const afterSecond = advanceTurn(afterFirst);
 
     expect(afterSecond.currentPlayer).toBe(CellState.Player1);
+  });
+
+  test("return Player1 symbol for Player1 turn", () => {
+    const turnManager = createTurnManager();
+    const symbol = getPlayerSymbol(turnManager.currentPlayer);
+
+    expect(symbol).toBe("🟡");
+  });
+
+  test("return Player2 symbol for Player2 turn", () => {
+    const turnManager = createTurnManager();
+    const updated = advanceTurn(turnManager);
+    const symbol = getPlayerSymbol(updated.currentPlayer);
+
+    expect(symbol).toBe("🔴");
   });
 });
