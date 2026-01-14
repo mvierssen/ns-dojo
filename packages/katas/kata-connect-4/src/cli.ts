@@ -4,6 +4,7 @@ import {parseColumnInput} from "./board.js";
 import {CellState} from "./constants.js";
 import type {Game} from "./game.js";
 import type {GameInstructions} from "./instructions.js";
+import {createTurnManager, advanceTurn, type TurnManager} from "./turn-manager.js";
 
 export interface GameLoopResponse {
   type: "success" | "error" | "quit";
@@ -11,9 +12,11 @@ export interface GameLoopResponse {
 }
 
 export class GameLoop {
-  private currentPlayer: CellState = CellState.Player1;
+  private turnManager: TurnManager;
 
-  constructor(private game: Game) {}
+  constructor(private game: Game) {
+    this.turnManager = createTurnManager();
+  }
 
   getWelcomeOutput(): string {
     const instructions = this.game.getInstructions();
@@ -26,11 +29,11 @@ export class GameLoop {
   }
 
   getCurrentPlayer(): CellState {
-    return this.currentPlayer;
+    return this.turnManager.currentPlayer;
   }
 
   getPlayerPrompt(): string {
-    if (this.currentPlayer === CellState.Player1) {
+    if (this.turnManager.currentPlayer === CellState.Player1) {
       return "Player 1's turn (🟡)";
     }
     return "Player 2's turn (🔴)";
@@ -55,7 +58,7 @@ export class GameLoop {
 
     if (resultIsSuccess(parseResult) && typeof parseResult.value === "number") {
       const column = parseResult.value;
-      const dropResult = this.game.dropCoin(column, this.currentPlayer);
+      const dropResult = this.game.dropCoin(column, this.turnManager.currentPlayer);
 
       if (resultIsFailure(dropResult)) {
         return {
@@ -64,9 +67,9 @@ export class GameLoop {
         };
       }
 
-      const playerName = this.currentPlayer === CellState.Player1 ? "Player 1" : "Player 2";
-      this.currentPlayer =
-        this.currentPlayer === CellState.Player1 ? CellState.Player2 : CellState.Player1;
+      const playerName =
+        this.turnManager.currentPlayer === CellState.Player1 ? "Player 1" : "Player 2";
+      this.turnManager = advanceTurn(this.turnManager);
 
       return {
         type: "success",
