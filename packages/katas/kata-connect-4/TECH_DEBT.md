@@ -10,7 +10,7 @@ Some notes on things that smell in this codebase and ideas for fixing them.
 
 The string `"    1  2  3  4  5  6  7"` is copy-pasted in two places (`renderBoardWithLabels` and `renderBoardComplete`). Should probably just generate it from the COLUMN_LABELS array or at least extract to a constant.
 
-Not urgent, but annoying.
+Extract to a constant or generate from the array.
 
 ---
 
