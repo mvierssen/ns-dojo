@@ -1,5 +1,6 @@
 import {describe, expect, test} from "vitest";
 import {resultIsSuccess, resultIsFailure} from "@ns-dojo/shared-core";
+import {BoardBuilder} from "./test-utils/board-builder.js";
 import {
   createBoard,
   dropCoin,
@@ -18,7 +19,6 @@ import {
 import {validateColumn} from "./column.js";
 import type {Position} from "./types.js";
 import {
-  BOARD_ROWS,
   CELL_SYMBOLS,
   CellState,
   COLUMN_LABELS,
@@ -120,14 +120,10 @@ describe("BoardShould", () => {
   });
 
   test("render board with coins at correct positions", () => {
-    const board = createBoard();
-    // Manually place coins: Player1 at (1,1), Player2 at (1,2)
-    // Row 1 is at index 5, columns are 0-indexed in array
-    const row = board.cells[5];
-    if (row) {
-      row[0] = CellState.Player1;
-      row[1] = CellState.Player2;
-    }
+    const board = BoardBuilder.empty()
+      .withCoin({row: 1, column: 1}, CellState.Player1)
+      .withCoin({row: 1, column: 2}, CellState.Player2)
+      .build();
 
     const rendered = renderBoardComplete(board);
     const lines = rendered.split("\n");
@@ -229,10 +225,9 @@ describe("FindLowestEmptyRowShould", () => {
   });
 
   test("return row 2 when row 1 is occupied", () => {
-    const board = createBoard();
-    // Manually place coin at row 1, column 3 (array index: cells[5][2])
-    const row = board.cells[5];
-    if (row) row[2] = CellState.Player1;
+    const board = BoardBuilder.empty()
+      .withCoin({row: 1, column: 3}, CellState.Player1)
+      .build();
 
     const col = validateColumn(3);
     expect(resultIsSuccess(col)).toBe(true);
@@ -242,13 +237,8 @@ describe("FindLowestEmptyRowShould", () => {
   });
 
   test("return row 6 when rows 1-5 are occupied", () => {
-    const board = createBoard();
-    // Fill column 4 from row 1 to row 5
-    // Row 1: cells[5][3], Row 2: cells[4][3], ..., Row 5: cells[1][3]
-    for (let rowIndex = 5; rowIndex >= 1; rowIndex--) {
-      const row = board.cells[rowIndex];
-      if (row) row[3] = CellState.Player1;
-    }
+    const coins = Array.from({length: 5}, () => CellState.Player1);
+    const board = BoardBuilder.empty().withColumn(4, coins).build();
 
     const col = validateColumn(4);
     expect(resultIsSuccess(col)).toBe(true);
@@ -258,12 +248,8 @@ describe("FindLowestEmptyRowShould", () => {
   });
 
   test("return null when column is full", () => {
-    const board = createBoard();
-    // Fill entire column 2 (all 6 rows)
-    for (let rowIndex = 0; rowIndex < BOARD_ROWS; rowIndex++) {
-      const row = board.cells[rowIndex];
-      if (row) row[1] = CellState.Player2;
-    }
+    const coins = Array.from({length: 6}, () => CellState.Player2);
+    const board = BoardBuilder.empty().withColumn(2, coins).build();
 
     const col = validateColumn(2);
     expect(resultIsSuccess(col)).toBe(true);
@@ -399,11 +385,9 @@ describe("DropCoinShould", () => {
   });
 
   test("place coin at row 2 when row 1 is occupied", () => {
-    const board = createBoard();
-    // Place a coin at row 1, column 4
-    const row5 = board.cells[5];
-    if (row5 === undefined) throw new Error("Row 5 should exist");
-    row5[3] = CellState.Player1;
+    const board = BoardBuilder.empty()
+      .withCoin({row: 1, column: 4}, CellState.Player1)
+      .build();
 
     const col = validateColumn(4);
     expect(resultIsSuccess(col)).toBe(true);
@@ -430,13 +414,8 @@ describe("DropCoinShould", () => {
   });
 
   test("return failure when column is full", () => {
-    const board = createBoard();
-    // Fill entire column 2
-    for (let rowIndex = 0; rowIndex < BOARD_ROWS; rowIndex++) {
-      const row = board.cells[rowIndex];
-      if (row === undefined) throw new Error(`Row ${String(rowIndex)} should exist`);
-      row[1] = CellState.Player1;
-    }
+    const coins = Array.from({length: 6}, () => CellState.Player1);
+    const board = BoardBuilder.empty().withColumn(2, coins).build();
 
     const col = validateColumn(2);
     expect(resultIsSuccess(col)).toBe(true);
@@ -447,13 +426,8 @@ describe("DropCoinShould", () => {
   });
 
   test("failure message indicates which column is full", () => {
-    const board = createBoard();
-    // Fill entire column 7
-    for (let rowIndex = 0; rowIndex < BOARD_ROWS; rowIndex++) {
-      const row = board.cells[rowIndex];
-      if (row === undefined) throw new Error(`Row ${String(rowIndex)} should exist`);
-      row[6] = CellState.Player1;
-    }
+    const coins = Array.from({length: 6}, () => CellState.Player1);
+    const board = BoardBuilder.empty().withColumn(7, coins).build();
 
     const col = validateColumn(7);
     expect(resultIsSuccess(col)).toBe(true);
