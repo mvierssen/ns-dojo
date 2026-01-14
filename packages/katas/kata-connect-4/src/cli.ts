@@ -1,7 +1,6 @@
 import type {Result} from "@ns-dojo/shared-core";
 import {resultCreateSuccess, resultIsFailure, resultIsSuccess} from "@ns-dojo/shared-core";
 import {parseColumnInput} from "./board.js";
-import {validateColumn} from "./column.js";
 import {CellState} from "./constants.js";
 import type {Game} from "./game.js";
 import type {GameInstructions} from "./instructions.js";
@@ -58,15 +57,8 @@ export class GameLoop {
       };
     }
 
-    if (resultIsSuccess(parseResult) && typeof parseResult.value === "number") {
-      const columnResult = validateColumn(parseResult.value);
-      if (resultIsFailure(columnResult)) {
-        return {
-          type: "error",
-          message: formatError(columnResult.error),
-        };
-      }
-      const column: Column = columnResult.value;
+    if (resultIsSuccess(parseResult) && typeof parseResult.value !== "string") {
+      const column: Column = parseResult.value;
       const dropResult = this.game.dropCoin(column, this.turnManager.currentPlayer);
 
       if (resultIsFailure(dropResult)) {
@@ -119,10 +111,10 @@ export function formatSuccess(message: string): string {
   return message;
 }
 
-export function processColumnInput(input: string): Result<number | "quit"> {
+export function processColumnInput(input: string): Result<Column | "quit"> {
   const normalized = input.trim().toLowerCase();
   if (normalized === "q" || normalized === "quit") {
-    return resultCreateSuccess<number | "quit">("quit");
+    return resultCreateSuccess<Column | "quit">("quit");
   }
   return parseColumnInput(input);
 }

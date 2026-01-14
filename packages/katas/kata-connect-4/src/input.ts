@@ -1,12 +1,8 @@
-import {
-  resultCreateFailure,
-  resultCreateSuccess,
-  type Result,
-} from "@ns-dojo/shared-core";
-import {BOARD_COLUMNS} from "./constants.js";
-import {ColumnInputSchema} from "./schemas.js";
+import {resultCreateFailure, type Result} from "@ns-dojo/shared-core";
+import {validateColumn} from "./column.js";
+import type {Column} from "./types.js";
 
-export function parseColumnInput(input: string): Result<number> {
+export function parseColumnInput(input: string): Result<Column> {
   const trimmed = input.trim();
   const parsed = Number(trimmed);
 
@@ -14,15 +10,5 @@ export function parseColumnInput(input: string): Result<number> {
     return resultCreateFailure("Invalid column input: not a number");
   }
 
-  const validation = ColumnInputSchema.safeParse(parsed);
-
-  if (validation.success) {
-    return resultCreateSuccess(validation.data);
-  }
-
-  if (parsed < 1 || parsed > BOARD_COLUMNS) {
-    return resultCreateFailure(`Column must be between 1 and ${String(BOARD_COLUMNS)}`);
-  }
-
-  return resultCreateFailure("Invalid column input");
+  return validateColumn(parsed);
 }
