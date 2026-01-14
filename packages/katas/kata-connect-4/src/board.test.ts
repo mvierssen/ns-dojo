@@ -330,6 +330,16 @@ describe("SetCellShould", () => {
     const adjacentResult = getCell(newBoard, {row: 6, column: 6});
     expect(resultIsSuccess(adjacentResult) && adjacentResult.value).toBe(CellState.Empty);
   });
+
+  test("work correctly with Result-based getCell", () => {
+    const board = createBoard();
+    const position: Position = {row: 1, column: 1};
+    const newBoard = setCell(board, position, CellState.Player1);
+
+    const cellResult = getCell(newBoard, position);
+    expect(resultIsSuccess(cellResult)).toBe(true);
+    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(CellState.Player1);
+  });
 });
 
 describe("GetCellShould", () => {
