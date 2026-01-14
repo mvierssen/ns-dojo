@@ -85,3 +85,15 @@ export function checkDiagonalWin(
 
   return false;
 }
+
+export function checkWin(
+  board: Board,
+  position: Position,
+  player: CellState
+): boolean {
+  return (
+    checkHorizontalWin(board, position, player) ||
+    checkVerticalWin(board, position, player) ||
+    checkDiagonalWin(board, position, player)
+  );
+}
