@@ -11,6 +11,15 @@ test("Game implements IGame interface", () => {
   expect(game).toBeDefined();
 });
 
+test("Game class explicitly implements IGame", () => {
+  const game: IGame = new Game();
+  game.start();
+
+  expect(game.getBoard()).toBeDefined();
+  expect(game.getInstructions()).toBeDefined();
+  expect(game.displayBoard()).toBeDefined();
+});
+
 describe("GameShould", () => {
   test("begin with a fresh board when started", () => {
     const game = new Game();
