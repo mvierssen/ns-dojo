@@ -281,4 +281,16 @@ describe("GameLoopShould", () => {
     gameLoop.handleInput("2");
     expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
   });
+
+  test("keep current player unchanged when input is invalid", () => {
+    const game = new Game();
+    game.start();
+    const gameLoop = new GameLoop(game);
+
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+
+    const response = gameLoop.handleInput("abc");
+    expect(response.type).toBe("error");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+  });
 });
