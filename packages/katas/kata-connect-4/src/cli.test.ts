@@ -215,4 +215,12 @@ describe("GameLoopShould", () => {
     expect(getCell(board, {row: 1, column: 2})).toBe(CellState.Player2);
     expect(getCell(board, {row: 2, column: 1})).toBe(CellState.Player1);
   });
+
+  test("start with Player 1 as current player", () => {
+    const game = new Game();
+    const gameLoop = new GameLoop(game);
+
+    const currentPlayer = gameLoop.getCurrentPlayer();
+    expect(currentPlayer).toBe(CellState.Player1);
+  });
 });
