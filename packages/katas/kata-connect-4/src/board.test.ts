@@ -341,6 +341,14 @@ describe("GetCellShould", () => {
     expect(resultIsFailure(result)).toBe(true);
     expect(resultIsFailure(result) && result.error).toContain("Invalid row");
   });
+
+  test("return failure for invalid column index", () => {
+    const board = createBoard();
+    const result = getCell(board, {row: 1, column: 10});
+
+    expect(resultIsFailure(result)).toBe(true);
+    expect(resultIsFailure(result) && result.error).toContain("Invalid column");
+  });
 });
 
 describe("DropCoinShould", () => {
