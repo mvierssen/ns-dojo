@@ -2,10 +2,9 @@ import type {Result} from "@ns-dojo/shared-core";
 import {resultCreateSuccess, resultIsFailure, resultIsSuccess} from "@ns-dojo/shared-core";
 import {parseColumnInput} from "./board.js";
 import {CellState} from "./constants.js";
-import type {Game} from "./game.js";
 import type {GameInstructions} from "./instructions.js";
 import {createTurnManager, advanceTurn, type TurnManager} from "./turn-manager.js";
-import type {Column} from "./types.js";
+import type {Column, IGame} from "./types.js";
 
 export interface GameLoopResponse {
   type: "success" | "error" | "quit";
@@ -15,7 +14,7 @@ export interface GameLoopResponse {
 export class GameLoop {
   private turnManager: TurnManager;
 
-  constructor(private game: Game) {
+  constructor(private game: IGame) {
     this.turnManager = createTurnManager();
   }
 

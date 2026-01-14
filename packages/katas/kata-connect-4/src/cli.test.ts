@@ -14,6 +14,15 @@ import {
 import {CellState} from "./constants.js";
 import {Game} from "./game.js";
 import type {GameInstructions} from "./instructions.js";
+import type {IGame} from "./types.js";
+
+test("GameLoop accepts IGame interface", () => {
+  const game: IGame = new Game();
+  game.start();
+  const gameLoop = new GameLoop(game);
+
+  expect(gameLoop.getCurrentPlayer()).toBe(CellState.Player1);
+});
 
 describe("CliOutputShould", () => {
   test("format welcome message with game title", () => {
