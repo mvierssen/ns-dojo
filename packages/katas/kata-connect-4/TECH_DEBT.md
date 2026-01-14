@@ -80,3 +80,17 @@ Low priority since runtime validation exists, but would be nice.
 **Where:** `src/cli.ts` line 16
 
 `constructor(private game: Game) {}` takes a concrete class, not an interface. Makes it harder to test with mocks.
+
+---
+
+### Tests mutate arrays directly
+
+**Where:** `src/board.test.ts`, `src/game.test.ts`
+
+Lots of tests do stuff like:
+```typescript
+const row = board.cells[5];
+if (row) row[0] = CellState.Player1;
+```
+
+Brittle and verbose. Should have test builders that use domain operations instead.
