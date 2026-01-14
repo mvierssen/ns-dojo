@@ -75,7 +75,7 @@ Low priority since runtime validation exists, but would be nice.
 
 ---
 
-### GameLoop depends on concrete Game
+### GameLoop depends on concrete Game - DONE
 
 **Where:** `src/cli.ts` line 16
 
