@@ -112,3 +112,7 @@ Rough plan for tackling this stuff:
 ### Start with the easy wins
 
 Fix the duplicated column labels first. Quick, low risk, and removes the most obvious smell.
+
+### Then standardize error handling
+
+Change `getCell` to return Result. This should happen before bigger refactors so we're not rewriting things twice.
