@@ -64,4 +64,13 @@ describe("WinDetectionShould", () => {
     const result = checkVerticalWin(board, {row: 4, column: 3}, CellState.Player1);
     expect(result).toBe(true);
   });
+
+  test("return false when only 3 in vertical column", () => {
+    const board = BoardBuilder.empty()
+      .withColumn(2, [CellState.Player2, CellState.Player2, CellState.Player2])
+      .build();
+
+    const result = checkVerticalWin(board, {row: 3, column: 2}, CellState.Player2);
+    expect(result).toBe(false);
+  });
 });
