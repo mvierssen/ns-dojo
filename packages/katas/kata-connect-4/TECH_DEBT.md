@@ -62,3 +62,13 @@ This one file handles:
 - Input parsing
 
 Way too many reasons to change. Should split into focused modules.
+
+---
+
+### Column numbers are just numbers
+
+**Where:** throughout
+
+Column values are plain `number` everywhere. Could use a branded type to catch invalid columns at compile time instead of runtime.
+
+Low priority since runtime validation exists, but would be nice.
