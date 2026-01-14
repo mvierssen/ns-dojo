@@ -40,10 +40,11 @@ describe("GameShould", () => {
     const initialDisplay = game.displayBoard();
     expect(initialDisplay).toContain("⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪");
 
-    // Manually modify board for testing (will be replaced with proper move method later)
-    const board = game.getBoard();
-    const row = board.cells[5];
-    if (row) row[0] = CellState.Player1;
+    // Drop a coin to change board state
+    const col = validateColumn(1);
+    expect(resultIsSuccess(col)).toBe(true);
+    if (!resultIsSuccess(col)) return;
+    game.dropCoin(col.value, CellState.Player1);
 
     // Get updated display
     const updatedDisplay = game.displayBoard();
@@ -113,17 +114,15 @@ describe("GameShould", () => {
     const game = new Game();
     game.start();
 
-    // Fill column 2 completely
-    const board = game.getBoard();
-    for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
-      const row = board.cells[rowIndex];
-      if (row === undefined) throw new Error(`Row ${String(rowIndex)} should exist`);
-      row[1] = CellState.Player1;
-    }
-
+    // Fill column 2 completely using dropCoin
     const col = validateColumn(2);
     expect(resultIsSuccess(col)).toBe(true);
     if (!resultIsSuccess(col)) return;
+    for (let i = 0; i < 6; i++) {
+      game.dropCoin(col.value, CellState.Player1);
+    }
+
+    // Attempt to drop another coin in the full column
     const result = game.dropCoin(col.value, CellState.Player2);
 
     expect(resultIsFailure(result)).toBe(true);
