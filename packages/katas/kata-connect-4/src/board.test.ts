@@ -333,6 +333,14 @@ describe("GetCellShould", () => {
     expect(resultIsSuccess(result)).toBe(true);
     expect(resultIsSuccess(result) && result.value).toBe(CellState.Empty);
   });
+
+  test("return failure for invalid row index", () => {
+    const board = createBoard();
+    const result = getCell(board, {row: 10, column: 1});
+
+    expect(resultIsFailure(result)).toBe(true);
+    expect(resultIsFailure(result) && result.error).toContain("Invalid row");
+  });
 });
 
 describe("DropCoinShould", () => {
