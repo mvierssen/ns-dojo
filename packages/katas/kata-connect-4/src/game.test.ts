@@ -87,8 +87,8 @@ describe("GameShould", () => {
 
     expect(resultIsSuccess(result)).toBe(true);
     const board = game.getBoard();
-    const cell = getCell(board, {row: 1, column: 3});
-    expect(cell).toBe(CellState.Player1);
+    const cellResult = getCell(board, {row: 1, column: 3});
+    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(CellState.Player1);
   });
 
   test("dropCoin returns success with position for valid move", () => {
@@ -155,8 +155,11 @@ describe("GameShould", () => {
     expect(successResult3.value).toEqual({row: 3, column: 3});
 
     const board = game.getBoard();
-    expect(getCell(board, {row: 1, column: 3})).toBe(CellState.Player1);
-    expect(getCell(board, {row: 2, column: 3})).toBe(CellState.Player2);
-    expect(getCell(board, {row: 3, column: 3})).toBe(CellState.Player1);
+    const cell1 = getCell(board, {row: 1, column: 3});
+    const cell2 = getCell(board, {row: 2, column: 3});
+    const cell3 = getCell(board, {row: 3, column: 3});
+    expect(resultIsSuccess(cell1) && cell1.value).toBe(CellState.Player1);
+    expect(resultIsSuccess(cell2) && cell2.value).toBe(CellState.Player2);
+    expect(resultIsSuccess(cell3) && cell3.value).toBe(CellState.Player1);
   });
 });
