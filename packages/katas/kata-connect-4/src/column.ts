@@ -3,6 +3,9 @@ import {BOARD_COLUMNS} from "./constants.js";
 import type {Column} from "./types.js";
 
 export function validateColumn(value: number): Result<Column> {
+  if (!Number.isInteger(value)) {
+    return resultCreateFailure("Column must be an integer");
+  }
   if (value < 1 || value > BOARD_COLUMNS) {
     return resultCreateFailure(
       `Column must be between 1 and ${String(BOARD_COLUMNS)}`

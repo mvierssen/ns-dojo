@@ -32,7 +32,7 @@ export class Game {
     return renderBoardComplete(this.gameState.board);
   }
 
-  validateColumnInput(input: string): Result<number> {
+  validateColumnInput(input: string): Result<Column> {
     return parseColumnInput(input);
   }
 
