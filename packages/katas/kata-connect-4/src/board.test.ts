@@ -137,6 +137,13 @@ describe("BoardShould", () => {
     expect(lines[6]).toBe("    1  2  3  4  5  6  7");
   });
 
+  test("use COLUMN_LABELS_STRING constant in complete board render", () => {
+    const board = createBoard();
+    const rendered = renderBoardComplete(board);
+    const lines = rendered.split("\n");
+    expect(lines.at(-1)).toBe(COLUMN_LABELS_STRING);
+  });
+
   test("label columns 1 through 7 left to right", () => {
     expect(COLUMN_LABELS).toEqual([1, 2, 3, 4, 5, 6, 7]);
   });
