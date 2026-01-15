@@ -51,3 +51,17 @@ export const resultFlatMap = <T, U, E>(
   r: Result<T, E>,
   fn: (t: T) => Result<U, E>,
 ): Result<U, E> => (resultIsSuccess(r) ? fn(r.value) : r);
+
+export const resultUnwrapOrThrow = <T, E>(r: Result<T, E>): T => {
+  if (resultIsSuccess(r)) {
+    return r.value;
+  }
+  throw new Error(`Unwrap failed: ${String(r.error)}`);
+};
+
+export const resultUnwrapErrorOrThrow = <T, E>(r: Result<T, E>): E => {
+  if (resultIsFailure(r)) {
+    return r.error;
+  }
+  throw new Error(`UnwrapError failed: result was success`);
+};
