@@ -369,8 +369,8 @@ class MockGame implements IGame {
     return resultCreateFailure("Invalid");
   }
 
-  dropCoin(column: Column, _player: CellState): Result<Position> {
-    return resultCreateSuccess({row: 1, column});
+  dropCoin(column: Column, _player: CellState): Result<{position: Position; winner: CellState | null}> {
+    return resultCreateSuccess({position: {row: 1, column}, winner: null});
   }
 }
 

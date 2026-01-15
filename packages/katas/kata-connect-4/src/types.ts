@@ -9,11 +9,16 @@ export type Position = z.infer<typeof PositionSchema>;
 
 export type Column = number & {readonly __brand: "Column"};
 
+export interface DropCoinResult {
+  position: Position;
+  winner: CellState | null;
+}
+
 export interface IGame {
   start(): void;
   getBoard(): Board;
   getInstructions(): GameInstructions;
   displayBoard(): string;
   validateColumnInput(input: string): Result<Column>;
-  dropCoin(column: Column, player: CellState): Result<Position>;
+  dropCoin(column: Column, player: CellState): Result<DropCoinResult>;
 }
