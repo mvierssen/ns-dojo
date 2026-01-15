@@ -1,5 +1,5 @@
 import {describe, expect, test} from "vitest";
-import {resultIsFailure, resultIsSuccess} from "@ns-dojo/shared-core";
+import {resultUnwrapOrThrow, resultUnwrapErrorOrThrow} from "@ns-dojo/shared-core";
 import {getCell} from "./board.js";
 import {validateColumn} from "./column.js";
 import {CellState} from "./constants.js";
@@ -51,17 +51,12 @@ describe("GameShould", () => {
     const game = new Game();
     game.start();
 
-    // Get initial display
     const initialDisplay = game.displayBoard();
     expect(initialDisplay).toContain("⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪");
 
-    // Drop a coin to change board state
-    const col = validateColumn(1);
-    expect(resultIsSuccess(col)).toBe(true);
-    if (!resultIsSuccess(col)) return;
-    game.dropCoin(col.value, CellState.Player1);
+    const col = resultUnwrapOrThrow(validateColumn(1));
+    game.dropCoin(col, CellState.Player1);
 
-    // Get updated display
     const updatedDisplay = game.displayBoard();
     expect(updatedDisplay).toContain("🟡");
     expect(updatedDisplay).not.toBe(initialDisplay);
@@ -69,94 +64,72 @@ describe("GameShould", () => {
 
   test("validate column input and return success for valid input", () => {
     const game = new Game();
-    const result = game.validateColumnInput("4");
-    expect(resultIsSuccess(result)).toBe(true);
-    expect((result as {value: number}).value).toBe(4);
+    const result = resultUnwrapOrThrow(game.validateColumnInput("4"));
+    expect(result).toBe(4);
   });
 
   test("validate column input and return failure with error message for invalid input", () => {
     const game = new Game();
-    const result = game.validateColumnInput("abc");
-    expect(resultIsFailure(result)).toBe(true);
-    expect((result as {error: string}).error).toBeDefined();
-    expect((result as {error: string}).error.length).toBeGreaterThan(0);
+    const error = resultUnwrapErrorOrThrow(game.validateColumnInput("abc"));
+    expect(error).toBeDefined();
+    expect(error.length).toBeGreaterThan(0);
   });
 
   test("provide meaningful error message for out-of-range column", () => {
     const game = new Game();
-    const result = game.validateColumnInput("8");
-    expect(resultIsFailure(result)).toBe(true);
-    expect((result as {error: string}).error).toMatch(/column|range|1.*7/i);
+    const error = resultUnwrapErrorOrThrow(game.validateColumnInput("8"));
+    expect(error).toMatch(/column|range|1.*7/i);
   });
 
   test("provide meaningful error message for non-numeric input", () => {
     const game = new Game();
-    const result = game.validateColumnInput("abc");
-    expect(resultIsFailure(result)).toBe(true);
-    expect((result as {error: string}).error).toMatch(/not a number|numeric/i);
+    const error = resultUnwrapErrorOrThrow(game.validateColumnInput("abc"));
+    expect(error).toMatch(/not a number|numeric/i);
   });
 
   test("dropCoin updates board state with Player1 coin", () => {
     const game = new Game();
     game.start();
 
-    const col = validateColumn(3);
-    expect(resultIsSuccess(col)).toBe(true);
-    if (!resultIsSuccess(col)) return;
-    const result = game.dropCoin(col.value, CellState.Player1);
+    const col = resultUnwrapOrThrow(validateColumn(3));
+    resultUnwrapOrThrow(game.dropCoin(col, CellState.Player1));
 
-    expect(resultIsSuccess(result)).toBe(true);
     const board = game.getBoard();
-    const cellResult = getCell(board, {row: 1, column: 3});
-    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(CellState.Player1);
+    expect(resultUnwrapOrThrow(getCell(board, {row: 1, column: 3}))).toBe(CellState.Player1);
   });
 
   test("dropCoin returns success with position for valid move", () => {
     const game = new Game();
     game.start();
 
-    const col = validateColumn(5);
-    expect(resultIsSuccess(col)).toBe(true);
-    if (!resultIsSuccess(col)) return;
-    const result = game.dropCoin(col.value, CellState.Player2);
+    const col = resultUnwrapOrThrow(validateColumn(5));
+    const result = resultUnwrapOrThrow(game.dropCoin(col, CellState.Player2));
 
-    expect(resultIsSuccess(result)).toBe(true);
-    const successResult = result as {value: {position: {row: number; column: number}}};
-    expect(successResult.value.position).toEqual({row: 1, column: 5});
+    expect(result.position).toEqual({row: 1, column: 5});
   });
 
   test("dropCoin returns failure for full column", () => {
     const game = new Game();
     game.start();
 
-    // Fill column 2 completely using dropCoin
-    const col = validateColumn(2);
-    expect(resultIsSuccess(col)).toBe(true);
-    if (!resultIsSuccess(col)) return;
+    const col = resultUnwrapOrThrow(validateColumn(2));
     for (let i = 0; i < 6; i++) {
-      game.dropCoin(col.value, CellState.Player1);
+      game.dropCoin(col, CellState.Player1);
     }
 
-    // Attempt to drop another coin in the full column
-    const result = game.dropCoin(col.value, CellState.Player2);
-
-    expect(resultIsFailure(result)).toBe(true);
-    const failureResult = result as {error: string};
-    expect(failureResult.error).toContain("2");
-    expect(failureResult.error).toContain("full");
+    const error = resultUnwrapErrorOrThrow(game.dropCoin(col, CellState.Player2));
+    expect(error).toContain("2");
+    expect(error).toContain("full");
   });
 
   test("displayBoard shows dropped coin at correct position", () => {
     const game = new Game();
     game.start();
 
-    const col = validateColumn(4);
-    expect(resultIsSuccess(col)).toBe(true);
-    if (!resultIsSuccess(col)) return;
-    game.dropCoin(col.value, CellState.Player1);
+    const col = resultUnwrapOrThrow(validateColumn(4));
+    game.dropCoin(col, CellState.Player1);
     const display = game.displayBoard();
 
-    // Row 1 should show Player1 coin in column 4
     const lines = display.split("\n");
     const row1Line = lines.find((line) => line.startsWith("1 |"));
     expect(row1Line).toContain("🟡");
@@ -166,52 +139,35 @@ describe("GameShould", () => {
     const game = new Game();
     game.start();
 
-    const col = validateColumn(3);
-    expect(resultIsSuccess(col)).toBe(true);
-    if (!resultIsSuccess(col)) return;
-    const result1 = game.dropCoin(col.value, CellState.Player1);
-    const result2 = game.dropCoin(col.value, CellState.Player2);
-    const result3 = game.dropCoin(col.value, CellState.Player1);
+    const col = resultUnwrapOrThrow(validateColumn(3));
+    const result1 = resultUnwrapOrThrow(game.dropCoin(col, CellState.Player1));
+    const result2 = resultUnwrapOrThrow(game.dropCoin(col, CellState.Player2));
+    const result3 = resultUnwrapOrThrow(game.dropCoin(col, CellState.Player1));
 
-    expect(resultIsSuccess(result1)).toBe(true);
-    expect(resultIsSuccess(result2)).toBe(true);
-    expect(resultIsSuccess(result3)).toBe(true);
-
-    interface SuccessResult {value: {position: {row: number; column: number}}}
-    expect((result1 as SuccessResult).value.position).toEqual({row: 1, column: 3});
-    expect((result2 as SuccessResult).value.position).toEqual({row: 2, column: 3});
-    expect((result3 as SuccessResult).value.position).toEqual({row: 3, column: 3});
+    expect(result1.position).toEqual({row: 1, column: 3});
+    expect(result2.position).toEqual({row: 2, column: 3});
+    expect(result3.position).toEqual({row: 3, column: 3});
 
     const board = game.getBoard();
-    const cell1 = getCell(board, {row: 1, column: 3});
-    const cell2 = getCell(board, {row: 2, column: 3});
-    const cell3 = getCell(board, {row: 3, column: 3});
-    expect(resultIsSuccess(cell1) && cell1.value).toBe(CellState.Player1);
-    expect(resultIsSuccess(cell2) && cell2.value).toBe(CellState.Player2);
-    expect(resultIsSuccess(cell3) && cell3.value).toBe(CellState.Player1);
+    expect(resultUnwrapOrThrow(getCell(board, {row: 1, column: 3}))).toBe(CellState.Player1);
+    expect(resultUnwrapOrThrow(getCell(board, {row: 2, column: 3}))).toBe(CellState.Player2);
+    expect(resultUnwrapOrThrow(getCell(board, {row: 3, column: 3}))).toBe(CellState.Player1);
   });
 
   test("detect win after dropCoin", () => {
     const game = new Game();
     game.start();
 
-    const col1 = validateColumn(1);
-    const col2 = validateColumn(2);
-    const col3 = validateColumn(3);
-    const col4 = validateColumn(4);
-    expect(resultIsSuccess(col1)).toBe(true);
-    expect(resultIsSuccess(col2)).toBe(true);
-    expect(resultIsSuccess(col3)).toBe(true);
-    expect(resultIsSuccess(col4)).toBe(true);
-    if (!resultIsSuccess(col1) || !resultIsSuccess(col2) || !resultIsSuccess(col3) || !resultIsSuccess(col4)) return;
+    const col1 = resultUnwrapOrThrow(validateColumn(1));
+    const col2 = resultUnwrapOrThrow(validateColumn(2));
+    const col3 = resultUnwrapOrThrow(validateColumn(3));
+    const col4 = resultUnwrapOrThrow(validateColumn(4));
 
-    game.dropCoin(col1.value, CellState.Player1);
-    game.dropCoin(col2.value, CellState.Player1);
-    game.dropCoin(col3.value, CellState.Player1);
-    const result = game.dropCoin(col4.value, CellState.Player1);
+    game.dropCoin(col1, CellState.Player1);
+    game.dropCoin(col2, CellState.Player1);
+    game.dropCoin(col3, CellState.Player1);
+    const result = resultUnwrapOrThrow(game.dropCoin(col4, CellState.Player1));
 
-    expect(resultIsSuccess(result)).toBe(true);
-    interface WinResult {value: {winner: string | null}}
-    expect((result as WinResult).value.winner).toBe(CellState.Player1);
+    expect(result.winner).toBe(CellState.Player1);
   });
 });
