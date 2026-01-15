@@ -329,6 +329,25 @@ describe("GameLoopShould", () => {
     expect(response.type).toBe("error");
     expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
   });
+
+  test("announce winner when player wins", () => {
+    const game = new Game();
+    game.start();
+    const gameLoop = new GameLoop(game);
+
+    // Player 1 builds horizontal win
+    gameLoop.handleInput("1"); // P1
+    gameLoop.handleInput("1"); // P2
+    gameLoop.handleInput("2"); // P1
+    gameLoop.handleInput("2"); // P2
+    gameLoop.handleInput("3"); // P1
+    gameLoop.handleInput("3"); // P2
+    const response = gameLoop.handleInput("4"); // P1 wins
+
+    expect(response.type).toBe("win");
+    expect(response.message).toContain("Player 1");
+    expect(response.message).toContain("wins");
+  });
 });
 
 class MockGame implements IGame {
