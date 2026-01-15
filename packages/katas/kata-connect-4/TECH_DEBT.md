@@ -97,7 +97,7 @@ Brittle and verbose. Should have test builders that use domain operations instea
 
 ---
 
-### No win detection
+### No win detection - DONE
 
 **Where:** nowhere (that's the problem)
 
