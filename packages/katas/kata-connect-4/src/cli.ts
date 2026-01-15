@@ -7,7 +7,7 @@ import {createTurnManager, advanceTurn, type TurnManager} from "./turn-manager.j
 import type {Column, IGame} from "./types.js";
 
 export interface GameLoopResponse {
-  type: "success" | "error" | "quit";
+  type: "success" | "error" | "quit" | "win";
   message: string;
 }
 
@@ -69,6 +69,14 @@ export class GameLoop {
 
       const playerName =
         this.turnManager.currentPlayer === CellState.Player1 ? "Player 1" : "Player 2";
+
+      if (dropResult.value.winner !== null) {
+        return {
+          type: "win",
+          message: `${playerName} wins!`,
+        };
+      }
+
       this.turnManager = advanceTurn(this.turnManager);
 
       return {
