@@ -1,7 +1,9 @@
-export class Maze {
-  maze: string[][];
+export type MazeType = string[][];
 
-  constructor(maze: string[][]) {
+export class Maze {
+  maze: MazeType;
+
+  constructor(maze: MazeType) {
     this.maze = maze;
   }
   solve() {
