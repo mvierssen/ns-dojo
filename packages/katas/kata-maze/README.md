@@ -21,7 +21,7 @@ E : end of the maze
 1 : This is a wall that you cannot pass through
 0 : A free space that you can move through.
 
-The goal is the get to the end of the maze.
+The goal is to get to the end of the maze.
 A solved maze will have an x in the start, the path,
 and the end of the maze, like this.
 
