@@ -1,9 +1,9 @@
-import { Maze } from './maze.js';
+import { Maze, type MazeType } from './maze.js';
 import { describe, expect, test } from 'vitest';
 
 // mazes are provided.  Write your own tests!
 
-const SIMPLE_MAZE = [
+const SIMPLE_MAZE: MazeType = [
   ['S', '0', '1'],
   ['1', '0', '1'],
   ['1', '0', 'E'],
