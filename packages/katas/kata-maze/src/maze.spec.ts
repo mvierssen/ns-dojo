@@ -36,7 +36,12 @@ describe('Maze business class can', () => {
 
   test('solve returns the solution', () => {
     const maze = new Maze(SIMPLE_MAZE);
-    expect(maze.solve()).toEqual('you wish!');
+    expect(maze.solve()).toEqual(
+      [
+      ["x", "x", "1"],
+      ["1", "x", "1"],
+      ["1", "x", "x"],
+    ]);
   });
 
   // xtest('skip a test marked with "xtest" instead of "test"', () => {
