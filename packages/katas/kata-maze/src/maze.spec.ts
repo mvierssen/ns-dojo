@@ -34,14 +34,32 @@ describe('Maze business class can', () => {
     expect(maze.constructor.name).toEqual('Maze');
   });
 
-  test('solve returns the solution', () => {
+  test('solve returns the solution for a simple maze', () => {
     const maze = new Maze(SIMPLE_MAZE);
-    expect(maze.solve()).toEqual(
-      [
-      ["x", "x", "1"],
-      ["1", "x", "1"],
-      ["1", "x", "x"],
-    ]);
+    const solvedMaze: MazeType = [
+      ["X", "X", "1"],
+      ["1", "X", "1"],
+      ["1", "X", "X"],
+    ];
+
+    expect(maze.solve()).toEqual(solvedMaze);
+  });
+
+  test('solve returns the solution for another simple maze', () => {
+    const anotherMaze: MazeType = [
+      ['1', '0', '1'],
+      ['1', '0', '1'],
+      ['1', 'S', 'E'],
+    ];
+    const maze = new Maze(anotherMaze);
+
+    const solvedMaze: MazeType = [
+      ['1', '0', '1'],
+      ['1', '0', '1'],
+      ['1', 'X', 'X'],
+    ];
+
+    expect(maze.solve()).toEqual(solvedMaze);
   });
 
   // xtest('skip a test marked with "xtest" instead of "test"', () => {

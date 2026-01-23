@@ -1,4 +1,5 @@
-export type MazeType = string[][];
+type CellValues = "X" | "1" | "0" | "S" | "E";
+export type MazeType = CellValues[][];
 
 export class Maze {
   maze: MazeType;
@@ -8,9 +9,9 @@ export class Maze {
   }
   solve(): MazeType {
     return [
-      ["x", "x", "1"],
-      ["1", "x", "1"],
-      ["1", "x", "x"],
+      ["X", "X", "1"],
+      ["1", "X", "1"],
+      ["1", "X", "X"],
     ]
   }
 }
