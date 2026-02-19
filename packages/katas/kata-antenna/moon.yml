@@ -1,0 +1,34 @@
+$schema: https://moonrepo.dev/schemas/project.json
+type: library
+language: typescript
+tags:
+  - tenant-shared
+dependsOn:
+  - shared-core
+tasks:
+  build:
+    deps:
+      - ^:build
+      - eslint-config-node:build
+      - ts-config-lib-compiled:build
+      - vite-config-base:build
+      - vitest-config-node:build
+
+  dev:
+    command: "npm run dev"
+    local: true
+    options:
+      runInCI: false
+
+  docker-build:
+    command: "docker build -t connect4 -f packages/katas/kata-connect-4/Dockerfile ."
+    options:
+      runFromWorkspaceRoot: true
+
+  docker-run:
+    command: "docker run -it --rm connect4"
+    deps:
+      - docker-build
+    local: true
+    options:
+      runInCI: false
