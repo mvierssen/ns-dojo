@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       cache-workspace:
-        description: "Cache .moon/cache and node_modules"
+        description: "Cache ~/.npm and .moon/cache"
         type: boolean
         default: true
 
