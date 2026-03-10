@@ -1,12 +1,12 @@
-import { Maze, type MazeType } from './maze.js';
-import { describe, expect, test } from 'vitest';
+import {describe, expect, test} from "vitest";
+import {Maze, type MazeType} from "./maze.js";
 
 // mazes are provided.  Write your own tests!
 
 const SIMPLE_MAZE: MazeType = [
-  ['S', '0', '1'],
-  ['1', '0', '1'],
-  ['1', '0', 'E'],
+  ["S", "0", "1"],
+  ["1", "0", "1"],
+  ["1", "0", "E"],
 ];
 
 // const MODERATE_MAZE = [
@@ -28,15 +28,15 @@ const SIMPLE_MAZE: MazeType = [
 //   ['1','1','1','1','1','1','1','1','1','1','1','1','E'],
 // ];
 
-describe('Maze business class can', () => {
-  test('return an instance of the Maze class', () => {
+describe("Maze business class can", () => {
+  test("return an instance of the Maze class", () => {
     const maze = new Maze(SIMPLE_MAZE);
-    expect(maze.constructor.name).toEqual('Maze');
+    expect(maze.constructor.name).toEqual("Maze");
   });
 
-  test('solve returns the solution', () => {
+  test("solve returns the solution", () => {
     const maze = new Maze(SIMPLE_MAZE);
-    expect(maze.solve()).toEqual('you wish!');
+    expect(maze.solve()).toEqual("you wish!");
   });
 
   // xtest('skip a test marked with "xtest" instead of "test"', () => {

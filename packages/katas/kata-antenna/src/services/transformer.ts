@@ -1,5 +1,5 @@
-import type { Antenna } from "../ports/antenna.js";
-import type { Printer } from "../ports/printer.js";
+import type {Antenna} from "../ports/antenna.js";
+import type {Printer} from "../ports/printer.js";
 
 export class Transformer {
   antenna: Antenna;
@@ -9,6 +9,5 @@ export class Transformer {
     this.printer = printer;
   }
 
-  transform(): void {
-  }
+  transform(): void {}
 }

@@ -15,7 +15,6 @@ A maze is represented by a matrix
 ]
 ```
 
-
 S : start of the maze
 E : end of the maze
 1 : This is a wall that you cannot pass through

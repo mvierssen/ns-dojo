@@ -1,4 +1,4 @@
-import {CellState, CELL_SYMBOLS} from "./constants.js";
+import {CELL_SYMBOLS, CellState} from "./constants.js";
 
 export interface TurnManager {
   currentPlayer: CellState;

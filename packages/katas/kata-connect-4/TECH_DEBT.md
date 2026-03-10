@@ -19,6 +19,7 @@ Extract to a constant or generate from the array.
 **Where:** `src/game.ts`
 
 It's called a "Facade" but it's really doing:
+
 - Storing state (the board)
 - Rendering (displayBoard)
 - Validating input
@@ -43,6 +44,7 @@ Should change to `Result<CellState>` to match the rest.
 **Where:** `src/cli.ts`
 
 This file has:
+
 - Pure formatting functions (formatWelcome, formatBoard, formatError, etc.)
 - The GameLoop class which manages player turns
 
@@ -55,6 +57,7 @@ Player turn management is game logic, not CLI stuff. Should be separate.
 **Where:** `src/board.ts`
 
 This one file handles:
+
 - Creating boards
 - Cell access/mutation
 - Rendering (multiple functions)
@@ -88,6 +91,7 @@ Low priority since runtime validation exists, but would be nice.
 **Where:** `src/board.test.ts`, `src/game.test.ts`
 
 Lots of tests do stuff like:
+
 ```typescript
 const row = board.cells[5];
 if (row) row[0] = CellState.Player1;

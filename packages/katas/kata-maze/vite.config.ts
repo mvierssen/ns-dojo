@@ -1,5 +1,5 @@
-import {defineConfig, mergeConfig} from "vite";
 import baseConfig from "@ns-dojo/vite-config-base";
+import {defineConfig, mergeConfig} from "vite";
 
 export default mergeConfig(
   baseConfig,

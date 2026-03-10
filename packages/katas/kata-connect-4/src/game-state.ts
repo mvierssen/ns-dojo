@@ -23,15 +23,23 @@ export function initializeGameState(): GameState {
 export function processMove(
   gameState: GameState,
   column: Column,
-  player: CellState
-): Result<{gameState: GameState; position: Position; winner: CellState | null}> {
+  player: CellState,
+): Result<{
+  gameState: GameState;
+  position: Position;
+  winner: CellState | null;
+}> {
   const dropResult = dropCoin(gameState.board, column, player);
 
   if (!resultIsSuccess(dropResult)) {
     return resultCreateFailure(dropResult.error);
   }
 
-  const winner = checkWin(dropResult.value.board, dropResult.value.position, player)
+  const winner = checkWin(
+    dropResult.value.board,
+    dropResult.value.position,
+    player,
+  )
     ? player
     : null;
 

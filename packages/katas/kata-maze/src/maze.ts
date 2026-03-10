@@ -7,7 +7,7 @@ export class Maze {
     this.maze = maze;
   }
   solve() {
-    const solution = 'you wish!';
+    const solution = "you wish!";
     return solution;
   }
 }

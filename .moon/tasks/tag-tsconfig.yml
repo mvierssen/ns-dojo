@@ -112,11 +112,14 @@ tasks:
 
   # CI aggregate task
   ci-check:
+    command: echo 'ci-check complete'
     deps:
       - build
       - lint
       - fmt-check
       - typecheck
+    options:
+      cache: false
 
 inheritedBy:
   tag: tsconfig

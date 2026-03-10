@@ -5,12 +5,8 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@ns-dojo/eslint-config-base": [
-        "../eslint-config-base/src/index.ts"
-      ],
-      "@ns-dojo/eslint-config-base/*": [
-        "../eslint-config-base/src/*"
-      ]
+      "@ns-dojo/eslint-config-base": ["../eslint-config-base/src/index.ts"],
+      "@ns-dojo/eslint-config-base/*": ["../eslint-config-base/src/*"]
     }
   },
   "references": [
@@ -18,11 +14,6 @@
       "path": "../eslint-config-base"
     }
   ],
-  "include": [
-    "src",
-    "eslint.config.ts"
-  ],
-  "exclude": [
-    "dist"
-  ]
+  "include": ["src", "eslint.config.ts"],
+  "exclude": ["dist"]
 }

@@ -1,5 +1,5 @@
-import {describe, expect, test} from "vitest";
 import {resultIsSuccess} from "@ns-dojo/shared-core";
+import {describe, expect, test} from "vitest";
 import {createBoard, getCell} from "./board-core.js";
 import {CellState} from "./constants.js";
 

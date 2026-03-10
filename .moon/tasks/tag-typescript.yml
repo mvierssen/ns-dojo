@@ -151,11 +151,14 @@ tasks:
 
   # CI aggregate task
   ci-check:
+    command: echo 'ci-check complete'
     deps:
       - build
       - test
       - lint
       - typecheck
+    options:
+      cache: false
 
 inheritedBy:
   tag: typescript

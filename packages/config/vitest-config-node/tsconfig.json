@@ -5,12 +5,8 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@ns-dojo/vitest-config-base": [
-        "../vitest-config-base/src/index.ts"
-      ],
-      "@ns-dojo/vitest-config-base/*": [
-        "../vitest-config-base/src/*"
-      ]
+      "@ns-dojo/vitest-config-base": ["../vitest-config-base/src/index.ts"],
+      "@ns-dojo/vitest-config-base/*": ["../vitest-config-base/src/*"]
     }
   },
   "references": [
@@ -21,10 +17,6 @@
       "path": "../vitest-config-base"
     }
   ],
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "dist"
-  ]
+  "include": ["src"],
+  "exclude": ["dist"]
 }

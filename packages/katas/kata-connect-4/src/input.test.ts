@@ -1,5 +1,5 @@
+import {resultIsFailure, resultIsSuccess} from "@ns-dojo/shared-core";
 import {describe, expect, test} from "vitest";
-import {resultIsSuccess, resultIsFailure} from "@ns-dojo/shared-core";
 import {parseColumnInput} from "./input.js";
 import type {Column} from "./types.js";
 

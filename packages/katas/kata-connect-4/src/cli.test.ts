@@ -1,11 +1,11 @@
-import {describe, expect, test} from "vitest";
-import type {Result} from "@ns-dojo/shared-core";
 import {
-  resultIsSuccess,
-  resultIsFailure,
-  resultCreateSuccess,
   resultCreateFailure,
+  resultCreateSuccess,
+  resultIsFailure,
+  resultIsSuccess,
+  type Result,
 } from "@ns-dojo/shared-core";
+import {describe, expect, test} from "vitest";
 import {createBoard, getCell} from "./board.js";
 import {
   formatBoard,
@@ -41,10 +41,13 @@ describe("CliOutputShould", () => {
       welcome: "Welcome to Connect 4!",
       rules: {
         boardDimensions: "The board has 6 rows and 7 columns.",
-        coinDropMechanics: "Coins fall to the lowest available row in the selected column.",
+        coinDropMechanics:
+          "Coins fall to the lowest available row in the selected column.",
         turnOrder: "Player 1 goes first, then players alternate turns.",
-        winCondition: "Get 4 in a row to win - horizontal, vertical, or diagonal.",
-        drawCondition: "The game is a draw if the board is full with no winner.",
+        winCondition:
+          "Get 4 in a row to win - horizontal, vertical, or diagonal.",
+        drawCondition:
+          "The game is a draw if the board is full with no winner.",
         columnSelection: "Select a column from 1 to 7 to drop your coin.",
       },
       startPrompt: "Press Enter to start the game!",
@@ -57,7 +60,8 @@ describe("CliOutputShould", () => {
   });
 
   test("format board string for console display", () => {
-    const boardDisplay = "6 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n5 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n4 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n3 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n2 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n1 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n    1  2  3  4  5  6  7";
+    const boardDisplay =
+      "6 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n5 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n4 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n3 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n2 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n1 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n    1  2  3  4  5  6  7";
 
     const formatted = formatBoard(boardDisplay);
     expect(formatted).toContain("6 |");
@@ -213,7 +217,9 @@ describe("GameLoopShould", () => {
 
     const board = game.getBoard();
     const cellResult = getCell(board, {row: 1, column: 3});
-    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(CellState.Player1);
+    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(
+      CellState.Player1,
+    );
   });
 
   test("handleInput alternates players between moves", () => {
@@ -388,7 +394,10 @@ class MockGame implements IGame {
     return resultCreateFailure("Invalid");
   }
 
-  dropCoin(column: Column, _player: CellState): Result<{position: Position; winner: CellState | null}> {
+  dropCoin(
+    column: Column,
+    _player: CellState,
+  ): Result<{position: Position; winner: CellState | null}> {
     return resultCreateSuccess({position: {row: 1, column}, winner: null});
   }
 }
