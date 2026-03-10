@@ -12,7 +12,7 @@ projects:
 vcs:
   client: "git"
   provider: "github"
-  defaultBranch: "master"
+  defaultBranch: "main"
 
   sync: true
   hooks:
