@@ -29,9 +29,9 @@ describe("Transformer", () => {
       const antenna = new FakeAntenna("/0");
       const printer = new SpyPrinter();
 
-      const transfomer = new Transformer(antenna, printer);
+      const transformer = new Transformer(antenna, printer);
 
-      transfomer.transform();
+      transformer.transform();
 
       expect(printer.printedMessage).toBe("");
     });
