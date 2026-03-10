@@ -1,7 +1,8 @@
 $schema: https://moonrepo.dev/schemas/project.json
-type: configuration
+layer: configuration
 language: typescript
 tags:
+  - tsconfig
   - tenant-shared
 fileGroups:
   sources:

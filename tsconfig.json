@@ -1,5 +1,60 @@
 {
   "extends": "./tsconfig.options.json",
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "packages/config/eslint-config-base"
+    },
+    {
+      "path": "packages/config/eslint-config-node"
+    },
+    {
+      "path": "packages/config/prettier-config"
+    },
+    {
+      "path": "packages/config/stryker-config"
+    },
+    {
+      "path": "packages/config/ts-config-base"
+    },
+    {
+      "path": "packages/config/ts-config-build"
+    },
+    {
+      "path": "packages/config/ts-config-lib-compiled"
+    },
+    {
+      "path": "packages/config/ts-config-lib-source"
+    },
+    {
+      "path": "packages/config/ts-config-node"
+    },
+    {
+      "path": "packages/config/vite-config-base"
+    },
+    {
+      "path": "packages/config/vitest-config-base"
+    },
+    {
+      "path": "packages/config/vitest-config-node"
+    },
+    {
+      "path": "packages/katas/kata-antenna"
+    },
+    {
+      "path": "packages/katas/kata-connect-4"
+    },
+    {
+      "path": "packages/katas/kata-connect-4-oop"
+    },
+    {
+      "path": "packages/katas/kata-maze"
+    },
+    {
+      "path": "packages/katas/kata-smelly-mars-rover"
+    },
+    {
+      "path": "packages/shared/shared-core"
+    }
+  ]
 }

@@ -1,7 +1,8 @@
 $schema: https://moonrepo.dev/schemas/project.json
-type: library
+layer: library
 language: typescript
 tags:
+  - typescript
   - tenant-shared
 dependsOn:
   - shared-core

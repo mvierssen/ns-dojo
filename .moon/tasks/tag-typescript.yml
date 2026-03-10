@@ -57,7 +57,6 @@ tasks:
       - "test:watch"
     deps:
       - '^:build'
-    local: true
     options:
       cache: false
       runInCI: false
@@ -143,3 +142,20 @@ tasks:
       - "coverage"
     options:
       cache: true
+
+  # Clean build artifacts
+  clean:
+    script: rm -rf dist
+    options:
+      cache: false
+
+  # CI aggregate task
+  ci-check:
+    deps:
+      - build
+      - test
+      - lint
+      - typecheck
+
+inheritedBy:
+  tag: typescript

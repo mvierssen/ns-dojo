@@ -10,11 +10,11 @@ projects:
   - "packages/katas/*"
 
 vcs:
-  manager: "git"
+  client: "git"
   provider: "github"
   defaultBranch: "master"
 
-  syncHooks: true
+  sync: true
   hooks:
     commit-msg:
       - "npx commitlint --edit $ARG1"
@@ -25,8 +25,8 @@ vcs:
     pre-commit:
       - "unset $(git rev-parse --local-env-vars 2>/dev/null || echo '') && npx moon run :lint :typecheck --affected --status=staged --concurrency=4"
 
-# Runner configuration for task execution
-runner:
+# Pipeline configuration for task execution
+pipeline:
   autoCleanCache: true
   cacheLifetime: "7 days"
   logRunningCommand: true
@@ -37,7 +37,7 @@ hasher:
   walkStrategy: "vcs"
 
 constraints:
-  enforceProjectTypeRelationships: true
+  enforceLayerRelationships: true
 
   tagRelationships:
     tenant-templates:

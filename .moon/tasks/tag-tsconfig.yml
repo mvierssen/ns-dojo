@@ -39,8 +39,7 @@ tasks:
 
   # Clean build artifacts
   clean:
-    command: "bash -lc 'rm -rf dist'"
-    local: true
+    script: rm -rf dist
     options:
       cache: false
 
@@ -110,3 +109,14 @@ tasks:
       - "*.json"
       - "*.md"
     outputs: []
+
+  # CI aggregate task
+  ci-check:
+    deps:
+      - build
+      - lint
+      - fmt-check
+      - typecheck
+
+inheritedBy:
+  tag: tsconfig
