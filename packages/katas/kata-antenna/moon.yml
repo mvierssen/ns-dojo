@@ -22,12 +22,12 @@ tasks:
       runInCI: false
 
   docker-build:
-    command: "docker build -t connect4 -f packages/katas/kata-connect-4/Dockerfile ."
+    command: "docker build -t kata-antenna -f packages/katas/kata-antenna/Dockerfile ."
     options:
       runFromWorkspaceRoot: true
 
   docker-run:
-    command: "docker run -it --rm connect4"
+    command: "docker run -it --rm kata-antenna"
     deps:
       - docker-build
 
