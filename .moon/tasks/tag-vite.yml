@@ -4,8 +4,6 @@
 
 $schema: https://moonrepo.dev/schemas/tasks.json
 
-extends: "./typescript-library.yml"
-
 fileGroups:
   sources:
     - "src/**/*"
@@ -37,7 +35,6 @@ tasks:
       - "npm"
       - "run"
       - "dev"
-    local: true
     options:
       cache: false
       runInCI: false
@@ -49,8 +46,10 @@ tasks:
       - "npm"
       - "run"
       - "preview"
-    local: true
     options:
       cache: false
       runInCI: false
       persistent: true
+
+inheritedBy:
+  tag: vite

@@ -4,19 +4,20 @@
 
 $schema: "https://moonrepo.dev/schemas/toolchain.json"
 
-unstable_node:
-  #version: "24.9.0"
+node:
+  version: null
 
-unstable_npm:
+npm:
+  version: null
   installArgs: ["--no-save"]
-  #version: "11.6.0"
 
 typescript:
   createMissingConfig: false
   syncProjectReferences: true
   syncProjectReferencesToPaths: true
 
-unstable_javascript:
+javascript:
+  dedupeOnLockfileChange: false
   packageManager: "npm"
   syncPackageManagerField: true
   syncProjectWorkspaceDependencies: true

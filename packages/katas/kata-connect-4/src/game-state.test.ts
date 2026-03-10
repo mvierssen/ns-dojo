@@ -1,10 +1,13 @@
+import {resultIsFailure, resultIsSuccess} from "@ns-dojo/shared-core";
 import {describe, expect, test} from "vitest";
-import {resultIsSuccess, resultIsFailure} from "@ns-dojo/shared-core";
-import type {GameState} from "./game-state.js";
-import {initializeGameState, processMove} from "./game-state.js";
 import {createBoard} from "./board-core.js";
 import {validateColumn} from "./column.js";
 import {CellState} from "./constants.js";
+import {
+  initializeGameState,
+  processMove,
+  type GameState,
+} from "./game-state.js";
 
 describe("GameStateShould", () => {
   test("have board property", () => {
@@ -32,7 +35,9 @@ describe("GameStateShould", () => {
 
     expect(resultIsSuccess(result)).toBe(true);
     expect(resultIsSuccess(result) && result.value.gameState).toBeDefined();
-    expect(resultIsSuccess(result) && result.value.gameState.board).not.toBe(gameState.board);
+    expect(resultIsSuccess(result) && result.value.gameState.board).not.toBe(
+      gameState.board,
+    );
   });
 
   test("return failure when column is full", () => {

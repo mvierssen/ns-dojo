@@ -4,8 +4,6 @@
 
 $schema: https://moonrepo.dev/schemas/tasks.json
 
-extends: "./typescript-library.yml"
-
 tasks:
   # Build CLI tool
   build:
@@ -28,8 +26,10 @@ tasks:
       - "npm"
       - "run"
       - "dev"
-    local: true
     options:
       cache: false
       runInCI: false
       persistent: true
+
+inheritedBy:
+  tag: cli

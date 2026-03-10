@@ -1,7 +1,8 @@
 $schema: https://moonrepo.dev/schemas/project.json
-type: library
+layer: library
 language: typescript
 tags:
+  - typescript
   - tenant-shared
 dependsOn:
   - shared-core
@@ -16,7 +17,7 @@ tasks:
 
   dev:
     command: "npm run dev"
-    local: true
+
     options:
       runInCI: false
 
@@ -29,6 +30,6 @@ tasks:
     command: "docker run -it --rm connect4"
     deps:
       - docker-build
-    local: true
+
     options:
       runInCI: false

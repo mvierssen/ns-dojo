@@ -1,8 +1,8 @@
-import {describe, expect, test} from "vitest";
 import {resultIsSuccess} from "@ns-dojo/shared-core";
-import {BoardBuilder} from "./board-builder.js";
-import {CellState} from "../constants.js";
+import {describe, expect, test} from "vitest";
 import {getCell} from "../board-core.js";
+import {CellState} from "../constants.js";
+import {BoardBuilder} from "./board-builder.js";
 
 describe("BoardBuilderShould", () => {
   test("create empty board", () => {
@@ -10,7 +10,9 @@ describe("BoardBuilderShould", () => {
 
     expect(board.cells.length).toBe(6);
     expect(board.cells[0]?.length).toBe(7);
-    const allEmpty = board.cells.flat().every((cell) => cell === CellState.Empty);
+    const allEmpty = board.cells
+      .flat()
+      .every((cell) => cell === CellState.Empty);
     expect(allEmpty).toBe(true);
   });
 
@@ -21,7 +23,9 @@ describe("BoardBuilderShould", () => {
 
     const cellResult = getCell(board, {row: 1, column: 3});
     expect(resultIsSuccess(cellResult)).toBe(true);
-    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(CellState.Player1);
+    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(
+      CellState.Player1,
+    );
   });
 
   test("place multiple coins", () => {

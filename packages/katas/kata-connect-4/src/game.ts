@@ -1,8 +1,16 @@
-import type {Result} from "@ns-dojo/shared-core";
-import {resultCreateFailure, resultCreateSuccess, resultIsSuccess} from "@ns-dojo/shared-core";
+import {
+  resultCreateFailure,
+  resultCreateSuccess,
+  resultIsSuccess,
+  type Result,
+} from "@ns-dojo/shared-core";
 import {parseColumnInput, renderBoardComplete} from "./board.js";
 import type {CellState} from "./constants.js";
-import {initializeGameState, processMove, type GameState} from "./game-state.js";
+import {
+  initializeGameState,
+  processMove,
+  type GameState,
+} from "./game-state.js";
 import {getGameInstructions, type GameInstructions} from "./instructions.js";
 import type {Board, Column, DropCoinResult, IGame} from "./types.js";
 

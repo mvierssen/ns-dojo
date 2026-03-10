@@ -6,7 +6,8 @@
     "baseUrl": ".",
     "strict": true,
     "paths": {
-      "@ns-dojo/shared-core/*": ["../../shared/shared-core/src/*"]
+      "@ns-dojo/shared-core/*": ["../../shared/shared-core/src/*"],
+      "@ns-dojo/shared-core": ["../../shared/shared-core/src/index.ts"]
     }
   },
   "include": ["src", "vitest.config.ts"],

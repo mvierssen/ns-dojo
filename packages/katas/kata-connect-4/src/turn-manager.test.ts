@@ -1,6 +1,10 @@
 import {describe, expect, test} from "vitest";
-import {createTurnManager, advanceTurn, getPlayerSymbol} from "./turn-manager.js";
 import {CellState} from "./constants.js";
+import {
+  advanceTurn,
+  createTurnManager,
+  getPlayerSymbol,
+} from "./turn-manager.js";
 
 describe("TurnManagerShould", () => {
   test("start with Player1 as current player", () => {

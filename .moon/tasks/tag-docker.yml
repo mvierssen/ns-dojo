@@ -4,8 +4,6 @@
 
 $schema: https://moonrepo.dev/schemas/tasks.json
 
-extends: "./typescript-application.yml"
-
 fileGroups:
   dockerfiles:
     - "Dockerfile"
@@ -92,3 +90,6 @@ tasks:
     options:
       cache: false
       runInCI: false
+
+inheritedBy:
+  tag: docker

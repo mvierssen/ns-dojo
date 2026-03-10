@@ -1,7 +1,9 @@
 # Base stage
-FROM node:22-alpine AS base
+FROM node:22-slim AS base
 WORKDIR /app
-RUN npm install -g @moonrepo/cli@1.41.7
+ENV MOON_TOOLCHAIN_FORCE_GLOBALS=true
+RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN npm install -g @moonrepo/cli
 
 # Skeleton stage
 FROM base AS skeleton
@@ -10,8 +12,8 @@ RUN moon docker scaffold kata-connect-4
 
 # Build stage
 FROM base AS build
-COPY --from=skeleton /app/.moon/docker/workspace .
-RUN npm ci
+COPY --from=skeleton /app/.moon/docker/configs .
+RUN --mount=type=cache,target=/root/.npm moon docker setup
 COPY --from=skeleton /app/.moon/docker/sources .
 RUN moon run kata-connect-4:build
 RUN moon docker prune

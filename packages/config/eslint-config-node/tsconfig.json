@@ -4,7 +4,10 @@
     "outDir": "dist",
     "rootDir": ".",
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@ns-dojo/eslint-config-base": ["../eslint-config-base/src/index.ts"],
+      "@ns-dojo/eslint-config-base/*": ["../eslint-config-base/src/*"]
+    }
   },
   "references": [
     {

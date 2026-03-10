@@ -1,7 +1,12 @@
 import {describe, expect, test} from "vitest";
-import {checkDiagonalWin, checkHorizontalWin, checkVerticalWin, checkWin} from "./win-detection.js";
-import {BoardBuilder} from "./test-utils/board-builder.js";
 import {CellState} from "./constants.js";
+import {BoardBuilder} from "./test-utils/board-builder.js";
+import {
+  checkDiagonalWin,
+  checkHorizontalWin,
+  checkVerticalWin,
+  checkWin,
+} from "./win-detection.js";
 
 describe("WinDetectionShould", () => {
   test("detect horizontal win with 4 in row", () => {
@@ -12,7 +17,11 @@ describe("WinDetectionShould", () => {
       .withCoin({row: 1, column: 4}, CellState.Player1)
       .build();
 
-    const result = checkHorizontalWin(board, {row: 1, column: 4}, CellState.Player1);
+    const result = checkHorizontalWin(
+      board,
+      {row: 1, column: 4},
+      CellState.Player1,
+    );
     expect(result).toBe(true);
   });
 
@@ -24,7 +33,11 @@ describe("WinDetectionShould", () => {
       .withCoin({row: 2, column: 5}, CellState.Player2)
       .build();
 
-    const result = checkHorizontalWin(board, {row: 2, column: 3}, CellState.Player2);
+    const result = checkHorizontalWin(
+      board,
+      {row: 2, column: 3},
+      CellState.Player2,
+    );
     expect(result).toBe(true);
   });
 
@@ -35,7 +48,11 @@ describe("WinDetectionShould", () => {
       .withCoin({row: 1, column: 3}, CellState.Player1)
       .build();
 
-    const result = checkHorizontalWin(board, {row: 1, column: 3}, CellState.Player1);
+    const result = checkHorizontalWin(
+      board,
+      {row: 1, column: 3},
+      CellState.Player1,
+    );
     expect(result).toBe(false);
   });
 
@@ -47,7 +64,11 @@ describe("WinDetectionShould", () => {
       .withCoin({row: 1, column: 4}, CellState.Player1)
       .build();
 
-    const result = checkHorizontalWin(board, {row: 1, column: 2}, CellState.Player1);
+    const result = checkHorizontalWin(
+      board,
+      {row: 1, column: 2},
+      CellState.Player1,
+    );
     expect(result).toBe(false);
   });
 
@@ -61,7 +82,11 @@ describe("WinDetectionShould", () => {
       ])
       .build();
 
-    const result = checkVerticalWin(board, {row: 4, column: 3}, CellState.Player1);
+    const result = checkVerticalWin(
+      board,
+      {row: 4, column: 3},
+      CellState.Player1,
+    );
     expect(result).toBe(true);
   });
 
@@ -70,7 +95,11 @@ describe("WinDetectionShould", () => {
       .withColumn(2, [CellState.Player2, CellState.Player2, CellState.Player2])
       .build();
 
-    const result = checkVerticalWin(board, {row: 3, column: 2}, CellState.Player2);
+    const result = checkVerticalWin(
+      board,
+      {row: 3, column: 2},
+      CellState.Player2,
+    );
     expect(result).toBe(false);
   });
 
@@ -82,7 +111,11 @@ describe("WinDetectionShould", () => {
       .withCoin({row: 6, column: 4}, CellState.Player1)
       .build();
 
-    const result = checkDiagonalWin(board, {row: 6, column: 4}, CellState.Player1);
+    const result = checkDiagonalWin(
+      board,
+      {row: 6, column: 4},
+      CellState.Player1,
+    );
     expect(result).toBe(true);
   });
 
@@ -94,7 +127,11 @@ describe("WinDetectionShould", () => {
       .withCoin({row: 6, column: 4}, CellState.Player2)
       .build();
 
-    const result = checkDiagonalWin(board, {row: 5, column: 5}, CellState.Player2);
+    const result = checkDiagonalWin(
+      board,
+      {row: 5, column: 5},
+      CellState.Player2,
+    );
     expect(result).toBe(true);
   });
 

@@ -1,7 +1,7 @@
 import {describe, expect, test} from "vitest";
-import * as main from "./main.js";
-import {Game} from "./game.js";
 import {GameLoop} from "./cli.js";
+import {Game} from "./game.js";
+import * as main from "./main.js";
 
 describe("MainEntrypointShould", () => {
   test("export createCli function", () => {

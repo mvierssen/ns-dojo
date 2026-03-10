@@ -1,12 +1,12 @@
-import type {Board, Position} from "./types.js";
-import {getCell} from "./board-core.js";
 import {resultIsSuccess} from "@ns-dojo/shared-core";
+import {getCell} from "./board-core.js";
 import type {CellState} from "./constants.js";
+import type {Board, Position} from "./types.js";
 
 export function checkHorizontalWin(
   board: Board,
   position: Position,
-  player: CellState
+  player: CellState,
 ): boolean {
   const {row} = position;
   let count = 0;
@@ -28,7 +28,7 @@ export function checkHorizontalWin(
 export function checkVerticalWin(
   board: Board,
   position: Position,
-  player: CellState
+  player: CellState,
 ): boolean {
   const {column} = position;
   let count = 0;
@@ -49,7 +49,7 @@ export function checkVerticalWin(
 export function checkDiagonalWin(
   board: Board,
   position: Position,
-  player: CellState
+  player: CellState,
 ): boolean {
   // Check diagonal down-right (↘)
   let count = 0;
@@ -89,7 +89,7 @@ export function checkDiagonalWin(
 export function checkWin(
   board: Board,
   position: Position,
-  player: CellState
+  player: CellState,
 ): boolean {
   return (
     checkHorizontalWin(board, position, player) ||

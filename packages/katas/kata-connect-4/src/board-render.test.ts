@@ -1,6 +1,6 @@
 import {describe, expect, test} from "vitest";
 import {createBoard} from "./board-core.js";
-import {renderRow, renderBoardWithLabels} from "./board-render.js";
+import {renderBoardWithLabels, renderRow} from "./board-render.js";
 import {CellState, COLUMN_LABELS_STRING} from "./constants.js";
 
 describe("BoardRenderShould", () => {

@@ -1,9 +1,17 @@
-import type {Result} from "@ns-dojo/shared-core";
-import {resultCreateSuccess, resultIsFailure, resultIsSuccess} from "@ns-dojo/shared-core";
+import {
+  resultCreateSuccess,
+  resultIsFailure,
+  resultIsSuccess,
+  type Result,
+} from "@ns-dojo/shared-core";
 import {parseColumnInput} from "./board.js";
 import {CellState} from "./constants.js";
 import type {GameInstructions} from "./instructions.js";
-import {createTurnManager, advanceTurn, type TurnManager} from "./turn-manager.js";
+import {
+  advanceTurn,
+  createTurnManager,
+  type TurnManager,
+} from "./turn-manager.js";
 import type {Column, IGame} from "./types.js";
 
 export interface GameLoopResponse {
@@ -58,7 +66,10 @@ export class GameLoop {
 
     if (resultIsSuccess(parseResult) && typeof parseResult.value !== "string") {
       const column: Column = parseResult.value;
-      const dropResult = this.game.dropCoin(column, this.turnManager.currentPlayer);
+      const dropResult = this.game.dropCoin(
+        column,
+        this.turnManager.currentPlayer,
+      );
 
       if (resultIsFailure(dropResult)) {
         return {
@@ -68,7 +79,9 @@ export class GameLoop {
       }
 
       const playerName =
-        this.turnManager.currentPlayer === CellState.Player1 ? "Player 1" : "Player 2";
+        this.turnManager.currentPlayer === CellState.Player1
+          ? "Player 1"
+          : "Player 2";
 
       if (dropResult.value.winner !== null) {
         return {
@@ -81,7 +94,9 @@ export class GameLoop {
 
       return {
         type: "success",
-        message: formatSuccess(`${playerName} placed coin in column ${String(column)}`),
+        message: formatSuccess(
+          `${playerName} placed coin in column ${String(column)}`,
+        ),
       };
     }
 

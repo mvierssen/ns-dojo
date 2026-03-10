@@ -4,7 +4,10 @@
     "outDir": "dist",
     "rootDir": ".",
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@ns-dojo/vitest-config-base": ["../vitest-config-base/src/index.ts"],
+      "@ns-dojo/vitest-config-base/*": ["../vitest-config-base/src/*"]
+    }
   },
   "references": [
     {

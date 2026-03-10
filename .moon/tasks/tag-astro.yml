@@ -4,8 +4,6 @@
 
 $schema: https://moonrepo.dev/schemas/tasks.json
 
-extends: "./typescript-application.yml"
-
 fileGroups:
   sources:
     - "src/**/*"
@@ -38,3 +36,6 @@ tasks:
       - "worker-configuration.d.ts"
     options:
       cache: false
+
+inheritedBy:
+  tag: astro

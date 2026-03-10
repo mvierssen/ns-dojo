@@ -57,7 +57,6 @@ tasks:
       - "test:watch"
     deps:
       - '^:build'
-    local: true
     options:
       cache: false
       runInCI: false
@@ -68,6 +67,9 @@ tasks:
       - "npm"
       - "run"
       - "lint"
+    deps:
+      - build
+      - "^:build"
     inputs:
       - "@globs(sources)"
       - "@globs(tests)"
@@ -79,6 +81,9 @@ tasks:
       - "npm"
       - "run"
       - "lint:fix"
+    deps:
+      - build
+      - "^:build"
     inputs:
       - "@globs(sources)"
       - "@globs(tests)"
@@ -121,7 +126,8 @@ tasks:
       - "run"
       - "typecheck"
     deps:
-      - '^:build'
+      - build
+      - "^:build"
     inputs:
       - "@globs(sources)"
       - "@globs(tests)"
@@ -143,3 +149,23 @@ tasks:
       - "coverage"
     options:
       cache: true
+
+  # Clean build artifacts
+  clean:
+    script: rm -rf dist
+    options:
+      cache: false
+
+  # CI aggregate task
+  ci-check:
+    command: echo 'ci-check complete'
+    deps:
+      - build
+      - test
+      - lint
+      - typecheck
+    options:
+      cache: false
+
+inheritedBy:
+  tag: typescript

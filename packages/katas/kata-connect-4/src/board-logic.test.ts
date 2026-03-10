@@ -1,5 +1,5 @@
-import {describe, expect, test} from "vitest";
 import {resultIsSuccess} from "@ns-dojo/shared-core";
+import {describe, expect, test} from "vitest";
 import {createBoard, getCell} from "./board-core.js";
 import {dropCoin, findLowestEmptyRow} from "./board-logic.js";
 import {validateColumn} from "./column.js";
@@ -10,7 +10,9 @@ describe("BoardLogicShould", () => {
     const board = createBoard();
     const columnResult = validateColumn(3);
     expect(resultIsSuccess(columnResult)).toBe(true);
-    const lowestRow = resultIsSuccess(columnResult) ? findLowestEmptyRow(board, columnResult.value) : null;
+    const lowestRow = resultIsSuccess(columnResult)
+      ? findLowestEmptyRow(board, columnResult.value)
+      : null;
     expect(lowestRow).toBe(1);
   });
 
@@ -26,7 +28,9 @@ describe("BoardLogicShould", () => {
 
     const newBoard = resultIsSuccess(result) ? result.value.board : board;
     const cellResult = getCell(newBoard, {row: 1, column: 3});
-    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(CellState.Player1);
+    expect(resultIsSuccess(cellResult) && cellResult.value).toBe(
+      CellState.Player1,
+    );
   });
 
   test("dropCoin accepts Column branded type", () => {

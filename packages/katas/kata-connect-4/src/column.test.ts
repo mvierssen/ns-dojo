@@ -1,7 +1,7 @@
+import {resultIsFailure, resultIsSuccess} from "@ns-dojo/shared-core";
 import {describe, expect, test} from "vitest";
-import {resultIsSuccess, resultIsFailure} from "@ns-dojo/shared-core";
-import type {Column} from "./types.js";
 import {validateColumn} from "./column.js";
+import type {Column} from "./types.js";
 
 describe("ColumnTypeShould", () => {
   test("be assignable to number", () => {

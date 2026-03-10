@@ -1,5 +1,8 @@
+import {
+  resultUnwrapErrorOrThrow,
+  resultUnwrapOrThrow,
+} from "@ns-dojo/shared-core";
 import {describe, expect, test} from "vitest";
-import {resultUnwrapOrThrow, resultUnwrapErrorOrThrow} from "@ns-dojo/shared-core";
 import {getCell} from "./board.js";
 import {validateColumn} from "./column.js";
 import {CellState} from "./constants.js";
@@ -95,7 +98,9 @@ describe("GameShould", () => {
     resultUnwrapOrThrow(game.dropCoin(col, CellState.Player1));
 
     const board = game.getBoard();
-    expect(resultUnwrapOrThrow(getCell(board, {row: 1, column: 3}))).toBe(CellState.Player1);
+    expect(resultUnwrapOrThrow(getCell(board, {row: 1, column: 3}))).toBe(
+      CellState.Player1,
+    );
   });
 
   test("dropCoin returns success with position for valid move", () => {
@@ -117,7 +122,9 @@ describe("GameShould", () => {
       game.dropCoin(col, CellState.Player1);
     }
 
-    const error = resultUnwrapErrorOrThrow(game.dropCoin(col, CellState.Player2));
+    const error = resultUnwrapErrorOrThrow(
+      game.dropCoin(col, CellState.Player2),
+    );
     expect(error).toContain("2");
     expect(error).toContain("full");
   });
@@ -149,9 +156,15 @@ describe("GameShould", () => {
     expect(result3.position).toEqual({row: 3, column: 3});
 
     const board = game.getBoard();
-    expect(resultUnwrapOrThrow(getCell(board, {row: 1, column: 3}))).toBe(CellState.Player1);
-    expect(resultUnwrapOrThrow(getCell(board, {row: 2, column: 3}))).toBe(CellState.Player2);
-    expect(resultUnwrapOrThrow(getCell(board, {row: 3, column: 3}))).toBe(CellState.Player1);
+    expect(resultUnwrapOrThrow(getCell(board, {row: 1, column: 3}))).toBe(
+      CellState.Player1,
+    );
+    expect(resultUnwrapOrThrow(getCell(board, {row: 2, column: 3}))).toBe(
+      CellState.Player2,
+    );
+    expect(resultUnwrapOrThrow(getCell(board, {row: 3, column: 3}))).toBe(
+      CellState.Player1,
+    );
   });
 
   test("detect win after dropCoin", () => {
