@@ -5,7 +5,7 @@ import {Transformer} from "./services/transformer.js";
 
 // Given the antenna receives an end character
 // When we print
-// Then ther printer, prints nothing
+// Then the printer, prints nothing
 describe("Transformer", () => {
   class FakeAntenna implements Antenna {
     initialMessage: string;
