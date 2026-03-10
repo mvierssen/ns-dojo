@@ -50,7 +50,8 @@ tasks:
       - "run"
       - "typecheck"
     deps:
-      - '^:build'
+      - build
+      - "^:build"
     inputs:
       - "@globs(sources)"
       - "tsconfig*.json"
@@ -64,6 +65,9 @@ tasks:
       - "npm"
       - "run"
       - "lint"
+    deps:
+      - build
+      - "^:build"
     inputs:
       - "@globs(sources)"
       - "@globs(configs)"
@@ -75,6 +79,9 @@ tasks:
       - "npm"
       - "run"
       - "lint:fix"
+    deps:
+      - build
+      - "^:build"
     inputs:
       - "@globs(sources)"
       - "@globs(configs)"
