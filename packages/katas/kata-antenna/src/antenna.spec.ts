@@ -6,7 +6,7 @@ import {Transformer} from "./services/transformer.js";
 // Given the antenna receives an end character
 // When we print
 // Then ther printer, prints nothing
-describe("Transfomer", () => {
+describe("Transformer", () => {
   class FakeAntenna implements Antenna {
     initialMessage: string;
     constructor(initialMessage: string) {
@@ -29,9 +29,9 @@ describe("Transfomer", () => {
       const antenna = new FakeAntenna("/0");
       const printer = new SpyPrinter();
 
-      const transfomer = new Transformer(antenna, printer);
+      const transformer = new Transformer(antenna, printer);
 
-      transfomer.transform();
+      transformer.transform();
 
       expect(printer.printedMessage).toBe("");
     });
