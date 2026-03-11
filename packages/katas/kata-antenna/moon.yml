@@ -17,19 +17,34 @@ tasks:
 
   dev:
     command: "npm run dev"
-
     options:
       runInCI: false
 
   docker-build:
-    command: "docker build -t kata-antenna -f packages/katas/kata-antenna/Dockerfile ."
+    command: "docker build -t ghcr.io/mvierssen/kata-antenna:latest -f packages/katas/kata-antenna/Dockerfile ."
+    deps:
+      - build
     options:
       runFromWorkspaceRoot: true
+      cache: false
 
-  docker-run:
-    command: "docker run -it --rm kata-antenna"
+  docker-push:
+    command: "docker push ghcr.io/mvierssen/kata-antenna:latest"
     deps:
       - docker-build
+    options:
+      cache: false
 
+  docker-run:
+    command: "docker run -it --rm ghcr.io/mvierssen/kata-antenna:latest"
+    deps:
+      - docker-build
     options:
       runInCI: false
+
+  ci-publish:
+    command: echo 'ci-publish complete'
+    deps:
+      - docker-push
+    options:
+      cache: false

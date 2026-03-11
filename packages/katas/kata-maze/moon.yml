@@ -17,19 +17,34 @@ tasks:
 
   dev:
     command: "npm run dev"
-
     options:
       runInCI: false
 
   docker-build:
-    command: "docker build -t connect4 -f packages/katas/kata-connect-4/Dockerfile ."
+    command: "docker build -t ghcr.io/mvierssen/kata-maze:latest -f packages/katas/kata-maze/Dockerfile ."
+    deps:
+      - build
     options:
       runFromWorkspaceRoot: true
+      cache: false
 
-  docker-run:
-    command: "docker run -it --rm connect4"
+  docker-push:
+    command: "docker push ghcr.io/mvierssen/kata-maze:latest"
     deps:
       - docker-build
+    options:
+      cache: false
 
+  docker-run:
+    command: "docker run -it --rm ghcr.io/mvierssen/kata-maze:latest"
+    deps:
+      - docker-build
     options:
       runInCI: false
+
+  ci-publish:
+    command: echo 'ci-publish complete'
+    deps:
+      - docker-push
+    options:
+      cache: false
