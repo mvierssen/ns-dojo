@@ -31,7 +31,7 @@ describe("TurnManagerShould", () => {
     const turnManager = createTurnManager();
     const symbol = getPlayerSymbol(turnManager.currentPlayer);
 
-    expect(symbol).toBe("🟡");
+    expect(symbol).toBe("\u001B[33mO\u001B[0m");
   });
 
   test("return Player2 symbol for Player2 turn", () => {
@@ -39,6 +39,6 @@ describe("TurnManagerShould", () => {
     const updated = advanceTurn(turnManager);
     const symbol = getPlayerSymbol(updated.currentPlayer);
 
-    expect(symbol).toBe("🔴");
+    expect(symbol).toBe("\u001B[31mO\u001B[0m");
   });
 });

@@ -31,7 +31,7 @@ export async function createCli(): Promise<void> {
   let isRunning = true;
   while (isRunning) {
     const currentPlayer = gameLoop.getCurrentPlayer();
-    const playerSymbol = currentPlayer === CellState.Player1 ? "🟡" : "🔴";
+    const playerSymbol = currentPlayer === CellState.Player1 ? "\u001B[33mO\u001B[0m" : "\u001B[31mO\u001B[0m";
     const playerName =
       currentPlayer === CellState.Player1 ? "Player 1" : "Player 2";
     const input = await rl.question(

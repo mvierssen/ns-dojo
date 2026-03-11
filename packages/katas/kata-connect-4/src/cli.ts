@@ -42,9 +42,9 @@ export class GameLoop {
 
   getPlayerPrompt(): string {
     if (this.turnManager.currentPlayer === CellState.Player1) {
-      return "Player 1's turn (🟡)";
+      return "Player 1's turn (\u001B[33mO\u001B[0m)";
     }
-    return "Player 2's turn (🔴)";
+    return "Player 2's turn (\u001B[31mO\u001B[0m)";
   }
 
   handleInput(input: string): GameLoopResponse {

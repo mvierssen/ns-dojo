@@ -46,8 +46,8 @@ describe("GameShould", () => {
 
     expect(display).toContain("6 |");
     expect(display).toContain("1 |");
-    expect(display).toContain("1  2  3  4  5  6  7");
-    expect(display).toContain("⚪");
+    expect(display).toContain("1 2 3 4 5 6 7");
+    expect(display).toContain(".");
   });
 
   test("display board updates after state change", () => {
@@ -55,13 +55,13 @@ describe("GameShould", () => {
     game.start();
 
     const initialDisplay = game.displayBoard();
-    expect(initialDisplay).toContain("⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪");
+    expect(initialDisplay).toContain(". . . . . . .");
 
     const col = resultUnwrapOrThrow(validateColumn(1));
     game.dropCoin(col, CellState.Player1);
 
     const updatedDisplay = game.displayBoard();
-    expect(updatedDisplay).toContain("🟡");
+    expect(updatedDisplay).toContain("\u001B[33mO\u001B[0m");
     expect(updatedDisplay).not.toBe(initialDisplay);
   });
 
@@ -139,7 +139,7 @@ describe("GameShould", () => {
 
     const lines = display.split("\n");
     const row1Line = lines.find((line) => line.startsWith("1 |"));
-    expect(row1Line).toContain("🟡");
+    expect(row1Line).toContain("\u001B[33mO\u001B[0m");
   });
 
   test("dropCoin multiple times stacks coins correctly", () => {

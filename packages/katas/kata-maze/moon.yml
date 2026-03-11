@@ -40,7 +40,8 @@ tasks:
     deps:
       - docker-build
     options:
-      runInCI: false
+      interactive: true
+      cache: false
 
   ci-publish:
     command: echo 'ci-publish complete'

@@ -61,11 +61,11 @@ describe("CliOutputShould", () => {
 
   test("format board string for console display", () => {
     const boardDisplay =
-      "6 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n5 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n4 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n3 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n2 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n1 | ⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪\n    1  2  3  4  5  6  7";
+      "6 | . . . . . . .\n5 | . . . . . . .\n4 | . . . . . . .\n3 | . . . . . . .\n2 | . . . . . . .\n1 | . . . . . . .\n    1 2 3 4 5 6 7";
 
     const formatted = formatBoard(boardDisplay);
     expect(formatted).toContain("6 |");
-    expect(formatted).toContain("1  2  3  4  5  6  7");
+    expect(formatted).toContain("1 2 3 4 5 6 7");
   });
 
   test("format player turn prompt", () => {
@@ -156,7 +156,7 @@ describe("GameLoopShould", () => {
 
     const output = gameLoop.getBoardOutput();
     expect(output).toContain("6 |");
-    expect(output).toContain("1  2  3  4  5  6  7");
+    expect(output).toContain("1 2 3 4 5 6 7");
   });
 
   test("handle valid column input and return success response", () => {
@@ -253,7 +253,7 @@ describe("GameLoopShould", () => {
     const gameLoop = new GameLoop(game);
 
     const prompt = gameLoop.getPlayerPrompt();
-    expect(prompt).toBe("Player 1's turn (🟡)");
+    expect(prompt).toBe("Player 1's turn (\u001B[33mO\u001B[0m)");
   });
 
   test("getPlayerPrompt returns Player 2's turn indicator with emoji", () => {
@@ -265,7 +265,7 @@ describe("GameLoopShould", () => {
     gameLoop.handleInput("1");
 
     const prompt = gameLoop.getPlayerPrompt();
-    expect(prompt).toBe("Player 2's turn (🔴)");
+    expect(prompt).toBe("Player 2's turn (\u001B[31mO\u001B[0m)");
   });
 
   test("getPlayerPrompt updates after each successful move", () => {
@@ -273,13 +273,13 @@ describe("GameLoopShould", () => {
     game.start();
     const gameLoop = new GameLoop(game);
 
-    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (\u001B[33mO\u001B[0m)");
 
     gameLoop.handleInput("1");
-    expect(gameLoop.getPlayerPrompt()).toBe("Player 2's turn (🔴)");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 2's turn (\u001B[31mO\u001B[0m)");
 
     gameLoop.handleInput("2");
-    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (\u001B[33mO\u001B[0m)");
   });
 
   test("show Player 2's turn after Player 1 makes valid move", () => {
@@ -287,11 +287,11 @@ describe("GameLoopShould", () => {
     game.start();
     const gameLoop = new GameLoop(game);
 
-    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (\u001B[33mO\u001B[0m)");
 
     const response = gameLoop.handleInput("3");
     expect(response.type).toBe("success");
-    expect(gameLoop.getPlayerPrompt()).toBe("Player 2's turn (🔴)");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 2's turn (\u001B[31mO\u001B[0m)");
   });
 
   test("show Player 1's turn again after Player 2 makes valid move", () => {
@@ -300,10 +300,10 @@ describe("GameLoopShould", () => {
     const gameLoop = new GameLoop(game);
 
     gameLoop.handleInput("1");
-    expect(gameLoop.getPlayerPrompt()).toBe("Player 2's turn (🔴)");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 2's turn (\u001B[31mO\u001B[0m)");
 
     gameLoop.handleInput("2");
-    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (\u001B[33mO\u001B[0m)");
   });
 
   test("keep current player unchanged when input is invalid", () => {
@@ -311,11 +311,11 @@ describe("GameLoopShould", () => {
     game.start();
     const gameLoop = new GameLoop(game);
 
-    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (\u001B[33mO\u001B[0m)");
 
     const response = gameLoop.handleInput("abc");
     expect(response.type).toBe("error");
-    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (\u001B[33mO\u001B[0m)");
   });
 
   test("keep current player unchanged when move fails due to full column", () => {
@@ -329,11 +329,11 @@ describe("GameLoopShould", () => {
     }
 
     // After 6 moves, it's Player 1's turn again (started P1, alternated 6 times)
-    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (\u001B[33mO\u001B[0m)");
 
     const response = gameLoop.handleInput("3");
     expect(response.type).toBe("error");
-    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (🟡)");
+    expect(gameLoop.getPlayerPrompt()).toBe("Player 1's turn (\u001B[33mO\u001B[0m)");
   });
 
   test("announce winner when player wins", () => {

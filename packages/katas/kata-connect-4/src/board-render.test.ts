@@ -7,7 +7,7 @@ describe("BoardRenderShould", () => {
   test("render single row of empty cells", () => {
     const row: CellState[] = Array.from({length: 7}, () => CellState.Empty);
     const rendered = renderRow(row);
-    expect(rendered).toBe("⚪ ⚪ ⚪ ⚪ ⚪ ⚪ ⚪");
+    expect(rendered).toBe(". . . . . . .");
   });
 
   test("render board with column labels at bottom", () => {
