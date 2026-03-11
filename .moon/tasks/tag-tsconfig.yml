@@ -72,6 +72,8 @@ tasks:
       - "@globs(sources)"
       - "@globs(configs)"
     outputs: []
+    options:
+      cache: true
 
   # Linting with auto-fix
   lint-fix:
@@ -116,6 +118,8 @@ tasks:
       - "*.json"
       - "*.md"
     outputs: []
+    options:
+      cache: true
 
   # CI aggregate task
   ci-check:

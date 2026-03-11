@@ -75,6 +75,8 @@ tasks:
       - "@globs(tests)"
       - "@globs(configs)"
     outputs: []
+    options:
+      cache: true
 
   lint-fix:
     command:
@@ -119,6 +121,8 @@ tasks:
       - "*.json"
       - "*.md"
     outputs: []
+    options:
+      cache: true
 
   typecheck:
     command:
@@ -133,6 +137,8 @@ tasks:
       - "@globs(tests)"
       - "tsconfig*.json"
     outputs: []
+    options:
+      cache: true
 
   coverage:
     command:
